@@ -24,4 +24,3 @@ public:
     Nodo* getAnterior();
 };
 
-#include "Nodo.cpp"  
