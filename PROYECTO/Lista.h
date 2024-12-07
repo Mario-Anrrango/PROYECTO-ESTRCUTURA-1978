@@ -1,5 +1,6 @@
 #pragma once
 #include "Nodo.h"
+#include "Lista.cpp"
 
 template <typename T>
 class ListaCircularDoble {
@@ -19,5 +20,5 @@ public:
     void mostrar(Nodo<T> *aux);           
 };
 
-#include "Lista.cpp"
+
 
