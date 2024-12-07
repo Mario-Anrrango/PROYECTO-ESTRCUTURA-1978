@@ -3,22 +3,21 @@
 #include "Lista.cpp"
 
 template <typename T>
-class ListaCircularDoble {
+class ListaCircularDoble
+{
 private:
-    Nodo<T>* ultimo;    
-    Nodo<T>* primero;
+    Nodo<T> *ultimo;
+    Nodo<T> *primero;
+
 public:
-     
-  Nodo<T>* getPrimero() {
+    Nodo<T> *getPrimero()
+    {
         return primero;
     }
-    ListaCircularDoble();     
-    void insertar(T dato);    
+    ListaCircularDoble();
+    void insertar(T dato);
     void buscarPorPlaca(T dato);
-    void buscarPorHistorial(T dato);     
-    void eliminar(T dato);    
-    void mostrar(Nodo<T> *aux);           
+    void buscarPorHistorial(T dato);
+    void eliminar(T dato);
+    void mostrar(Nodo<T> *aux);
 };
-
-
-

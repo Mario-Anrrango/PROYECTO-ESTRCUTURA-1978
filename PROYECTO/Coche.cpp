@@ -4,36 +4,36 @@
 
 using namespace std;
 
-Coche InsertarDatos(){
+Coche InsertarDatos()
+{
     string placa;
     string modelo;
     string color;
     string marca;
 
     cout << "Ingrese la placa: ";
-    cin >> placa; 
+    cin >> placa;
 
     cout << "Ingrese la marca: ";
-    cin >> marca; 
+    cin >> marca;
 
     cout << "Ingrese el color: ";
-    cin >> color; 
+    cin >> color;
 
     cout << "Ingrese el modelo: ";
-    cin >> modelo;  
+    cin >> modelo;
 
     return Coche(placa, modelo, color, marca);
 }
 
+void Coche::menu(ListaCircularDoble<Coche> &lista)
+{
 
-
-void Coche::menu(ListaCircularDoble<Coche>& lista) {
-
-    
     Coche nuevoCoche;
     int opcion;
 
-    do {
+    do
+    {
         cout << "========================================" << endl;
         cout << "        Menu de Parqueadero               " << endl;
         cout << "========================================" << endl;
@@ -44,23 +44,24 @@ void Coche::menu(ListaCircularDoble<Coche>& lista) {
         cout << "Elige una opcion: ";
         cin >> opcion;
 
-        switch (opcion) {
-            case 1:
-                nuevoCoche = InsertarDatos();
-                lista.insertar(nuevoCoche);
-                break;
+        switch (opcion)
+        {
+        case 1:
+            nuevoCoche = InsertarDatos();
+            lista.insertar(nuevoCoche);
+            break;
 
-            case 2:
-                lista.mostrar(lista.getPrimero());
-                break;
+        case 2:
+            lista.mostrar(lista.getPrimero());
+            break;
 
-            case 3:
-                cout << "Saliendo..." << endl;
-                break;
+        case 3:
+            cout << "Saliendo..." << endl;
+            break;
 
-            default:
-                cout << "Opción inválida, por favor elige otra opción." << endl;
-                break;
+        default:
+            cout << "Opción inválida, por favor elige otra opción." << endl;
+            break;
         }
     } while (opcion != 3);
 

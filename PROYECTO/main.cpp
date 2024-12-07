@@ -2,13 +2,12 @@
 #include "Coche.h"
 #include "Lista.h"
 
-
 using namespace std;
 
+int main()
+{
 
-int main() {
-
-    ListaCircularDoble<Coche> listaCoches;  
+    ListaCircularDoble<Coche> listaCoches;
 
     Coche coche;
     coche.menu(listaCoches);
