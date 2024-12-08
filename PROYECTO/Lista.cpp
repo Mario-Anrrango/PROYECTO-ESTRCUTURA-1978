@@ -36,6 +36,22 @@ primero->setAnterior(ultimo);
 }
 
 template <typename T>
+void ListaCircularDoble<T>::buscarPorPlaca(T dato)
+{
+ Nodo<T>* aux = primero;
+
+if(aux == nullptr){
+
+    cout<< "La lista esta vacia " << endl;
+     return ;
+}
+
+while()
+
+}
+
+
+template <typename T>
 void ListaCircularDoble<T>::mostrar(Nodo<T>* primero) {
     if (primero == nullptr) {
         std::cout << "La lista está vacía." << std::endl;
@@ -54,5 +70,9 @@ void ListaCircularDoble<T>::mostrar(Nodo<T>* primero) {
         cout << aux->getDato() << endl;
         aux = aux->getSiguiente();
     }
-}
+    }
+
+
+    
+   
 
