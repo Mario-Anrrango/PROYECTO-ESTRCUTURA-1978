@@ -30,6 +30,7 @@ void Coche::menu(ListaCircularDoble<Coche>& lista) {
         "Insertar Coche",
         "Mostrar Lista de Coches",
         "Buscar Coche por la Placa",
+        "Ayuda",
         "Salir"
     };
 
@@ -66,6 +67,15 @@ void Coche::menu(ListaCircularDoble<Coche>& lista) {
                 break;
             }
             case 3: {
+                system("cls");
+                cout << "========================================" << endl;
+                cout << "========================================" << endl;
+                cout << "               (i)AYUDA                 " << endl;
+                cout << "========================================" << endl;
+                cout << "========================================" << endl;
+                break;
+            }
+            case 4: {
                 cout << "Saliendo..." << endl;
                 return;
             }
