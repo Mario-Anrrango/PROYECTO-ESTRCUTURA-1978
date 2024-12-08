@@ -2,16 +2,11 @@
 #include "Coche.h"
 #include "Lista.h"
 
-
-using namespace std;
-
-
 int main() {
-
-    ListaCircularDoble<Coche> listaCoches;  
-
+    ListaCircularDoble<Coche> listaCoches;
     Coche coche;
-    coche.menu(listaCoches);
+
+    coche.menu(listaCoches); // Llama al menú del coche
 
     return 0;
 }
