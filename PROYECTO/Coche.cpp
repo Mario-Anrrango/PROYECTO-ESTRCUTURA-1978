@@ -2,24 +2,23 @@
 #include "Lista.h"
 #include "Menu.h"
 #include <iostream>
-#include <cstdlib>
+#include "ValidacionPlaca.h"
+#include "Validaciones.h"
 
 using namespace std;
 
 Coche InsertarDatos() {
+    Validaciones validaciones;
+    Placa validador;
     string placa, modelo, color, marca;
 
-    cout << "Ingrese la placa: ";
-    cin >> placa;
+    placa = validador.ingresarPlaca();
 
-    cout << "Ingrese la marca: ";
-    cin >> marca;
+    marca = validaciones.ingresarString("Ingrese la marca: ");
 
-    cout << "Ingrese el color: ";
-    cin >> color;
+    color = validaciones.ingresarString("Ingrese el color: ");
 
-    cout << "Ingrese el modelo: ";
-    cin >> modelo;
+    modelo = validaciones.ingresarString("Ingrese el modelo: ");
 
     return Coche(placa, modelo, color, marca);
 }
