@@ -61,6 +61,10 @@ void menu(ListaCircularDoble<Coche>& lista);
 friend std::ostream& operator<<(std::ostream& os, const Coche& coche) {
         os << "Placa: " << coche.placa << "\n Marca: " << coche.marca << " \n Modelo: " << coche.modelo << " \n Color: " << coche.color;
      
+     time_t tiempo = chrono::system_clock::to_time_t(coche.horaIngreso);
+    os << "\nHora de Ingreso: " << std::ctime(&tiempo); 
+
+
         return os;
     }
 

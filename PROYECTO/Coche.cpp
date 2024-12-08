@@ -10,7 +10,7 @@ Coche InsertarDatos(){
     string modelo;
     string color;
     string marca;
-
+    
     cout << "Ingrese la placa: ";
     cin >> placa; 
 
@@ -29,10 +29,9 @@ Coche InsertarDatos(){
 
 
 void Coche::menu(ListaCircularDoble<Coche>& lista) {
-
-    
     Coche nuevoCoche;
     int opcion;
+    string placa; 
 
     do {
         cout << "========================================" << endl;
@@ -40,7 +39,8 @@ void Coche::menu(ListaCircularDoble<Coche>& lista) {
         cout << "========================================" << endl;
         cout << "1. Insertar Coche" << endl;
         cout << "2. Mostrar Lista de Coches" << endl;
-        cout << "3. Salir" << endl;
+        cout << "3. Buscar Coche Por La Placa" << endl;
+        cout << "4. Salir" << endl;
         cout << "========================================" << endl;
         cout << "Elige una opcion: ";
         cin >> opcion;
@@ -52,16 +52,28 @@ void Coche::menu(ListaCircularDoble<Coche>& lista) {
                 break;
 
             case 2:
-      system("cls");
-      std::cout << "========================================" << std::endl;
-    std::cout << "========================================" << std::endl;
-    std::cout << "       Historial de Autos                " << std::endl;
-    std::cout << "========================================" << std::endl;
-    std::cout << "========================================" << std::endl;
+                system("cls");
+                std::cout << "========================================" << std::endl;
+                std::cout << "========================================" << std::endl;
+                std::cout << "       Historial de Autos                " << std::endl;
+                std::cout << "========================================" << std::endl;
+                std::cout << "========================================" << std::endl;
                 lista.mostrar(lista.getPrimero());
                 break;
 
             case 3:
+                system("cls");
+                std::cout << "========================================" << std::endl;
+                std::cout << "========================================" << std::endl;
+                std::cout << "   Bienvenido A La Busqueda De Coches   " << std::endl;
+                std::cout << "========================================" << std::endl;
+                std::cout << "========================================" << std::endl;
+                cout << "Ingrese La Placa ->" << endl;
+                cin >> placa;
+                lista.buscarPorPlaca(placa);
+                break;
+
+            case 4:
                 cout << "Saliendo..." << endl;
                 break;
 
@@ -69,7 +81,7 @@ void Coche::menu(ListaCircularDoble<Coche>& lista) {
                 cout << "Opción inválida, por favor elige otra opción." << endl;
                 break;
         }
-    } while (opcion != 3);
+    } while (opcion != 4); // Cambié la condición de salida a 4, porque el "case 4" debería salir del bucle
 
     return;
 }
