@@ -16,7 +16,7 @@ public:
     void insertar(T dato);    
     void buscarPorPlaca(string placa);
     void buscarPorHistorial(T dato);     
-    void eliminar(T dato);    
+    void eliminarPorPlaca(string placa);    
     void mostrar(Nodo<T> *aux);           
 };
 

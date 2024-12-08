@@ -82,6 +82,59 @@ void ListaCircularDoble<T>::mostrar(Nodo<T>* primero) {
     }
     }
 
+template <typename T>
+void ListaCircularDoble<T>::eliminarPorPlaca( string placa) {
+ 
+    if (primero == nullptr) {
+        cout << "La lista está vacia." << endl;
+        return;
+    }
+
+    Nodo<T>* aux = primero;
+    Nodo<T>* anterior = nullptr;
+
+   
+    if (primero == ultimo && primero->getDato().getPlaca() == placa) {
+        delete primero;
+        primero = nullptr;
+        ultimo = nullptr;
+        cout << "El coche con la placa " << placa << " ha sido eliminado." << endl;
+        return;
+    }
+
+   
+    do {
+        if (aux->getDato().getPlaca() == placa) {
+          
+            if (aux == primero) {
+                primero = primero->getSiguiente();
+                primero->setAnterior(ultimo);
+                ultimo->setSiguiente(primero);
+            }
+         
+            else if (aux == ultimo) {
+                ultimo = ultimo->getAnterior();
+                ultimo->setSiguiente(primero);
+                primero->setAnterior(ultimo);
+            }
+           
+            else {
+                anterior = aux->getAnterior();
+                anterior->setSiguiente(aux->getSiguiente());
+                aux->getSiguiente()->setAnterior(anterior);
+            }
+
+            delete aux;
+            cout << "El coche con la placa " << placa << " ha sido eliminado." << endl;
+            return;
+        }
+
+        aux = aux->getSiguiente();
+    } while (aux != primero);
+
+   
+    cout << "El coche con la placa " << placa << " no se encontro en el parqueadero." << endl;
+}
 
     
    

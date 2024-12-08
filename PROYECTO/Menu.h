@@ -15,32 +15,32 @@ int menuInteractivo(const vector<string>& opciones, const string& titulo) {
     while (true) {
         system("cls");
         
-        // Título del menú
+    
         cout << "========================================" << endl;
         cout << "========================================" << endl;
         cout << "        " << titulo << endl;
         cout << "========================================" << endl;
         cout << "========================================" << endl;
 
-        // Mostrar opciones
+       
         for (int i = 0; i < numOpciones; ++i) {
             if (i == seleccion) {
-                cout << " > " << opciones[i] << " < " << endl; // Resalta la opción seleccionada
+                cout << " > " << opciones[i] << " < " << endl; 
             } else {
-                cout << "   " << opciones[i] << endl; // Opciones no seleccionadas
+                cout << "   " << opciones[i] << endl;
             }
         }
         
         cout << "========================================" << endl;
 
-        // Navegación con teclas
+       
         char tecla = _getch();
 
-        if (tecla == 'a' || tecla == 72) { // 'a' o flecha arriba
+        if (tecla == 'a' || tecla == 72) { 
             seleccion = (seleccion - 1 + numOpciones) % numOpciones;
-        } else if (tecla == 's' || tecla == 80) { // 's' o flecha abajo
+        } else if (tecla == 's' || tecla == 80) { 
             seleccion = (seleccion + 1) % numOpciones;
-        } else if (tecla == 13) { // Enter
+        } else if (tecla == 13) { 
             return seleccion;
         }
     }
