@@ -36,7 +36,7 @@ primero->setAnterior(ultimo);
 }
 
 template <typename T>
-void ListaCircularDoble<T>::buscarPorPlaca(T dato)
+void ListaCircularDoble<T>::buscarPorPlaca(string placa)
 {
  Nodo<T>* aux = primero;
 
@@ -45,7 +45,27 @@ if(aux == nullptr){
     cout<< "La lista esta vacia " << endl;
      return ;
 }
+do{
 
+if(aux->getSiguiente() == primero){
+
+    cout<< "El coche con la placa" << placa << "no esta en el parqueadero" << endl;
+    }
+
+    if(placa == aux->getDato().getPlaca()){
+
+     cout<< "AUTOMOVIL REGISTRADO CON LA PLACA "<< placa << endl;
+   cout << "========================================" << endl;
+    cout << aux->getDato() << endl;
+    cout << "----------------------------------------" << endl;
+
+    }else{ 
+
+        aux = aux->getSiguiente();
+    }
+
+    
+}while(aux->getSiguiente() == primero);
 
 }
 
