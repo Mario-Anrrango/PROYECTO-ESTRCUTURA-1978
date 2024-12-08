@@ -36,44 +36,36 @@ primero->setAnterior(ultimo);
 }
 
 template <typename T>
-void ListaCircularDoble<T>::buscarPorPlaca(string placa)
-{
- Nodo<T>* aux = primero;
-
-if(aux == nullptr){
-
-    cout<< "La lista esta vacia " << endl;
-     return ;
-}
-do{
-
-if(aux->getSiguiente() == primero){
-
-    cout<< "El coche con la placa" << placa << "no esta en el parqueadero" << endl;
+void ListaCircularDoble<T>::buscarPorPlaca(string placa) {
+   
+    if (primero == nullptr) {
+        cout << "La lista está vacia." << endl;
+        return;
     }
 
-    if(placa == aux->getDato().getPlaca()){
-
-     cout<< "AUTOMOVIL REGISTRADO CON LA PLACA "<< placa << endl;
-   cout << "========================================" << endl;
-    cout << aux->getDato() << endl;
-    cout << "----------------------------------------" << endl;
-
-    }else{ 
-
+    Nodo<T>* aux = primero;
+    do {
+     
+        if (aux->getDato().getPlaca() == placa) {
+            cout << "========================================" << endl;
+            cout << "   AUTOMOVIL REGISTRADO" << endl;
+            cout << "========================================" << endl;
+            cout << aux->getDato() << endl;
+            return; 
+        }
         aux = aux->getSiguiente();
-    }
+    } while (aux != primero); 
 
-    
-}while(aux->getSiguiente() == primero);
-
+ 
+    cout << "El coche con la placa " << placa << " no esta en el parqueadero." << endl;
 }
+
 
 
 template <typename T>
 void ListaCircularDoble<T>::mostrar(Nodo<T>* primero) {
     if (primero == nullptr) {
-        std::cout << "La lista está vacía." << std::endl;
+        std::cout << "La lista esta vacia." << std::endl;
         return;
     }
     
@@ -82,8 +74,7 @@ void ListaCircularDoble<T>::mostrar(Nodo<T>* primero) {
   cout<< "AUTOMOVIL REGISTRADO"<<endl;
    cout << "========================================" << endl;
     cout << aux->getDato() << endl;
-    cout << "----------------------------------------" << endl;
-  
+    
     aux = aux->getSiguiente();
     while (aux != primero) {  
         cout << aux->getDato() << endl;
