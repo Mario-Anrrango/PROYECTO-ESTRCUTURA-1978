@@ -33,7 +33,7 @@ void Coche::menu(ListaCircularDoble<Coche>& lista) {
         "Insertar Coche",
         "Mostrar Lista de Coches",
         "Buscar Coche por la Placa",
-        "Búsqueda Avanzada", 
+        "Busqueda Avanzada", 
         "Eliminar Coche por Placa",
         "Ayuda",
         "Salir"
@@ -88,11 +88,11 @@ void Coche::menu(ListaCircularDoble<Coche>& lista) {
                 system("cls");
                 cout << "========================================" << endl;
                 cout << "========================================" << endl;
-                cout << "  BIENVENIDOS A LA ELIMINACIÓN DE COCHES" << endl;
+                cout << "  BIENVENIDOS A LA SALIDA DE COCHES" << endl;
                 cout << "========================================" << endl;
                 cout << "========================================" << endl;
                 string placa;
-                cout << "Ingrese la placa del coche a eliminar: ";
+                cout << "Ingrese la placa del coche que ha salido: ";
                 cin >> placa;
                 lista.eliminarPorPlaca(placa);
                 break;
@@ -133,31 +133,42 @@ void Coche::menuBusquedaAvanzada(ListaCircularDoble<Coche>& lista) {
     };
 
     while (true) {
-        int seleccion = menuInteractivo(opciones, "Menu de Busqueda Avanzada");
+    int seleccion = menuInteractivo(opciones, "Menu de Busqueda Avanzada");
 
-        switch (seleccion) {
-        case 0: {
-            system("cls");
-            cout << "========================================" << endl;
-            cout << "  Buscar por Modelo" << endl;
-            cout << "========================================" << endl;
-            string modelo;
-            cout << "Ingrese el modelo: ";
-            cin >> modelo;
-            lista.BusquedaAvanzada("modelo", modelo);
-            break;
-        }
-        case 1: {
-            system("cls");
-            cout << "========================================" << endl;
-            cout << "  Buscar por Color" << endl;
-            cout << "========================================" << endl;
-            string color;
-            cout << "Ingrese el color: ";
-            cin >> color;
-            lista.BusquedaAvanzada("color", color);
-            break;
-        }
+    switch (seleccion) {
+    case 0: {
+        system("cls");
+        cout << "========================================" << endl;
+        cout << "  Buscar por Modelo" << endl;
+        cout << "========================================" << endl;
+        string modelo;
+        cout << "Ingrese el modelo: ";
+        cin >> modelo;
+        lista.BusquedaAvanzada("modelo", modelo);
+        break;
+    }
+    case 1: {
+        system("cls");
+        cout << "========================================" << endl;
+        cout << "  Buscar por Color" << endl;
+        cout << "========================================" << endl;
+        string color;
+        cout << "Ingrese el color: ";
+        cin >> color;
+        lista.BusquedaAvanzada("color", color);
+        break;
+    }
+    case 2: {
+        system("cls");
+        cout << "========================================" << endl;
+        cout << "  Buscar por Año/Fecha" << endl;
+        cout << "========================================" << endl;
+        string fecha;
+        cout << "Ingrese la fecha (DD-MM-AAAA): ";
+        cin >> fecha;
+        lista.BusquedaAvanzada("fecha", fecha);
+        break;
+    }
     case 3: {
         system("cls");
         cout << "========================================" << endl;

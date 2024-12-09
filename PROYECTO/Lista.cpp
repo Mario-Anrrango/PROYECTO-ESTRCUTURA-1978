@@ -265,7 +265,7 @@ std::ifstream archivo(nombreArchivo);
                this->insertar(coche);
 
         } else {
-            std::cerr << "Error: Formato de línea inválido: " << linea << std::endl;
+            std::cerr << "Error: Formato de linea inválido: " << linea << std::endl;
         }
     }
 
