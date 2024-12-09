@@ -255,7 +255,8 @@ std::ifstream archivo(nombreArchivo);
             std::getline(ss, fechaIngreso, ',') &&
             ss >> año) {  
 
-           
+           placa = descifrarTexto(placa);
+
             std::tm tm = {};
             std::istringstream ssFecha(fechaIngreso);
             ssFecha >> std::get_time(&tm, "%a %b %d %H:%M:%S %Y"); 
@@ -286,16 +287,17 @@ void ListaCircularDoble<T>::GuardarArchivo(string nombreArchivo) {
 
     Nodo<T>* actual = primero;
     do {
-        // Obtener los datos del coche
+       
         T coche = actual->getDato();
         
-        // Convertir la horaIngreso a un formato legible usando getHora
-        auto horaIngreso = coche.getHora(); // Aquí usamos getHora()
+       std::string placaCifrada = cifrarTexto(coche.getPlaca());
+
+        auto horaIngreso = coche.getHora(); 
         std::time_t horaIngresoTime = std::chrono::system_clock::to_time_t(horaIngreso);
         std::tm tmHoraIngreso = *std::localtime(&horaIngresoTime);
 
-        // Escribir los datos del coche en el archivo
-        archivo << coche.getPlaca() << ","
+        
+        archivo <<  placaCifrada << ","
                 << coche.getModelo() << ","
                 << coche.getColor() << ","
                 << coche.getMarca() << ","
@@ -303,7 +305,48 @@ void ListaCircularDoble<T>::GuardarArchivo(string nombreArchivo) {
                 << coche.getAño() << std::endl;
 
         actual = actual->getSiguiente();
-    } while (actual != primero); // Esto asegura que se recorra todo el ciclo circular
+    } while (actual != primero); 
 
     archivo.close();
+}
+
+template <typename T>
+string ListaCircularDoble<T>::cifrarTexto(const std::string &texto)
+
+{
+    std::string textoCifrado = texto;
+    
+    for (char& c : textoCifrado) {
+        if (isdigit(c)) {  
+            c = ((c - '0' + 2) % 10) + '0';  
+        } else if (isalpha(c)) {  
+            if (isupper(c)) {
+                c = ((c - 'A' + 2) % 26) + 'A';  
+            } else {
+                c = ((c - 'a' + 2) % 26) + 'a';  
+            }
+        }
+    }
+    
+    return textoCifrado;
+}
+
+template <typename T>
+string ListaCircularDoble<T>::descifrarTexto(const std::string &texto)
+{
+   std::string textoDescifrado = texto;
+    
+    for (char& c : textoDescifrado) {
+        if (isdigit(c)) {  
+            c = ((c - '0' - 2 + 10) % 10) + '0';  
+        } else if (isalpha(c)) {  
+            if (isupper(c)) {
+                c = ((c - 'A' - 2 + 26) % 26) + 'A'; 
+            } else {
+                c = ((c - 'a' - 2 + 26) % 26) + 'a';  
+            }
+        }
+    }
+    
+    return textoDescifrado;
 }

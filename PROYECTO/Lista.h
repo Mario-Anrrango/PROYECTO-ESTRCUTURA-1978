@@ -1,6 +1,8 @@
 #pragma once
 #include "Nodo.h"
 
+using namespace std;
+
 template <typename T>
 class ListaCircularDoble {
 private:
@@ -20,6 +22,8 @@ public:
     void mostrar(Nodo<T> *aux);  
     void CargarArchivo(string nombreArchivo);
     void GuardarArchivo(string nombreArchivo);
+    string cifrarTexto(const std::string& texto);
+    string descifrarTexto(const std::string& texto);
 };
 
 #include "Lista.cpp"

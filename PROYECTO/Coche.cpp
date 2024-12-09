@@ -126,9 +126,9 @@ void Coche::menuBusquedaAvanzada(ListaCircularDoble<Coche>& lista) {
     vector<string> opciones = {
         "Buscar por Modelo",
         "Buscar por Color",
-        "Buscar por Año/Fecha",
+        "Buscar por Anio/Fecha",
         "Buscar por Marca",
-        "Salir"
+        "Volver al Menu Principal"
     };
 
     while (true) {
