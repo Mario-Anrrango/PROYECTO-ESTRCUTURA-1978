@@ -163,6 +163,19 @@ void ListaCircularDoble<T>::BusquedaAvanzada(string criterio, string valor) {
 
     do {
        
+            if (criterio == "marca") {
+            string marca = aux->getDato().getMarca();
+            std::transform(marca.begin(), marca.end(), marca.begin(), ::tolower);  
+            if (marca == valor) {
+                cout << "========================================" << endl;
+                cout << "   AUTOMOVIL REGISTRADO POR MARCA" << endl;
+                cout << "========================================" << endl;
+                cout << aux->getDato() << endl;
+                encontrado = true; 
+            }
+        }
+
+
         if (criterio == "modelo") {
             string modelo = aux->getDato().getModelo();
             std::transform(modelo.begin(), modelo.end(), modelo.begin(), ::tolower);  

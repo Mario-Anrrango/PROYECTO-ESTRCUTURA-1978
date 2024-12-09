@@ -128,6 +128,7 @@ void Coche::menuBusquedaAvanzada(ListaCircularDoble<Coche>& lista) {
         "Buscar por Modelo",
         "Buscar por Color",
         "Buscar por Año/Fecha",
+        "Buscar por Marca",
         "Salir"
     };
 
@@ -157,26 +158,26 @@ void Coche::menuBusquedaAvanzada(ListaCircularDoble<Coche>& lista) {
             lista.BusquedaAvanzada("color", color);
             break;
         }
-        case 2: {
-            system("cls");
-            cout << "========================================" << endl;
-            cout << "  Buscar por Año/Fecha" << endl;
-            cout << "========================================" << endl;
-            string fecha;
-            cout << "Ingrese la fecha (DD-MM-AAAA): ";
-            cin >> fecha;
-            lista.BusquedaAvanzada("fecha", fecha);
-            break;
-        }
-        case 3: {
-            cout << "Saliendo..." << endl;
-            return;
-        }
-        default:
-            cout << "Opción invalida. Intentalo de nuevo." << endl;
-            break;
-        }
-
-        system("pause");
+    case 3: {
+        system("cls");
+        cout << "========================================" << endl;
+        cout << "  Buscar por Marca" << endl;
+        cout << "========================================" << endl;
+        string marca;
+        cout << "Ingrese la marca: ";
+        cin >> marca;
+        lista.BusquedaAvanzada("marca", marca);
+        break;
     }
+    case 4: {
+        cout << "Saliendo..." << endl;
+        return;
+    }
+    default:
+        cout << "Opción invalida. Intentalo de nuevo." << endl;
+        break;
+    }
+
+    system("pause");
+}
 }
