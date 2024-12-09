@@ -1,10 +1,15 @@
-ABC1234,Toyota,Corolla,Blanco,2020,2024-12-08 10:30:00
-XYZ5678,Ford,Mustang,Rojo,2022,2024-12-08 11:00:00
-LMN3456,Honda,Civic,Azul,2019,2024-12-08 11:30:00
-QWE7890,Chevrolet,Silverado,Gris,2021,2024-12-08 12:00:00
-RTY5678,Nissan,Altima,Negro,2020,2024-12-08 12:30:00
-FGH1234,BMW,X5,Plata,2023,2024-12-08 13:00:00
-KLM4567,Audi,A4,Verde,2021,2024-12-08 13:30:00
-PQR7890,Mercedes-Benz,GLC,Marrón,2022,2024-12-08 14:00:00
-JKL2345,Subaru,Outback,Rojo,2020,2024-12-08 14:30:00
-VBN6789,Hyundai,Tucson,Blanco,2021,2024-12-08 15:00:00
+ABC1233,Corolla,Rojo,Toyota,Sun Dec 08 21:25:18 2024,2024
+PBF4175,Civic,Azul,Honda,Sun Dec 08 21:30:00 2024,2024
+PQR9876,Mustang,Negro,Ford,Sun Dec 08 21:35:00 2024,2024
+XTY4567,Fusion,Blanco,Ford,Sun Dec 08 21:40:00 2024,2024
+LMN5432,Accord,Verde,Honda,Sun Dec 08 21:45:00 2024,2024
+UVW9087,Corolla,Negro,Toyota,Sun Dec 08 21:50:00 2024,2024
+JKL6745,Camry,Gris,Toyota,Sun Dec 08 21:55:00 2024,2024
+MNO1234,Sentra,Rojo,Nissan,Sun Dec 08 22:00:00 2024,2024
+DEF5678,Altima,Azul,Nissan,Sun Dec 08 22:05:00 2024,2024
+GHI8765,Civic,Blanco,Honda,Sun Dec 08 22:10:00 2024,2024
+PQR5432,Focus,Amarillo,Ford,Sun Dec 08 22:15:00 2024,2024
+ZXY9876,Charger,Negro,Dodge,Sun Dec 08 22:20:00 2024,2024
+TUV1122,Chrysler 300,Plata,Chrysler,Sun Dec 08 22:25:00 2024,2024
+JKL5634,Jeep Compass,Verde,Jeep,Sun Dec 08 22:30:00 2024,2024
+VBN2357,Ford Escape,Blanco,Ford,Sun Dec 08 22:35:00 2024,2024

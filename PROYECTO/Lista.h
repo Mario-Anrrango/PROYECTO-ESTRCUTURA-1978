@@ -18,7 +18,7 @@ public:
     void BusquedaAvanzada(string criterio , string valor);      
     void eliminarPorPlaca(string placa);    
     void mostrar(Nodo<T> *aux);  
-   
+    void CargarArchivo(string nombreArchivo);
 };
 
 #include "Lista.cpp"

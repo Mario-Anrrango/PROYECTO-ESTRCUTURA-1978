@@ -213,3 +213,48 @@ void ListaCircularDoble<T>::BusquedaAvanzada(string criterio, string valor) {
         cout << "No se encontro ningun automovil con el criterio de busqueda: " << criterio << " y valor: " << valor << endl;
     }
 }
+template <typename T>
+
+void ListaCircularDoble<T>::CargarArchivo(string nombreArchivo){
+
+std::ifstream archivo(nombreArchivo);
+
+    if (!archivo.is_open()) {
+        std::cerr << "Error: No se pudo abrir el archivo " << nombreArchivo << std::endl;
+        return;
+    }
+
+    std::string linea;
+    while (std::getline(archivo, linea)) {
+       
+        std::istringstream ss(linea);
+        std::string placa, modelo, color, marca, fechaIngreso;
+        int año;
+
+        
+        if (std::getline(ss, placa, ',') &&
+            std::getline(ss, modelo, ',') &&
+            std::getline(ss, color, ',') &&
+            std::getline(ss, marca, ',') &&
+            std::getline(ss, fechaIngreso, ',') &&
+            ss >> año) {  
+
+           
+            std::tm tm = {};
+            std::istringstream ssFecha(fechaIngreso);
+            ssFecha >> std::get_time(&tm, "%a %b %d %H:%M:%S %Y"); 
+            auto horaIngreso = std::chrono::system_clock::from_time_t(std::mktime(&tm));
+
+           
+             T coche(placa, modelo, color, marca, año, horaIngreso);
+
+            
+               this->insertar(coche);
+
+        } else {
+            std::cerr << "Error: Formato de línea inválido: " << linea << std::endl;
+        }
+    }
+
+    archivo.close();
+}
