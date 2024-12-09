@@ -15,9 +15,10 @@ public:
     ListaCircularDoble();     
     void insertar(T dato);    
     void buscarPorPlaca(string placa);
-    void buscarPorHistorial(T dato);     
+    void BusquedaAvanzada(string criterio , string valor);      
     void eliminarPorPlaca(string placa);    
-    void mostrar(Nodo<T> *aux);           
+    void mostrar(Nodo<T> *aux);  
+   
 };
 
 #include "Lista.cpp"

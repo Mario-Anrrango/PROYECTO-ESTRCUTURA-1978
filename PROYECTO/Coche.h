@@ -16,6 +16,7 @@ private:
     string modelo;
     string marca;
     chrono::system_clock::time_point horaIngreso;
+    int año;
 
     
 public:
@@ -29,6 +30,10 @@ public:
     Coche(string placa , string modelo , string color , string marca):
      placa(placa), modelo(modelo) ,color (color),marca(marca),horaIngreso(chrono::system_clock::now()){}
 
+ Coche(std::string placa, std::string modelo, std::string color, std::string marca, int año, std::chrono::system_clock::time_point horaIngreso) //sobrecarga de el constructor como enseño en clase
+        : placa(placa), modelo(modelo), color(color), marca(marca), año(año), horaIngreso(horaIngreso) {}
+
+
 string getPlaca() const
  {return placa;}
 
@@ -40,6 +45,10 @@ string getModelo() const
 
 string getColor () const
 {return color;}
+
+ int getAño() const 
+ { return año; }
+
 
 chrono::system_clock::time_point getHora() const
  {return horaIngreso;}
@@ -58,12 +67,17 @@ void setColor(const string& color)
 
 void menu(ListaCircularDoble<Coche>& lista);
 
+void menuBusquedaAvanzada(ListaCircularDoble<Coche>& lista);
+
 friend std::ostream& operator<<(std::ostream& os, const Coche& coche) {
-        os << "Placa: " << coche.placa << "\n Marca: " << coche.marca << " \n Modelo: " << coche.modelo << " \n Color: " << coche.color << "\n----------------------------------------" << std::endl;
+        os << "Placa: " << coche.placa << "\n Marca: " << coche.marca << " \n Modelo: " << coche.modelo << " \n Color: " << coche.color 
+        << "\n----------------------------------------" << std::endl;
 
      
      time_t tiempo = chrono::system_clock::to_time_t(coche.horaIngreso);
-    os << "\nHora de Ingreso: " << std::ctime(&tiempo); 
+    os << "\nHora de Ingreso: " << std::ctime(&tiempo) 
+    << "\n----------------------------------------" << std::endl;
+
 
 
         return os;
