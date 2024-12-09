@@ -44,6 +44,9 @@ ultimo = nuevoCarro;
 ultimo->setSiguiente(primero);
 primero->setAnterior(ultimo);
 }
+
+std::string nombreArchivo = "autos.txt";
+GuardarArchivo("autos.txt");
 }
 
 template <typename T>
@@ -268,6 +271,39 @@ std::ifstream archivo(nombreArchivo);
             std::cerr << "Error: Formato de linea inválido: " << linea << std::endl;
         }
     }
+
+    archivo.close();
+}
+
+template <typename T>
+void ListaCircularDoble<T>::GuardarArchivo(string nombreArchivo) {
+    std::ofstream archivo(nombreArchivo);
+
+    if (!archivo.is_open()) {
+        std::cerr << "Error: No se pudo abrir el archivo " << nombreArchivo << std::endl;
+        return;
+    }
+
+    Nodo<T>* actual = primero;
+    do {
+        // Obtener los datos del coche
+        T coche = actual->getDato();
+        
+        // Convertir la horaIngreso a un formato legible usando getHora
+        auto horaIngreso = coche.getHora(); // Aquí usamos getHora()
+        std::time_t horaIngresoTime = std::chrono::system_clock::to_time_t(horaIngreso);
+        std::tm tmHoraIngreso = *std::localtime(&horaIngresoTime);
+
+        // Escribir los datos del coche en el archivo
+        archivo << coche.getPlaca() << ","
+                << coche.getModelo() << ","
+                << coche.getColor() << ","
+                << coche.getMarca() << ","
+                << std::put_time(&tmHoraIngreso, "%a %b %d %H:%M:%S %Y") << ","
+                << coche.getAño() << std::endl;
+
+        actual = actual->getSiguiente();
+    } while (actual != primero); // Esto asegura que se recorra todo el ciclo circular
 
     archivo.close();
 }

@@ -47,7 +47,6 @@ void Coche::menu(ListaCircularDoble<Coche>& lista) {
             case 0: {
                 Coche nuevoCoche = InsertarDatos();
                 lista.insertar(nuevoCoche);
-               
                 break;
             }
             case 1: {

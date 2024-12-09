@@ -19,6 +19,7 @@ public:
     void eliminarPorPlaca(string placa);    
     void mostrar(Nodo<T> *aux);  
     void CargarArchivo(string nombreArchivo);
+    void GuardarArchivo(string nombreArchivo);
 };
 
 #include "Lista.cpp"
