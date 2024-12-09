@@ -16,22 +16,36 @@ private:
     string modelo;
     string marca;
     chrono::system_clock::time_point horaIngreso;
+    std::chrono::system_clock::time_point horaSalida;
     int año;
 
     
 public:
-  Coche() {
+
+Coche() {
     this->placa = "";
     this->marca = "";
     this->modelo = "";
     this->color = "";
 }
 
-    Coche(string placa , string modelo , string color , string marca):
+
+    Coche(string placa , string modelo , string color , string marca , int año):
      placa(placa), modelo(modelo) ,color (color),marca(marca),horaIngreso(chrono::system_clock::now()){}
 
- Coche(std::string placa, std::string modelo, std::string color, std::string marca, int año, std::chrono::system_clock::time_point horaIngreso) //sobrecarga de el constructor como enseño en clase
-        : placa(placa), modelo(modelo), color(color), marca(marca), año(año), horaIngreso(horaIngreso) {}
+   Coche(std::string placa, std::string modelo, std::string color, std::string marca,  
+          std::chrono::system_clock::time_point horaIngreso, std::chrono::system_clock::time_point horaSalida)
+        : placa(placa), modelo(modelo), color(color), marca(marca), año(año), 
+          horaIngreso(horaIngreso), horaSalida(horaSalida) {}
+
+
+ void setHoraSalida(std::chrono::system_clock::time_point hora) {
+    horaSalida = hora;
+}
+
+    chrono::system_clock::time_point getHoraSalida() const {
+        return horaSalida;
+    }
 
 
 string getPlaca() const
@@ -70,19 +84,25 @@ void menu(ListaCircularDoble<Coche>& lista);
 void menuBusquedaAvanzada(ListaCircularDoble<Coche>& lista);
 
 friend std::ostream& operator<<(std::ostream& os, const Coche& coche) {
-        os << "Placa: " << coche.placa << "\n Marca: " << coche.marca << " \n Modelo: " << coche.modelo << " \n Color: " << coche.color 
-        << "\n----------------------------------------" << std::endl;
+    os << "Placa: " << coche.placa << "\nMarca: " << coche.marca << " \nModelo: " << coche.modelo << " \nColor: " << coche.color 
+       << "\n----------------------------------------" << std::endl;
 
-     
-     time_t tiempo = chrono::system_clock::to_time_t(coche.horaIngreso);
-    os << "\nHora de Ingreso: " << std::ctime(&tiempo) 
-    << "\n----------------------------------------" << std::endl;
+    
+    time_t tiempoIngreso = chrono::system_clock::to_time_t(coche.horaIngreso);
+    os << "\nHora de Ingreso: " << std::ctime(&tiempoIngreso) 
+       << "\n----------------------------------------" << std::endl;
 
-
-
-        return os;
+  
+    if (coche.horaSalida == std::chrono::system_clock::time_point()) {
+        os << "\nHora de Salida: N/A" << std::endl;
+    } else {
+        time_t tiempoSalida = chrono::system_clock::to_time_t(coche.horaSalida);
+        os << "\nHora de Salida: " << std::ctime(&tiempoSalida) 
+           << "\n----------------------------------------" << std::endl;
     }
 
+    return os;
+}
 };
 
 

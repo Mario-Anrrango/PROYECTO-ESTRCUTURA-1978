@@ -24,6 +24,7 @@ public:
     void GuardarArchivo(string nombreArchivo);
     string cifrarTexto(const std::string& texto);
     string descifrarTexto(const std::string& texto);
+    void salirDelParqueadero(const std::string& placa);
 };
 
 #include "Lista.cpp"

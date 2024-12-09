@@ -15,6 +15,7 @@ Coche InsertarDatos() {
     Validaciones validaciones;
     Placa validador;
     string placa, modelo, color, marca;
+    int año = 0;
 
     placa = validador.ingresarPlaca();
 
@@ -24,7 +25,7 @@ Coche InsertarDatos() {
 
     modelo = validaciones.ingresarString("Ingrese el modelo: ");
 
-    return Coche(placa, modelo, color, marca);
+    return Coche(placa, modelo, color, marca, año );
 }
 
 
@@ -35,6 +36,7 @@ void Coche::menu(ListaCircularDoble<Coche>& lista) {
         "Buscar Coche por la Placa",
         "Busqueda Avanzada", 
         "Eliminar Coche por Placa",
+        "Liberar el parqueadero",
         "Ayuda",
         "Salir"
     };
@@ -87,16 +89,31 @@ void Coche::menu(ListaCircularDoble<Coche>& lista) {
                 system("cls");
                 cout << "========================================" << endl;
                 cout << "========================================" << endl;
-                cout << "  BIENVENIDOS A LA SALIDA DE COCHES" << endl;
+                cout << "  BIENVENIDOS A LA DEPURACION DE COCHES" << endl;
                 cout << "========================================" << endl;
                 cout << "========================================" << endl;
                 string placa;
-                cout << "Ingrese la placa del coche que ha salido: ";
+                cout << "Ingrese la placa del coche que se va eliminar: ";
                 cin >> placa;
                 lista.eliminarPorPlaca(placa);
                 break;
+
             }
             case 5: {
+                system("cls");
+                cout << "========================================" << endl;
+                cout << "========================================" << endl;
+                cout << "  BIENVENIDOS A LA GESTION DE ESTACIONAMIENTO " << endl;
+                cout << "========================================" << endl;
+                cout << "========================================" << endl;
+                string placa;
+                cout << "Ingrese la placa del coche que se va dejar el estacionamiento: ";
+                cin >> placa;
+                lista.salirDelParqueadero(placa);
+                break;
+
+            }
+            case 6: {
                 system("cls");
                 cout << "========================================" << endl;
                 cout << "========================================" << endl;
@@ -109,7 +126,7 @@ void Coche::menu(ListaCircularDoble<Coche>& lista) {
                 system(comando.c_str());
                 break;
             }
-            case 6: {
+            case 7: {
                 cout << "Saliendo..." << endl;
                 return;
             }
