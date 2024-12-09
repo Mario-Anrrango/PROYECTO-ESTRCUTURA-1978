@@ -6,6 +6,8 @@
 #include "Validaciones.h"
 #include <string>
 #include <vector>
+#include <cstdlib>
+#include <filesystem>
 
 using namespace std;
 
@@ -102,6 +104,10 @@ void Coche::menu(ListaCircularDoble<Coche>& lista) {
                 cout << "               (i)AYUDA                 " << endl;
                 cout << "========================================" << endl;
                 cout << "========================================" << endl;
+                filesystem::path rutaEjecutable = filesystem::current_path();
+                string archivo = rutaEjecutable.string() + "\\ayuda.html";
+                string comando = "start " + archivo;
+                system(comando.c_str());
                 break;
             }
             case 6: {
