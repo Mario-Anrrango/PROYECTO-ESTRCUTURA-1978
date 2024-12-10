@@ -24,24 +24,25 @@ string Validaciones::ingresarString(const string& msj) {
     while (true) {
         c = getch();
 
-        if (isalpha(c) || c == ' ') {
+        if (isalpha(c)) { 
             input += c;
             cout << c;
-        } else if (c == '\b' && !input.empty()) {
+        } else if (c == '\b' && !input.empty()) { 
             input.pop_back();
             cout << "\b \b";
-        } else if (c == '\r') {
+        } else if (c == '\r') { 
             if (!input.empty()) {
                 break;
             } else {
-                cout << "\a";
+                cout << "\a"; 
             }
         } else {
-            cout << "\a";
+            cout << "\a"; 
         }
     }
 
     cout << endl;
     return input;
 }
+
 #endif

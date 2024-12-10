@@ -393,15 +393,22 @@ template <typename T>
 void ListaCircularDoble<T>::salirDelParqueadero(const std::string& placa) {
     Nodo<T>* actual = primero;
 
-    
-    while (actual != nullptr) {
+  
+    do {
         T coche = actual->getDato();  
-        
-        
+
+       
         if (coche.getPlaca() == placa) {
+           
+            if (coche.getHoraSalida() != std::chrono::system_clock::time_point()) {
+                std::cerr << "Error: El coche con placa " << placa << " ya ha salido del parqueadero." << std::endl;
+                return;
+            }
+
             auto ahora = std::chrono::system_clock::now();  
             
             coche.setHoraSalida(ahora);  
+            
             
             actual->setDato(coche);  
             
@@ -412,8 +419,9 @@ void ListaCircularDoble<T>::salirDelParqueadero(const std::string& placa) {
             return;
         }
         
-        actual = actual->getSiguiente();  
-    }
-    
+        actual = actual->getSiguiente(); 
+    } while (actual != primero);  
+
     std::cerr << "Coche con placa " << placa << " no encontrado en el parqueadero." << std::endl;
 }
+

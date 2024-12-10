@@ -25,6 +25,7 @@ public:
     string cifrarTexto(const std::string& texto);
     string descifrarTexto(const std::string& texto);
     void salirDelParqueadero(const std::string& placa);
+    string ingresarPlaca();
 };
 
 #include "Lista.cpp"
