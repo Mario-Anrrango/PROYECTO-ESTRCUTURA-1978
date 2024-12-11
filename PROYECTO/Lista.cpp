@@ -259,7 +259,15 @@ void ListaCircularDoble<T>::CargarArchivo(std::string nombreArchivo)
 
     if (!archivo.is_open())
     {
-        std::cerr << "Error: No se pudo abrir el archivo " << nombreArchivo << std::endl;
+        // Si no se puede abrir el archivo, intentamos crearlo
+        std::cerr << "Error: No se pudo abrir el archivo " << nombreArchivo << ". Creando archivo vacío..." << std::endl;
+        std::ofstream nuevoArchivo(nombreArchivo); // Crea el archivo vacío
+        if (!nuevoArchivo.is_open())
+        {
+            std::cerr << "Error: No se pudo crear el archivo " << nombreArchivo << std::endl;
+            return;
+        }
+        nuevoArchivo.close(); // Cerramos el archivo vacío
         return;
     }
 
@@ -277,7 +285,6 @@ void ListaCircularDoble<T>::CargarArchivo(std::string nombreArchivo)
             std::getline(ss, fechaIngreso, ',') &&
             std::getline(ss, horaSalida, ','))
         {
-
             // Desencriptar la placa
             placa = descifrarTexto(placa);
 
@@ -327,6 +334,7 @@ void ListaCircularDoble<T>::CargarArchivo(std::string nombreArchivo)
     archivo.close();
 }
 
+
 template <typename T>
 void ListaCircularDoble<T>::GuardarArchivo(std::string nombreArchivo)
 {
@@ -334,7 +342,15 @@ void ListaCircularDoble<T>::GuardarArchivo(std::string nombreArchivo)
 
     if (!archivo.is_open())
     {
-        std::cerr << "Error: No se pudo abrir el archivo " << nombreArchivo << std::endl;
+        // Si no se puede abrir el archivo, lo creamos
+        std::cerr << "Error: No se pudo abrir el archivo " << nombreArchivo << ". Creando archivo nuevo..." << std::endl;
+        std::ofstream nuevoArchivo(nombreArchivo); // Crear el archivo vacío
+        if (!nuevoArchivo.is_open())
+        {
+            std::cerr << "Error: No se pudo crear el archivo " << nombreArchivo << std::endl;
+            return;
+        }
+        nuevoArchivo.close(); // Cerramos el archivo vacío
         return;
     }
 
