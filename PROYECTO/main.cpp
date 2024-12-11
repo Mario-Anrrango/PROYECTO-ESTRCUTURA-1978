@@ -2,17 +2,16 @@
 #include "Coche.h"
 #include "Lista.h"
 
-int main() {
+int main()
+{
 
-
-    
     ListaCircularDoble<Coche> listaCoches;
     std::string nombreArchivo = "autos.txt";
 
     listaCoches.CargarArchivo("autos.txt");
     Coche coche;
 
-    coche.menu(listaCoches); 
+    coche.menu(listaCoches);
 
     return 0;
 }

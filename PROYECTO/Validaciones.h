@@ -9,35 +9,47 @@
 
 using namespace std;
 
-
-class Validaciones {
+class Validaciones
+{
 public:
-    string ingresarString(const string& msj);
+    string ingresarString(const string &msj);
 };
 
-string Validaciones::ingresarString(const string& msj) {
+string Validaciones::ingresarString(const string &msj)
+{
     string input;
     char c;
 
     cout << msj;
 
-    while (true) {
+    while (true)
+    {
         c = getch();
 
-        if (isalpha(c)) { 
+        if (isalpha(c))
+        {
             input += c;
             cout << c;
-        } else if (c == '\b' && !input.empty()) { 
+        }
+        else if (c == '\b' && !input.empty())
+        {
             input.pop_back();
             cout << "\b \b";
-        } else if (c == '\r') { 
-            if (!input.empty()) {
+        }
+        else if (c == '\r')
+        {
+            if (!input.empty())
+            {
                 break;
-            } else {
-                cout << "\a"; 
             }
-        } else {
-            cout << "\a"; 
+            else
+            {
+                cout << "\a";
+            }
+        }
+        else
+        {
+            cout << "\a";
         }
     }
 
