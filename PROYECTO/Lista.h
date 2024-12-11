@@ -17,7 +17,7 @@ public:
     ListaCircularDoble();     
     void insertar(T dato);    
     void buscarPorPlaca(string placa);
-    void BusquedaAvanzada(string criterio , string valor);      
+    void BusquedaAvanzada(string criterio, string valorInicio, string valorFin);      
     void eliminarPorPlaca(string placa);    
     void mostrar(Nodo<T> *aux);  
     void CargarArchivo(string nombreArchivo);

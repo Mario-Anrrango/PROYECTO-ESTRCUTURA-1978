@@ -166,7 +166,7 @@ void ListaCircularDoble<T>::eliminarPorPlaca(string placa)
 }
 
 template <typename T>
-void ListaCircularDoble<T>::BusquedaAvanzada(string criterio, string valor)
+void ListaCircularDoble<T>::BusquedaAvanzada(string criterio, string valorInicio, string valorFin)
 {
     if (primero == nullptr)
     {
@@ -174,19 +174,22 @@ void ListaCircularDoble<T>::BusquedaAvanzada(string criterio, string valor)
         return;
     }
 
-    std::transform(valor.begin(), valor.end(), valor.begin(), ::tolower);
+    // Convertir valores a minúsculas si el criterio es por texto
+    if (criterio != "hora")
+    {
+        transform(valorInicio.begin(), valorInicio.end(), valorInicio.begin(), ::tolower);
+    }
 
     Nodo<T> *aux = primero;
     bool encontrado = false;
 
     do
     {
-
         if (criterio == "marca")
         {
             string marca = aux->getDato().getMarca();
-            std::transform(marca.begin(), marca.end(), marca.begin(), ::tolower);
-            if (marca == valor)
+            transform(marca.begin(), marca.end(), marca.begin(), ::tolower);
+            if (marca == valorInicio)
             {
                 cout << "========================================" << endl;
                 cout << "   AUTOMOVIL REGISTRADO POR MARCA" << endl;
@@ -196,11 +199,11 @@ void ListaCircularDoble<T>::BusquedaAvanzada(string criterio, string valor)
             }
         }
 
-        if (criterio == "modelo")
+        else if (criterio == "modelo")
         {
             string modelo = aux->getDato().getModelo();
-            std::transform(modelo.begin(), modelo.end(), modelo.begin(), ::tolower);
-            if (modelo == valor)
+            transform(modelo.begin(), modelo.end(), modelo.begin(), ::tolower);
+            if (modelo == valorInicio)
             {
                 cout << "========================================" << endl;
                 cout << "   AUTOMOVIL REGISTRADO POR MODELO" << endl;
@@ -213,8 +216,8 @@ void ListaCircularDoble<T>::BusquedaAvanzada(string criterio, string valor)
         else if (criterio == "color")
         {
             string color = aux->getDato().getColor();
-            std::transform(color.begin(), color.end(), color.begin(), ::tolower);
-            if (color == valor)
+            transform(color.begin(), color.end(), color.begin(), ::tolower);
+            if (color == valorInicio)
             {
                 cout << "========================================" << endl;
                 cout << "   AUTOMOVIL REGISTRADO POR COLOR" << endl;
@@ -224,19 +227,25 @@ void ListaCircularDoble<T>::BusquedaAvanzada(string criterio, string valor)
             }
         }
 
-        else if (criterio == "año" || criterio == "fecha")
+        else if (criterio == "hora")
         {
-            std::chrono::system_clock::time_point horaIngreso = aux->getDato().getHora();
-            std::time_t tiempo = std::chrono::system_clock::to_time_t(horaIngreso);
-            std::tm *tm = std::localtime(&tiempo);
+            chrono::system_clock::time_point horaIngreso = aux->getDato().getHora();
+            time_t tiempo = chrono::system_clock::to_time_t(horaIngreso);
+            tm *tm = localtime(&tiempo);
 
-            char fecha[11];
-            std::strftime(fecha, sizeof(fecha), "%d-%m-%Y", tm);
+            char horaActual[9];
+            strftime(horaActual, sizeof(horaActual), "%H:%M:%S", tm);
 
-            if (fecha == valor)
+            // Función lambda para verificar si la hora está dentro del intervalo
+            auto estaEnIntervalo = [&valorInicio, &valorFin, &horaActual]()
+            {
+                return valorInicio <= horaActual && horaActual <= valorFin;
+            };
+
+            if (estaEnIntervalo())
             {
                 cout << "========================================" << endl;
-                cout << "   AUTOMOVIL REGISTRADO POR FECHA" << endl;
+                cout << "   AUTOMOVIL REGISTRADO POR HORA" << endl;
                 cout << "========================================" << endl;
                 cout << aux->getDato() << endl;
                 encontrado = true;
@@ -248,7 +257,7 @@ void ListaCircularDoble<T>::BusquedaAvanzada(string criterio, string valor)
 
     if (!encontrado)
     {
-        cout << "No se encontro ningun automovil con el criterio de busqueda: " << criterio << " y valor: " << valor << endl;
+        cout << "No se encontro ningun automovil con el criterio de busqueda: " << criterio <<endl;
     }
 }
 
@@ -333,7 +342,6 @@ void ListaCircularDoble<T>::CargarArchivo(std::string nombreArchivo)
 
     archivo.close();
 }
-
 
 template <typename T>
 void ListaCircularDoble<T>::GuardarArchivo(std::string nombreArchivo)

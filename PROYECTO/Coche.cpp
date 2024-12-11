@@ -155,6 +155,7 @@ void Coche::menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista)
         "Buscar por Color",
         "Buscar por Anio/Fecha",
         "Buscar por Marca",
+        "Buscar por Hora",
         "Volver al Menu Principal"};
 
     while (true)
@@ -172,7 +173,7 @@ void Coche::menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista)
             string modelo;
             cout << "Ingrese el modelo: ";
             cin >> modelo;
-            lista.BusquedaAvanzada("modelo", modelo);
+            lista.BusquedaAvanzada("modelo", modelo,"");
             break;
         }
         case 1:
@@ -184,7 +185,7 @@ void Coche::menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista)
             string color;
             cout << "Ingrese el color: ";
             cin >> color;
-            lista.BusquedaAvanzada("color", color);
+            lista.BusquedaAvanzada("color", color,"");
             break;
         }
         case 2:
@@ -196,7 +197,7 @@ void Coche::menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista)
             string fecha;
             cout << "Ingrese la fecha (DD-MM-AAAA): ";
             cin >> fecha;
-            lista.BusquedaAvanzada("fecha", fecha);
+            lista.BusquedaAvanzada("fecha", fecha,"");
             break;
         }
         case 3:
@@ -208,10 +209,24 @@ void Coche::menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista)
             string marca;
             cout << "Ingrese la marca: ";
             cin >> marca;
-            lista.BusquedaAvanzada("marca", marca);
+            lista.BusquedaAvanzada("hora", "08:00:00", "12:00:00");
             break;
         }
         case 4:
+        {
+            system("cls");
+            cout << "========================================" << endl;
+            cout << "  Buscar por Hora" << endl;
+            cout << "========================================" << endl;
+            string HoraEntrada1,HoraEntrada2;
+            cout << "Ingrese la hora de entrada 1: ";
+            cin >> HoraEntrada1;
+            cout << "Ingrese la hora de entrada 2: ";
+            cin >> HoraEntrada2;
+            lista.BusquedaAvanzada("hora", HoraEntrada1,HoraEntrada2);
+            break;
+        }
+        case 5:
         {
             cout << "Saliendo..." << endl;
             return;
