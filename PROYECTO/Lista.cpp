@@ -236,7 +236,7 @@ void ListaCircularDoble<T>::BusquedaAvanzada(string criterio, string valorInicio
             char horaActual[9];
             strftime(horaActual, sizeof(horaActual), "%H:%M:%S", tm);
 
-            // Función lambda para verificar si la hora está dentro del intervalo
+            
             auto estaEnIntervalo = [&valorInicio, &valorFin, &horaActual]()
             {
                 return valorInicio <= horaActual && horaActual <= valorFin;
