@@ -94,7 +94,7 @@ public:
         this->color = color;
     }
 
-    void menu(ListaCircularDoble<Coche> &lista);
+    void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial);
 
     void menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista);
 

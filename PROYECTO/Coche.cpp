@@ -35,7 +35,7 @@ Coche InsertarDatos(ListaCircularDoble<Coche> &lista)
 
                 if (cocheActual.getPlaca() == placa && cocheActual.getHoraSalida() == chrono::system_clock::time_point())
                 {
-                    cout << "\nLa placa ya existe y el coche aún no ha salido. Intente con otra placa." << endl;
+                    cout << "\nEl coche con la placa "<<placa << "ya esta en el parqueadero. Ingrese una placa nueva." << endl;
                     placaDuplicada = true;
                     break;
                 }
@@ -59,18 +59,18 @@ Coche InsertarDatos(ListaCircularDoble<Coche> &lista)
     return Coche(placa, modelo, color, marca, año);
 }
 
-void Coche::menu(ListaCircularDoble<Coche> &lista)
+void Coche::menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial)
 {
     vector<string> opciones = {
         "Insertar Coche",
         "Mostrar Lista de Coches",
-        "Buscar Coche por la Placa",
+        "Ver coches actualmente en el parqueadero",
         "Busqueda Avanzada",
-        "Eliminar Coche por Placa",
         "Liberar el parqueadero",
         "Ayuda",
         "Salir"};
     string archivo = "autos.txt";
+    string archivoHistorial = "autos_historial.txt";
 
     while (true)
     {
@@ -81,7 +81,8 @@ void Coche::menu(ListaCircularDoble<Coche> &lista)
         case 0:
         {
             Coche nuevoCoche = InsertarDatos(lista);
-            lista.insertar(nuevoCoche);
+            lista.insertar(nuevoCoche, "autos.txt");
+            listaHistorial.insertar(nuevoCoche, "autos_historial.txt");
             break;
         }
         case 1:
@@ -100,11 +101,11 @@ void Coche::menu(ListaCircularDoble<Coche> &lista)
             system("cls");
             cout << "========================================" << endl;
             cout << "========================================" << endl;
-            cout << "  BIENVENIDOS A LA BUSQUEDA DE COCHES   " << endl;
+            cout << "  BIENVENIDOS AL PARQUEADERO            " << endl;
             cout << "========================================" << endl;
             cout << "========================================" << endl;
             string placa;
-            cout << "Ingrese la placa: ";
+            cout << "Ingrese la placa a buscar: ";
             cin >> placa;
             lista.buscarPorPlaca(placa);
             break;
@@ -122,21 +123,7 @@ void Coche::menu(ListaCircularDoble<Coche> &lista)
             break;
         }
         case 4:
-        {
-            system("cls");
-            cout << "========================================" << endl;
-            cout << "========================================" << endl;
-            cout << "  BIENVENIDOS A LA DEPURACION DE COCHES" << endl;
-            cout << "========================================" << endl;
-            cout << "========================================" << endl;
-            string placa;
-            cout << "Ingrese la placa del coche que se va eliminar: ";
-            cin >> placa;
-            lista.eliminarPorPlaca(placa);
-            break;
-        }
-        case 5:
-        {
+          {
             system("cls");
             cout << "========================================" << endl;
             cout << "========================================" << endl;
@@ -146,10 +133,12 @@ void Coche::menu(ListaCircularDoble<Coche> &lista)
             string placa;
             cout << "Ingrese la placa del coche que se va dejar el estacionamiento: ";
             cin >> placa;
-            lista.salirDelParqueadero(placa);
+            listaHistorial.salirDelParqueadero(placa);
+            lista.eliminarPorPlaca(placa);
             break;
         }
-        case 6:
+     
+        case 5:
         {
             system("cls");
             cout << "========================================" << endl;
@@ -162,7 +151,7 @@ void Coche::menu(ListaCircularDoble<Coche> &lista)
             system(comando.c_str());
             break;
         }
-        case 7:
+        case 6:
         {
             cout << "Saliendo..." << endl;
             return;

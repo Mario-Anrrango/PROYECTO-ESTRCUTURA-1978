@@ -15,7 +15,7 @@ public:
         return primero;
     }
     ListaCircularDoble();     
-    void insertar(T dato);    
+    void insertar(T dato,const std::string& nombreArchivo);    
     void buscarPorPlaca(string placa);
     void BusquedaAvanzada(string criterio, string valorInicio, string valorFin);      
     void eliminarPorPlaca(string placa);    

@@ -23,7 +23,7 @@ ListaCircularDoble<T>::ListaCircularDoble()
 }
 
 template <typename T>
-void ListaCircularDoble<T>::insertar(T dato)
+void ListaCircularDoble<T>::insertar(T dato , const std::string& nombreArchivo)
 {
 
     Nodo<T> *nuevoCarro = new Nodo<T>(dato);
@@ -46,8 +46,8 @@ void ListaCircularDoble<T>::insertar(T dato)
         primero->setAnterior(ultimo);
     }
 
-    std::string nombreArchivo = "autos.txt";
-    GuardarArchivo("autos.txt");
+     GuardarArchivo(nombreArchivo);
+;
 }
 
 template <typename T>
@@ -294,25 +294,25 @@ void ListaCircularDoble<T>::CargarArchivo(std::string nombreArchivo)
             std::getline(ss, fechaIngreso, ',') &&
             std::getline(ss, horaSalida, ','))
         {
-            // Desencriptar la placa
+           
             placa = descifrarTexto(placa);
 
-            // Procesar la fecha de ingreso
+          
             std::tm tm = {};
             std::istringstream ssFecha(fechaIngreso);
             ssFecha >> std::get_time(&tm, "%a %b %d %H:%M:%S %Y");
             if (ssFecha.fail())
             {
                 std::cerr << "Error en el formato de la fecha de ingreso: " << fechaIngreso << std::endl;
-                continue; // Continuar con la siguiente línea
+                continue; 
             }
             auto horaIngreso = std::chrono::system_clock::from_time_t(std::mktime(&tm));
 
-            // Procesar la hora de salida
+          
             std::chrono::system_clock::time_point horaSalidaParsed;
             if (horaSalida == "N/A" || horaSalida.empty())
             {
-                horaSalidaParsed = std::chrono::system_clock::time_point(); // Si no hay hora de salida
+                horaSalidaParsed = std::chrono::system_clock::time_point(); 
             }
             else
             {
@@ -322,7 +322,7 @@ void ListaCircularDoble<T>::CargarArchivo(std::string nombreArchivo)
                 if (ssHoraSalida.fail())
                 {
                     std::cerr << "Error en el formato de la hora de salida: " << horaSalida << std::endl;
-                    horaSalidaParsed = std::chrono::system_clock::time_point(); // Asignar tiempo nulo
+                    horaSalidaParsed = std::chrono::system_clock::time_point(); 
                 }
                 else
                 {
@@ -330,9 +330,9 @@ void ListaCircularDoble<T>::CargarArchivo(std::string nombreArchivo)
                 }
             }
 
-            // Crear un objeto de tipo T con los datos obtenidos
+            
             T coche(placa, modelo, color, marca, horaIngreso, horaSalidaParsed);
-            this->insertar(coche); // Insertar el coche en la lista circular
+            this->insertar(coche, nombreArchivo); 
         }
         else
         {
@@ -350,15 +350,15 @@ void ListaCircularDoble<T>::GuardarArchivo(std::string nombreArchivo)
 
     if (!archivo.is_open())
     {
-        // Si no se puede abrir el archivo, lo creamos
+       
         std::cerr << "Error: No se pudo abrir el archivo " << nombreArchivo << ". Creando archivo nuevo..." << std::endl;
-        std::ofstream nuevoArchivo(nombreArchivo); // Crear el archivo vacío
+        std::ofstream nuevoArchivo(nombreArchivo); 
         if (!nuevoArchivo.is_open())
         {
             std::cerr << "Error: No se pudo crear el archivo " << nombreArchivo << std::endl;
             return;
         }
-        nuevoArchivo.close(); // Cerramos el archivo vacío
+        nuevoArchivo.close(); 
         return;
     }
 
@@ -482,7 +482,7 @@ void ListaCircularDoble<T>::salirDelParqueadero(const std::string &placa)
 
             std::cout << "El coche con placa " << placa << " ha salido del parqueadero." << std::endl;
 
-            GuardarArchivo("autos.txt");
+            GuardarArchivo("autos_historial.txt");
             return;
         }
 
