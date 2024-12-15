@@ -167,6 +167,8 @@ void Coche::menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &li
 
 void Coche::menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial)
 {
+
+    Validaciones validaciones;
     vector<string> opciones = {
         "Buscar en Parqueadero",
         "Buscar en Historial de Coches",
@@ -200,7 +202,7 @@ void Coche::menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista, ListaCircular
                     cout << "========================================" << endl;
                     string modelo;
                     cout << "Ingrese el modelo: ";
-                    cin >> modelo;
+                    modelo = validaciones.ingresarString("Ingrese el modelo: ");
                     lista.BusquedaAvanzada("modelo", modelo,"");
                     break;
                 }
@@ -212,7 +214,8 @@ void Coche::menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista, ListaCircular
                     cout << "========================================" << endl;
                     string color;
                     cout << "Ingrese el color: ";
-                    cin >> color;
+                    color = validaciones.ingresarString("Ingrese el color: ");
+
                     lista.BusquedaAvanzada("color", color,"");
                     break;
                 }
@@ -220,7 +223,7 @@ void Coche::menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista, ListaCircular
                 {
                     system("cls");
                     cout << "========================================" << endl;
-                    cout << "  Buscar por Año/Fecha" << endl;
+                    cout << "  Buscar por Anio/Fecha" << endl;
                     cout << "========================================" << endl;
                     string fecha;
                     cout << "Ingrese la fecha (DD-MM-AAAA): ";
@@ -236,7 +239,8 @@ void Coche::menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista, ListaCircular
                     cout << "========================================" << endl;
                     string marca;
                     cout << "Ingrese la marca: ";
-                    cin >> marca;
+                    marca = validaciones.ingresarString("Ingrese la marca: ");
+                    
                     lista.BusquedaAvanzada("marca", marca,"");
                     break;
                 }
@@ -288,7 +292,7 @@ void Coche::menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista, ListaCircular
                     cout << "========================================" << endl;
                     string modelo;
                     cout << "Ingrese el modelo: ";
-                    cin >> modelo;
+                    modelo = validaciones.ingresarString("Ingrese el modelo: ");
                     listaHistorial.BusquedaAvanzada("modelo", modelo,"");
                     break;
                 }
@@ -300,7 +304,7 @@ void Coche::menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista, ListaCircular
                     cout << "========================================" << endl;
                     string color;
                     cout << "Ingrese el color: ";
-                    cin >> color;
+                    color = validaciones.ingresarString("Ingrese el color: ");
                     listaHistorial.BusquedaAvanzada("color", color,"");
                     break;
                 }
@@ -324,7 +328,7 @@ void Coche::menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista, ListaCircular
                     cout << "========================================" << endl;
                     string marca;
                     cout << "Ingrese la marca: ";
-                    cin >> marca;
+                    marca = validaciones.ingresarString("Ingrese la marca: ");
                     listaHistorial.BusquedaAvanzada("marca", marca,"");
                     break;
                 }
