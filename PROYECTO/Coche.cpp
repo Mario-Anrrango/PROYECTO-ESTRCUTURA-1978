@@ -12,22 +12,23 @@
 
 using namespace std;
 
-Coche InsertarDatos(ListaCircularDoble<Coche> &lista)
+Coche InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial)
 {
     Validaciones validaciones;
     Placa<Coche> validador;
-   
+
     string placa, modelo, color, marca;
     int año = 0;
-     
+
     while (true)
     {
-        placa = validador.ingresarPlaca(lista.getPrimero()); 
+        placa = validador.ingresarPlaca(lista.getPrimero());
 
         Nodo<Coche> *temp = lista.getPrimero();
         bool placaDuplicada = false;
 
-        if (temp != nullptr) 
+       
+        if (temp != nullptr)
         {
             do
             {
@@ -35,25 +36,46 @@ Coche InsertarDatos(ListaCircularDoble<Coche> &lista)
 
                 if (cocheActual.getPlaca() == placa && cocheActual.getHoraSalida() == chrono::system_clock::time_point())
                 {
-                    cout << "\nEl coche con la placa "<<placa << "ya esta en el parqueadero. Ingrese una placa nueva." << endl;
+                    cout << "\nEl coche con la placa " << placa << " ya esta en el parqueadero. Ingrese una placa nueva." << endl;
                     placaDuplicada = true;
                     break;
                 }
 
                 temp = temp->getSiguiente();
-            } while (temp != lista.getPrimero()); 
+            } while (temp != lista.getPrimero());
         }
 
         if (!placaDuplicada)
         {
-            break; 
+            break;
         }
     }
 
+
+    Nodo<Coche> *tempHistorial = listaHistorial.getPrimero();
+    if (tempHistorial != nullptr)
+    {
+        do
+        {
+            Coche cocheHistorial = tempHistorial->getDato();
+
+            if (cocheHistorial.getPlaca() == placa)
+            {
+                cout << "\nLa placa " << placa << " fue encontrada en el historial. Recuperando datos..." << endl;
+                modelo = cocheHistorial.getModelo();
+                color = cocheHistorial.getColor();
+                marca = cocheHistorial.getMarca();
+                cout<< "Marca:  " << marca <<"\n Color:  " << color <<"\n Modelo:  " << modelo <<"\n"; 
+                return Coche(placa, modelo, color, marca, año);
+            }
+
+            tempHistorial = tempHistorial->getSiguiente();
+        } while (tempHistorial != listaHistorial.getPrimero());
+    }
+
+    
     marca = validaciones.ingresarString("Ingrese la marca: ");
-
     color = validaciones.ingresarString("Ingrese el color: ");
-
     modelo = validaciones.ingresarString("Ingrese el modelo: ");
 
     return Coche(placa, modelo, color, marca, año);
@@ -81,7 +103,7 @@ void Coche::menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &li
         {
         case 0:
         {
-            Coche nuevoCoche = InsertarDatos(lista);
+            Coche nuevoCoche = InsertarDatos(lista,listaHistorial);
             lista.insertar(nuevoCoche, "autos.txt");
             listaHistorial.insertar(nuevoCoche, "autos_historial.txt");
             break;
