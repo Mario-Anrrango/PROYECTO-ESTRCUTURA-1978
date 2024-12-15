@@ -64,7 +64,7 @@ void Coche::menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &li
     vector<string> opciones = {
         "Insertar Coche",
         "Mostrar Lista de Coches",
-        "Ver coches actualmente en el parqueadero",
+        "Buscar Coche en Parqueadero",
         "Busqueda Avanzada",
         "Liberar el parqueadero",
         "Ayuda",
