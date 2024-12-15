@@ -12,15 +12,43 @@
 
 using namespace std;
 
-Coche InsertarDatos()
+Coche InsertarDatos(ListaCircularDoble<Coche> &lista)
 {
     Validaciones validaciones;
     Placa<Coche> validador;
-    ListaCircularDoble<Coche> lista;
+   
     string placa, modelo, color, marca;
     int año = 0;
+     
+    while (true)
+    {
+        placa = validador.ingresarPlaca(lista.getPrimero()); 
 
-    placa = validador.ingresarPlaca(lista.getPrimero());
+        Nodo<Coche> *temp = lista.getPrimero();
+        bool placaDuplicada = false;
+
+        if (temp != nullptr) 
+        {
+            do
+            {
+                Coche cocheActual = temp->getDato();
+
+                if (cocheActual.getPlaca() == placa && cocheActual.getHoraSalida() == chrono::system_clock::time_point())
+                {
+                    cout << "\nLa placa ya existe y el coche aún no ha salido. Intente con otra placa." << endl;
+                    placaDuplicada = true;
+                    break;
+                }
+
+                temp = temp->getSiguiente();
+            } while (temp != lista.getPrimero()); 
+        }
+
+        if (!placaDuplicada)
+        {
+            break; 
+        }
+    }
 
     marca = validaciones.ingresarString("Ingrese la marca: ");
 
@@ -52,7 +80,7 @@ void Coche::menu(ListaCircularDoble<Coche> &lista)
         {
         case 0:
         {
-            Coche nuevoCoche = InsertarDatos();
+            Coche nuevoCoche = InsertarDatos(lista);
             lista.insertar(nuevoCoche);
             break;
         }
