@@ -174,7 +174,7 @@ void ListaCircularDoble<T>::BusquedaAvanzada(string criterio, string valorInicio
         return;
     }
 
-    // Convertir valores a minúsculas si el criterio es por texto
+    
     if (criterio != "hora")
     {
         transform(valorInicio.begin(), valorInicio.end(), valorInicio.begin(), ::tolower);

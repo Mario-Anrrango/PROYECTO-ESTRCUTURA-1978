@@ -96,7 +96,7 @@ public:
 
     void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial);
 
-    void menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista);
+    void menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial);
 
     friend std::ostream &operator<<(std::ostream &os, const Coche &coche)
     {

@@ -119,7 +119,7 @@ void Coche::menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &li
             cout << "========================================" << endl;
             cout << "========================================" << endl;
 
-            menuBusquedaAvanzada(lista);
+            menuBusquedaAvanzada(lista, listaHistorial);
             break;
         }
         case 4:
@@ -165,14 +165,11 @@ void Coche::menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &li
     }
 }
 
-void Coche::menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista)
+void Coche::menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial)
 {
     vector<string> opciones = {
-        "Buscar por Modelo",
-        "Buscar por Color",
-        "Buscar por Anio/Fecha",
-        "Buscar por Marca",
-        "Buscar por Hora",
+        "Buscar en Parqueadero",
+        "Buscar en Historial de Coches",
         "Volver al Menu Principal"};
 
     while (true)
@@ -181,73 +178,186 @@ void Coche::menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista)
 
         switch (seleccion)
         {
-        case 0:
+        case 0: 
         {
-            system("cls");
-            cout << "========================================" << endl;
-            cout << "  Buscar por Modelo" << endl;
-            cout << "========================================" << endl;
-            string modelo;
-            cout << "Ingrese el modelo: ";
-            cin >> modelo;
-            lista.BusquedaAvanzada("modelo", modelo,"");
+            vector<string> opcionesBusqueda = {
+                "Buscar por Modelo",
+                "Buscar por Color",
+                "Buscar por Año/Fecha",
+                "Buscar por Marca",
+                "Buscar por Hora",
+                "Volver al Menu Principal"};
+
+            int seleccionBusqueda = menuInteractivo(opcionesBusqueda, "Menu de Busqueda en Parqueadero");
+
+            switch (seleccionBusqueda)
+            {
+            case 0:
+                {
+                    system("cls");
+                    cout << "========================================" << endl;
+                    cout << "  Buscar por Modelo" << endl;
+                    cout << "========================================" << endl;
+                    string modelo;
+                    cout << "Ingrese el modelo: ";
+                    cin >> modelo;
+                    lista.BusquedaAvanzada("modelo", modelo,"");
+                    break;
+                }
+            case 1:
+                {
+                    system("cls");
+                    cout << "========================================" << endl;
+                    cout << "  Buscar por Color" << endl;
+                    cout << "========================================" << endl;
+                    string color;
+                    cout << "Ingrese el color: ";
+                    cin >> color;
+                    lista.BusquedaAvanzada("color", color,"");
+                    break;
+                }
+            case 2:
+                {
+                    system("cls");
+                    cout << "========================================" << endl;
+                    cout << "  Buscar por Año/Fecha" << endl;
+                    cout << "========================================" << endl;
+                    string fecha;
+                    cout << "Ingrese la fecha (DD-MM-AAAA): ";
+                    cin >> fecha;
+                    lista.BusquedaAvanzada("fecha", fecha,"");
+                    break;
+                }
+            case 3:
+                {
+                    system("cls");
+                    cout << "========================================" << endl;
+                    cout << "  Buscar por Marca" << endl;
+                    cout << "========================================" << endl;
+                    string marca;
+                    cout << "Ingrese la marca: ";
+                    cin >> marca;
+                    lista.BusquedaAvanzada("marca", marca,"");
+                    break;
+                }
+            case 4:
+                {
+                    system("cls");
+                    cout << "========================================" << endl;
+                    cout << "  Buscar por Hora" << endl;
+                    cout << "========================================" << endl;
+                    string HoraEntrada1, HoraEntrada2;
+                    cout << "Ingrese la hora de entrada 1: ";
+                    cin >> HoraEntrada1;
+                    cout << "Ingrese la hora de entrada 2: ";
+                    cin >> HoraEntrada2;
+                    lista.BusquedaAvanzada("hora", HoraEntrada1, HoraEntrada2);
+                    break;
+                }
+            case 5:
+                {
+                    cout << "Saliendo..." << endl;
+                    return;
+                }
+            default:
+                cout << "Opción invalida. Intentalo de nuevo." << endl;
+                break;
+            }
             break;
         }
-        case 1:
+
+        case 1: 
         {
-            system("cls");
-            cout << "========================================" << endl;
-            cout << "  Buscar por Color" << endl;
-            cout << "========================================" << endl;
-            string color;
-            cout << "Ingrese el color: ";
-            cin >> color;
-            lista.BusquedaAvanzada("color", color,"");
+            vector<string> opcionesBusqueda = {
+                "Buscar por Modelo",
+                "Buscar por Color",
+                "Buscar por Año/Fecha",
+                "Buscar por Marca",
+                "Buscar por Hora",
+                "Volver al Menu Principal"};
+
+            int seleccionBusqueda = menuInteractivo(opcionesBusqueda, "Menu de Busqueda en Historial");
+
+            switch (seleccionBusqueda)
+            {
+            case 0:
+                {
+                    system("cls");
+                    cout << "========================================" << endl;
+                    cout << "  Buscar por Modelo" << endl;
+                    cout << "========================================" << endl;
+                    string modelo;
+                    cout << "Ingrese el modelo: ";
+                    cin >> modelo;
+                    listaHistorial.BusquedaAvanzada("modelo", modelo,"");
+                    break;
+                }
+            case 1:
+                {
+                    system("cls");
+                    cout << "========================================" << endl;
+                    cout << "  Buscar por Color" << endl;
+                    cout << "========================================" << endl;
+                    string color;
+                    cout << "Ingrese el color: ";
+                    cin >> color;
+                    listaHistorial.BusquedaAvanzada("color", color,"");
+                    break;
+                }
+            case 2:
+                {
+                    system("cls");
+                    cout << "========================================" << endl;
+                    cout << "  Buscar por Año/Fecha" << endl;
+                    cout << "========================================" << endl;
+                    string fecha;
+                    cout << "Ingrese la fecha (DD-MM-AAAA): ";
+                    cin >> fecha;
+                    listaHistorial.BusquedaAvanzada("fecha", fecha,"");
+                    break;
+                }
+            case 3:
+                {
+                    system("cls");
+                    cout << "========================================" << endl;
+                    cout << "  Buscar por Marca" << endl;
+                    cout << "========================================" << endl;
+                    string marca;
+                    cout << "Ingrese la marca: ";
+                    cin >> marca;
+                    listaHistorial.BusquedaAvanzada("marca", marca,"");
+                    break;
+                }
+            case 4:
+                {
+                    system("cls");
+                    cout << "========================================" << endl;
+                    cout << "  Buscar por Hora" << endl;
+                    cout << "========================================" << endl;
+                    string HoraEntrada1, HoraEntrada2;
+                    cout << "Ingrese la hora de entrada 1: ";
+                    cin >> HoraEntrada1;
+                    cout << "Ingrese la hora de entrada 2: ";
+                    cin >> HoraEntrada2;
+                    listaHistorial.BusquedaAvanzada("hora", HoraEntrada1, HoraEntrada2);
+                    break;
+                }
+            case 5:
+                {
+                    cout << "Saliendo..." << endl;
+                    return;
+                }
+            default:
+                cout << "Opción invalida. Intentalo de nuevo." << endl;
+                break;
+            }
             break;
         }
-        case 2:
-        {
-            system("cls");
-            cout << "========================================" << endl;
-            cout << "  Buscar por Año/Fecha" << endl;
-            cout << "========================================" << endl;
-            string fecha;
-            cout << "Ingrese la fecha (DD-MM-AAAA): ";
-            cin >> fecha;
-            lista.BusquedaAvanzada("fecha", fecha,"");
-            break;
-        }
-        case 3:
-        {
-            system("cls");
-            cout << "========================================" << endl;
-            cout << "  Buscar por Marca" << endl;
-            cout << "========================================" << endl;
-            string marca;
-            cout << "Ingrese la marca: ";
-            cin >> marca;
-            lista.BusquedaAvanzada("hora", "08:00:00", "12:00:00");
-            break;
-        }
-        case 4:
-        {
-            system("cls");
-            cout << "========================================" << endl;
-            cout << "  Buscar por Hora" << endl;
-            cout << "========================================" << endl;
-            string HoraEntrada1,HoraEntrada2;
-            cout << "Ingrese la hora de entrada 1: ";
-            cin >> HoraEntrada1;
-            cout << "Ingrese la hora de entrada 2: ";
-            cin >> HoraEntrada2;
-            lista.BusquedaAvanzada("hora", HoraEntrada1,HoraEntrada2);
-            break;
-        }
-        case 5:
-        {
+
+        case 2: // Volver al menú principal
             cout << "Saliendo..." << endl;
             return;
-        }
+
         default:
             cout << "Opción invalida. Intentalo de nuevo." << endl;
             break;
