@@ -61,10 +61,11 @@ Coche InsertarDatos(ListaCircularDoble<Coche> &lista)
 
 void Coche::menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial)
 {
+    Placa<Coche> validador;
     vector<string> opciones = {
         "Insertar Coche",
         "Mostrar Lista de Coches",
-        "Buscar Coche en Parqueadero",
+        "Busqueda de Coche Por Placa",
         "Busqueda Avanzada",
         "Liberar el parqueadero",
         "Ayuda",
@@ -85,31 +86,123 @@ void Coche::menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &li
             listaHistorial.insertar(nuevoCoche, "autos_historial.txt");
             break;
         }
-        case 1:
+      case 1:
+{
+    bool salirSubmenu = false;
+
+    while (!salirSubmenu)
+    {
+        system("cls");
+        cout << "========================================" << endl;
+        cout << "========================================" << endl;
+        cout << "         Menu de Lista de Coches        " << endl;
+        cout << "========================================" << endl;
+        cout << "========================================" << endl;
+
+        vector<string> opcionesLista = {
+            "Mostrar Coches en Parqueadero",
+            "Mostrar Historial Completo de Coches",
+            "Volver al Menu Principal"};
+
+        int seleccionLista = menuInteractivo(opcionesLista, "Menu de Lista de Coches");
+
+        switch (seleccionLista)
+        {
+        case 0: 
         {
             system("cls");
             cout << "========================================" << endl;
+            cout << "   LISTA DE COCHES EN EL PARQUEADERO    " << endl;
             cout << "========================================" << endl;
-            cout << "       HISTORIAL DE AUTOS               " << endl;
+            lista.mostrar(lista.getPrimero()); 
+            system("pause");
+            break; 
+        }
+        case 1: 
+        {
+            system("cls");
             cout << "========================================" << endl;
+            cout << "   HISTORIAL COMPLETO DE COCHES         " << endl;
             cout << "========================================" << endl;
-            lista.mostrar(lista.getPrimero());
+            listaHistorial.mostrar(listaHistorial.getPrimero()); 
+            system("pause");
+            break; 
+        }
+        case 2: 
+        {
+            cout << "Regresando al menu principal..." << endl;
+            salirSubmenu = true; 
             break;
         }
-        case 2:
+        default:
+            cout << "Opción inválida. Inténtelo de nuevo." << endl;
+            system("pause");
+            break;
+        }
+    }
+    break; 
+}
+        case 2: 
+{
+    bool salirSubmenu = false;
+    while (!salirSubmenu)
+    {
+        system("cls");
+        cout << "========================================" << endl;
+        cout << "========================================" << endl;
+        cout << "        Menu de Busqueda por Placa      " << endl;
+        cout << "========================================" << endl;
+        cout << "========================================" << endl;
+
+        vector<string> opcionesBusqueda = {
+            "Buscar en Parqueadero",
+            "Buscar en Historial",
+            "Volver al Menu Principal"};
+
+        int seleccionBusqueda = menuInteractivo(opcionesBusqueda, "Menu de Busqueda por Placa");
+
+        switch (seleccionBusqueda)
+        {
+        case 0: 
         {
             system("cls");
             cout << "========================================" << endl;
-            cout << "========================================" << endl;
-            cout << "  BIENVENIDOS AL PARQUEADERO            " << endl;
-            cout << "========================================" << endl;
+            cout << "   BUSQUEDA DE PLACA EN PARQUEADERO     " << endl;
             cout << "========================================" << endl;
             string placa;
-            cout << "Ingrese la placa a buscar: ";
+            cout << "Ingrese la placa a buscar(Utilize mayusculas para validar su placa): ";
             cin >> placa;
             lista.buscarPorPlaca(placa);
+            system("pause");
+            break; 
+        }
+        case 1: 
+        {
+            system("cls");
+            cout << "========================================" << endl;
+            cout << "   BUSQUEDA DE PLACA EN HISTORIAL       " << endl;
+            cout << "========================================" << endl;
+            string placa;
+            cout << "Ingrese la placa a buscar(Utilize mayusculas para validar su placa): ";
+            cin >> placa;
+            listaHistorial.buscarPorPlaca(placa);
+            system("pause");
+            break; 
+        }
+        case 2: 
+        {
+            cout << "Regresando al menu principal..." << endl;
+            salirSubmenu = true; 
             break;
         }
+        default:
+            cout << "Opción inválida. Inténtelo de nuevo." << endl;
+            system("pause");
+            break;
+        }
+    }
+    break; 
+}
         case 3:
         {
             system("cls");
@@ -131,7 +224,7 @@ void Coche::menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &li
             cout << "========================================" << endl;
             cout << "========================================" << endl;
             string placa;
-            cout << "Ingrese la placa del coche que se va dejar el estacionamiento: ";
+            cout << "Ingrese la placa del coche que  va a  dejar el estacionamiento: ";
             cin >> placa;
             listaHistorial.salirDelParqueadero(placa);
             lista.eliminarPorPlaca(placa);
@@ -358,7 +451,7 @@ void Coche::menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista, ListaCircular
             break;
         }
 
-        case 2: // Volver al menú principal
+        case 2: 
             cout << "Saliendo..." << endl;
             return;
 
