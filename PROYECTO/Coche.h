@@ -4,9 +4,11 @@
 #include <chrono>
 #include <ctime>
 #include "Lista.h"
+#include "Propietario.h"
 
 using namespace std;
 
+class Propietario;
 class Coche
 {
 private:
@@ -94,7 +96,7 @@ public:
         this->color = color;
     }
 
-    void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial);
+    void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial , ListaCircularDoble<Propietario> &listaPropietarios);
 
     void menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial);
 

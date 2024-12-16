@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <cctype>
 #include <conio.h>
+#include "Propietario.h"
 
 using namespace std;
 
@@ -104,7 +105,13 @@ Coche InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> 
     return Coche(placa, modelo, color, marca, anio);
 }
 
-void Coche::menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial)
+
+
+
+
+
+
+void Coche::menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial, ListaCircularDoble<Propietario> &listaPropietarios)
 {
     Placa<Coche> validador;
     vector<string> opciones = {
@@ -117,6 +124,7 @@ void Coche::menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &li
         "Salir"};
     string archivo = "autos.txt";
     string archivoHistorial = "autos_historial.txt";
+    string archivoPropietarios = "propietarios.txt";
 
     while (true)
     {
@@ -127,7 +135,9 @@ void Coche::menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &li
         case 0:
         {
             Coche nuevoCoche = InsertarDatos(lista,listaHistorial);
-            lista.insertar(nuevoCoche, "autos.txt");
+            Propietario propietario = propietario.insertarDatosPropietario(listaPropietarios, nuevoCoche.getPlaca());
+            
+             lista.insertar(nuevoCoche, "autos.txt");
             listaHistorial.insertar(nuevoCoche, "autos_historial.txt");
             break;
         }
