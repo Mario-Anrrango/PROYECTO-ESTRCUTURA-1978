@@ -1,5 +1,4 @@
-#ifndef VALIDACIONES_H
-#define VALIDACIONES_H
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -12,10 +11,11 @@ using namespace std;
 class Validaciones
 {
 public:
-    string ingresarString(const string &msj);
+    inline string ingresarString(const string &msj);
+    inline string ingresarCedula(const string &msj);
 };
 
-string Validaciones::ingresarString(const string &msj)
+inline string Validaciones::ingresarString(const string &msj)
 {
     string input;
     char c;
@@ -57,4 +57,48 @@ string Validaciones::ingresarString(const string &msj)
     return input;
 }
 
-#endif
+inline string Validaciones::ingresarCedula(const string &msj)
+{
+    string input;
+    char c;
+
+    cout << msj;
+
+    while (true)
+    {
+        c = getch();
+
+        if (isdigit(c))  
+        {
+            input += c;
+            cout << c;
+        }
+        else if (c == '\b' && !input.empty())  
+        {
+            input.pop_back();
+            cout << "\b \b";
+        }
+        else if (c == '\r')  
+        {
+            if (input.length() == 10)  
+            {
+                break;
+            }
+            else
+            {
+                cout << "\a";  
+                cout << "\nLa cédula debe tener 10 dígitos. Intente nuevamente: ";
+                input.clear();
+                cout << msj;
+            }
+        }
+        else
+        {
+            cout << "\a";  
+        }
+    }
+
+    cout << endl;
+    return input;
+}
+

@@ -14,6 +14,10 @@ public:
   Nodo<T>* getPrimero() {
         return primero;
     }
+
+    void setPrimero(Nodo<T>* primero) {
+        this->primero = primero;
+    }
     ListaCircularDoble();     
     void insertar(T dato,const std::string& nombreArchivo);    
     void buscarPorPlaca(string placa);
@@ -25,8 +29,10 @@ public:
     string cifrarTexto(const std::string& texto);
     string descifrarTexto(const std::string& texto);
     void salirDelParqueadero(const std::string& placa);
-    string ingresarPlaca();
+    void GuardarArchivoPropietario(const string& nombreArchivo, ListaCircularDoble<T>& lista);
+    void CargarArchivoPropietario(const std::string& nombreArchivo);
 };
 
 #include "Lista.cpp"
+
 

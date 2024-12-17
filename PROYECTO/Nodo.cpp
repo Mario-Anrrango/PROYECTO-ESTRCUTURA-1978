@@ -1,13 +1,11 @@
 #include "Nodo.h"
 
 template <typename T>
-Nodo<T>::Nodo(T dato)
-{
+Nodo<T>::Nodo(T dato) {
     this->dato = dato;
     this->siguiente = nullptr;
     this->anterior = nullptr;
 }
-
 template <typename T>
 T Nodo<T>::getDato()
 {

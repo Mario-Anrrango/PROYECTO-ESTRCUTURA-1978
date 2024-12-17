@@ -1,5 +1,4 @@
-#ifndef MENU_H
-#define MENU_H
+#pragma once
 
 #include <iostream>
 #include <vector>
@@ -54,4 +53,3 @@ int menuInteractivo(const vector<string> &opciones, const string &titulo)
     }
 }
 
-#endif

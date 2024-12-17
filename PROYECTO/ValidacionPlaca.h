@@ -1,5 +1,4 @@
-#ifndef VALIDACION_PLACA_H
-#define VALIDACION_PLACA_H
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -7,7 +6,6 @@
 #include <regex>
 #include <algorithm>
 #include <stdexcept>
-#include "Nodo.h"
 #include "Lista.h"
 
 using namespace std;
@@ -35,7 +33,7 @@ string Placa<T>::ingresarPlaca(Nodo<T> *aux)
         cout << "Ingrese la placa: ";
         getline(cin, placa);
 
-        // Eliminar espacios
+    
         placa.erase(remove(placa.begin(), placa.end(), ' '), placa.end());
 
         if (placa.length() != 7)
@@ -44,23 +42,22 @@ string Placa<T>::ingresarPlaca(Nodo<T> *aux)
             continue;
         }
 
-        // Validar la inicial de la provincia
+       
         if (provinciasValidas.count(string(1, toupper(placa[0]))) == 0)
         {
             cout << "\nInicial de provincia no válida. Intente de nuevo." << endl;
             continue;
         }
 
-        // Validar el formato de la placa
+        
         if (!regex_match(placa, regex("^[A-Z]{1,3}[0-9]{4}$")))
         {
             cout << "\nFormato de placa incorrecto. Intente de nuevo." << endl;
             continue;
         }
 
-        break; // Si todo es válido, salimos del ciclo
+        break; 
     }
 
     return placa;
 }
-#endif

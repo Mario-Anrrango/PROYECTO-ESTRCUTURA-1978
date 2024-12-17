@@ -1,10 +1,10 @@
-#pragma once
+#pragma once    
+
 #include <iostream>
 using namespace std;
 
 template <typename T>
-class Nodo
-{
+class Nodo {
 private:
     T dato;
     Nodo *siguiente;
@@ -24,3 +24,4 @@ public:
 };
 
 #include "Nodo.cpp"
+

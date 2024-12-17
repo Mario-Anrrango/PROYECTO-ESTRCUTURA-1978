@@ -1,13 +1,13 @@
 #include <iostream>
 #include "Coche.h"
-#include "Lista.h"
 #include "Propietario.h"
 
 int main()
 {
-    ListaCircularDoble<Propietario> listaPropietarios;
+   
     std::string nombreArchivoPropietarios = "propietarios.txt";
-
+    ListaCircularDoble<Propietario> listaPropietarios;
+    listaPropietarios.CargarArchivoPropietario(NombreArchivoPropietarios);;
 
     ListaCircularDoble<Coche> listaCochesHistorial;
     std::string nombreArchivoHistorial = "autos_historial.txt";
@@ -20,7 +20,7 @@ int main()
 
     Coche coche;
 
-    coche.menu(listaCoches,listaCochesHistorial,listaPropietarios);
+    coche.menu(listaCoches,listaCochesHistorial);
 
     return 0;
 }

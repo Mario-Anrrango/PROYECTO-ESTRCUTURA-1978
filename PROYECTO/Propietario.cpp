@@ -3,107 +3,40 @@
 #include <string>
 #include "Coche.h"  
 #include "Validaciones.h"
-#include "Menu.h"
-#include "Cedula.h"
-#include "Lista.h"
-#include "Nodo.h"
 #include <vector>
+#include "ValidacionPlaca.h"
+#include "Menu.h"
+#include "Lista.h"
 
+using namespace std;
 
-Propietario::Propietario(std::string nombre, std::string apellido, std::string cedula, std::string correo) 
-    : nombre(nombre), apellido(apellido), cedula(cedula), correo(correo) {}
+string NombreArchivoPropietarios = "Propietarios.txt";
+ListaCircularDoble<Propietario> listaPropietarios;
+Validaciones validaciones;
 
-
-Propietario Propietario::insertarDatosPropietario(ListaCircularDoble<Propietario> &lista, const string &placa)
+Propietario Propietario::insertarDatosPropietario(ListaCircularDoble<Propietario> &lista)
 {
-    Validaciones validaciones;
-    Cedula validador;
+    
     string nombre, apellido, cedula, correo;
 
+   
+    while (true) {
+        cedula = validaciones.ingresarCedula("Ingrese la Cedula: ");
+
+       
+        if (buscarPorID(cedula).getCedula() != "") {
+            cout << "La cédula ya está registrada. Por favor, ingrese una cédula diferente." << endl;
+        } else {
+            break; 
+        }
+    }
+
+   
     nombre = validaciones.ingresarString("Ingrese el nombre: ");
     apellido = validaciones.ingresarString("Ingrese el apellido: ");
-
-    while (true)
-    {
-        cedula = validador.ingresarCedula(lista.getPrimero());
-
-        Nodo<Propietario> *temp = lista.getPrimero();
-        bool cedulaDuplicada = false;
-
-        if (temp != nullptr)
-        {
-            do
-            {
-                Propietario propietarioActual = temp->getDato();
-
-           
-                if (propietarioActual.getCedula() == cedula)
-                {
-                    cout << "\nLa cédula " << cedula << " ya está registrada en el sistema. Ingrese una cédula nueva." << endl;
-                    cedulaDuplicada = true;
-                    break;
-                }
-
-                temp = temp->getSiguiente();
-            } while (temp != lista.getPrimero());
-        }
-
-        if (!cedulaDuplicada)
-        {
-            break;
-        }
-    }
-
-
-    Nodo<Propietario> *tempHistorial = lista.getPrimero();
-    if (tempHistorial != nullptr)
-    {
-        do
-        {
-            Propietario propietarioHistorial = tempHistorial->getDato();
-
-            if (propietarioHistorial.getCedula() == cedula)
-            {
-                cout << "\nLa cédula " << cedula << " fue encontrada en el historial. Recuperando datos..." << endl;
-                nombre = propietarioHistorial.getNombre();
-                apellido = propietarioHistorial.getApellido();
-                correo = propietarioHistorial.getCorreo();
-
-                cout << "Nombre: " << nombre << "\nApellido: " << apellido << "\nCorreo: " << correo << "\n";
-
-                vector<string> opciones = {"Sí", "No"};
-                int seleccion = menuInteractivo(opciones, "Propietario encontrado en el sistema. ¿Desea sobreescribir los datos del historial?");
-
-                if (seleccion == 0) 
-                {
-                    system("cls");
-                    cout << "========================================" << endl;
-                    cout << "========================================" << endl;
-                    cout << "        Datos Recuperados Exitosamente  " << endl;
-                    cout << "========================================" << endl;
-                    cout << "========================================" << endl;
-
-                    cout << "\nNombre:    " << nombre << endl;
-                    cout << "Apellido:  " << apellido << endl;
-                    cout << "Correo:    " << correo << endl;
-                    cout << "Cédula:    " << cedula << endl;
-
-                    return Propietario(nombre, apellido, cedula, correo);
-                }
-                else 
-                {
-                    system("cls");
-                    cout << "\nPor favor, ingrese los datos manualmente:" << endl;
-                    break;
-                }
-            }
-
-            tempHistorial = tempHistorial->getSiguiente();
-        } while (tempHistorial != lista.getPrimero());
-    }
-
     correo = validaciones.ingresarString("Ingrese el correo: ");
 
+   
     return Propietario(nombre, apellido, cedula, correo);
 }
 
@@ -123,6 +56,9 @@ std::string Propietario::getCedula() const {
 std::string Propietario::getCorreo() const {
     return correo;
 }
+std::string Propietario::getPlacaAsociada() const {
+    return placaAsociada;
+}
 
 void Propietario::setNombre(const std::string &nombre) {
     this->nombre = nombre;
@@ -139,3 +75,154 @@ void Propietario::setCedula(const std::string &cedula) {
 void Propietario::setCorreo(const std::string &correo) {
     this->correo = correo;
 }
+
+
+Propietario Propietario::buscarPorID(const std::string &id)
+{
+    Nodo<Propietario>* temp = listaPropietarios.getPrimero();
+    
+    if (temp == nullptr) {
+        cout << "La lista de propietarios está vacía." << endl;
+        return Propietario(); 
+    }
+
+    do {
+        if (temp->getDato().getCedula() == id) {
+            cout << "Propietario encontrado: " << temp->getDato().getNombre() << " " << temp->getDato().getApellido() << endl;
+            return temp->getDato(); 
+        }
+        temp = temp->getSiguiente();
+    } while (temp != listaPropietarios.getPrimero()); 
+
+    cout << "No se encontró ningún propietario con esa cédula." << endl;
+    return Propietario(); 
+}
+
+
+void Propietario::menuPropietario(ListaCircularDoble<Propietario> &lista)
+{
+    vector<string> opciones = {
+        "Insertar Propietario",
+        "Buscar Propietario",
+        "Eliminar Propietario",
+        "Salir"};
+
+    while (true)
+    {
+        int seleccion = menuInteractivo(opciones, "Menu de Propietarios");
+
+        switch (seleccion)
+        {
+        case 0:
+        {
+            Propietario nuevoPropietario = insertarDatosPropietario(lista);
+            lista.insertar(nuevoPropietario, NombreArchivoPropietarios);
+            lista.GuardarArchivoPropietario(NombreArchivoPropietarios, lista);
+            break;
+        }
+        case 1:
+        {
+            system("cls");
+            cout << "=====================================" << endl;
+            cout << "     Buscando Propietario           " << endl;
+            cout << "=====================================" << endl;
+            string id;
+            cout << "Ingrese la cédula del propietario a buscar: ";
+            cin >> id;
+            Propietario propietario = buscarPorID(id);
+            if (!propietario.getCedula().empty()) {
+                cout << "Propietario encontrado: " << propietario.getNombre() << endl;
+            } else {
+                cout << "No se encontró ningún propietario con esa cédula." << endl;
+            }
+            break;
+        }
+        case 2:
+        {
+            system("cls");
+            cout << "=====================================" << endl;
+            cout << "     Eliminando Propietario          " << endl;
+            cout << "=====================================" << endl;
+            string id;
+
+          
+            while (true) {
+                id = validaciones.ingresarCedula("Ingrese la cédula del propietario a eliminar: ");
+                
+                if (!id.empty()) {
+                    break; 
+                } else {
+                    cout << "Cédula inválida. Inténtelo nuevamente." << endl;
+                }
+            }
+
+            eliminarPorID(id);
+            lista.GuardarArchivoPropietario( NombreArchivoPropietarios, lista);
+            break;
+        }
+        case 3:
+        {
+            cout << "Saliendo..." << endl;
+            return;
+        }
+        default:
+            cout << "Opción inválida. Inténtelo de nuevo." << endl;
+            break;
+        }
+
+        system("pause");
+    }
+}
+
+Propietario::Propietario() {
+   
+    this->nombre = "";
+    this->apellido = "";
+    this->cedula = "";
+    this->correo = "";
+}
+
+Propietario::Propietario(std::string nombre, std::string apellido, std::string cedula, std::string correo)
+{
+        this->nombre = nombre;
+    this->apellido = apellido;
+    this->cedula = cedula;
+    this->correo = correo;
+}
+
+void Propietario::eliminarPorID( const string &id)
+{
+    Nodo<Propietario>* temp = listaPropietarios.getPrimero();  
+
+    
+    if (temp == nullptr) {
+        cout << "La lista está vacía." << endl;
+        return;
+    }
+
+    
+    do {
+        if (temp->getDato().getCedula() == id) {
+           
+            if (temp == listaPropietarios.getPrimero() && temp->getSiguiente() == listaPropietarios.getPrimero()) {
+               
+                listaPropietarios.setPrimero(nullptr);
+            } else {
+                
+                temp->getAnterior()->setSiguiente(temp->getSiguiente());  
+                temp->getSiguiente()->setAnterior(temp->getAnterior());  
+                if (temp == listaPropietarios.getPrimero()) {
+                    listaPropietarios.setPrimero(temp->getSiguiente());  
+                }
+            }
+            delete temp;  
+            cout << "Propietario con cédula " << id << " ha sido eliminado." << endl;
+            return;
+        }
+        temp = temp->getSiguiente();  
+    } while (temp != listaPropietarios.getPrimero());  
+
+    
+    cout << "Propietario con cédula " << id << " no encontrado." << endl;
+}
+

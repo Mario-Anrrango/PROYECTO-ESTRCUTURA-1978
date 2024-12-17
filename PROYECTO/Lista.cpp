@@ -1,3 +1,4 @@
+#include "Propietario.h"
 #include "Lista.h"
 #include <iostream>
 #include <chrono>
@@ -11,6 +12,7 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+
 
 using namespace std;
 
@@ -46,8 +48,6 @@ void ListaCircularDoble<T>::insertar(T dato , const std::string& nombreArchivo)
         primero->setAnterior(ultimo);
     }
 
-     GuardarArchivo(nombreArchivo);
-;
 }
 
 template <typename T>
@@ -268,15 +268,15 @@ void ListaCircularDoble<T>::CargarArchivo(std::string nombreArchivo)
 
     if (!archivo.is_open())
     {
-        // Si no se puede abrir el archivo, intentamos crearlo
+        
         std::cerr << "Error: No se pudo abrir el archivo " << nombreArchivo << ". Creando archivo vacío..." << std::endl;
-        std::ofstream nuevoArchivo(nombreArchivo); // Crea el archivo vacío
+        std::ofstream nuevoArchivo(nombreArchivo); 
         if (!nuevoArchivo.is_open())
         {
             std::cerr << "Error: No se pudo crear el archivo " << nombreArchivo << std::endl;
             return;
         }
-        nuevoArchivo.close(); // Cerramos el archivo vacío
+        nuevoArchivo.close(); 
         return;
     }
 
@@ -286,7 +286,7 @@ void ListaCircularDoble<T>::CargarArchivo(std::string nombreArchivo)
         std::istringstream ss(linea);
         std::string placa, modelo, color, marca, fechaIngreso, horaSalida;
 
-        // Leer los campos de la línea
+        
         if (std::getline(ss, placa, ',') &&
             std::getline(ss, modelo, ',') &&
             std::getline(ss, color, ',') &&
@@ -491,3 +491,73 @@ void ListaCircularDoble<T>::salirDelParqueadero(const std::string &placa)
 
     std::cerr << "Coche con placa " << placa << " no encontrado en el parqueadero." << std::endl;
 }
+
+template <typename T>
+void ListaCircularDoble<T>::GuardarArchivoPropietario(const string& nombreArchivo, ListaCircularDoble<T>& lista) {
+        ofstream archivo(nombreArchivo);
+
+        if (!archivo.is_open()) {
+            cerr << "Error: No se pudo abrir el archivo " << nombreArchivo << ". Creando archivo nuevo..." << endl;
+            ofstream nuevoArchivo(nombreArchivo);
+            if (!nuevoArchivo.is_open()) {
+                cerr << "Error: No se pudo crear el archivo " << nombreArchivo << endl;
+                return;
+            }
+            nuevoArchivo.close();
+            return;
+        }
+
+        cout << "Abriendo archivo para guardar los datos..." << endl;
+
+        Nodo<T>* actual = lista.getPrimero();
+        do {
+            
+            string cedula = actual->getDato().getCedula();
+            string nombre = actual->getDato().getNombre();
+            string apellido = actual->getDato().getApellido();
+            string correo = actual->getDato().getCorreo();
+            
+            archivo << cedula << "," << nombre << "," << apellido << "," <<correo << "," << endl;
+
+            actual = actual->getSiguiente();
+        } while (actual != lista.getPrimero());
+
+        archivo.close();
+        cout << "Propietarios guardados con éxito en " << nombreArchivo << endl;
+    }
+
+
+
+  template <typename T>
+void ListaCircularDoble<T>::CargarArchivoPropietario(const std::string& nombreArchivo) {
+    std::ifstream archivo(nombreArchivo);
+
+    
+    if (!archivo.is_open()) {
+        std::cerr << "Error: No se pudo abrir el archivo " << nombreArchivo << std::endl;
+        return;
+    }
+
+    std::cout << "Cargando datos desde el archivo..." << std::endl;
+
+    std::string linea;
+    while (getline(archivo, linea)) {
+        std::stringstream ss(linea);
+        std::string cedula, nombre, apellido, correo;
+
+       
+        if (getline(ss, cedula, ',') && getline(ss, nombre, ',') && 
+            getline(ss, apellido, ',') && getline(ss, correo)) {
+            
+            Propietario propietario(nombre, apellido, cedula, correo);
+
+            
+            listaPropietarios.insertar(propietario, nombreArchivo);
+        }
+    }
+
+    archivo.close();
+    std::cout << "Datos cargados con éxito desde " << nombreArchivo << std::endl;
+}
+
+
