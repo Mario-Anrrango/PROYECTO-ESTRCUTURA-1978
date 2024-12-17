@@ -47,7 +47,7 @@ void ListaCircularDoble<T>::insertar(T dato , const std::string& nombreArchivo)
     }
 
      GuardarArchivo(nombreArchivo);
-;
+
 }
 
 template <typename T>
@@ -460,6 +460,7 @@ template <typename T>
 void ListaCircularDoble<T>::salirDelParqueadero(const std::string &placa)
 {
     Nodo<T> *actual = primero;
+    bool encontrado = false;
 
     do
     {
@@ -467,27 +468,29 @@ void ListaCircularDoble<T>::salirDelParqueadero(const std::string &placa)
 
         if (coche.getPlaca() == placa)
         {
-
             if (coche.getHoraSalida() != std::chrono::system_clock::time_point())
             {
-                std::cerr << "Error: El coche con placa " << placa << " ya ha salido del parqueadero." << std::endl;
-                return;
+                actual = actual->getSiguiente();
+                continue;
             }
 
             auto ahora = std::chrono::system_clock::now();
-
             coche.setHoraSalida(ahora);
-
             actual->setDato(coche);
 
             std::cout << "El coche con placa " << placa << " ha salido del parqueadero." << std::endl;
-
-            GuardarArchivo("autos_historial.txt");
-            return;
+            encontrado = true;
         }
 
         actual = actual->getSiguiente();
     } while (actual != primero);
 
-    std::cerr << "Coche con placa " << placa << " no encontrado en el parqueadero." << std::endl;
+    if (encontrado)
+    {
+        GuardarArchivo("autos_historial.txt");
+    }
+    else
+    {
+        std::cerr << "Coche con placa " << placa << " no encontrado en el parqueadero." << std::endl;
+    }
 }
