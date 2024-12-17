@@ -74,7 +74,7 @@ void menuGestionPropietarios(ListaPropietarios &listaPropietarios)
         vector<string> opcionesPropietarios = {
             "Agregar Propietario",
             "Mostrar Propietarios",
-            "Buscar Propietario por Cédula",
+            "Buscar Propietario por Cedula",
             "Eliminar Placa de Propietario", 
             "Volver al Menu Principal"};
 
@@ -94,10 +94,10 @@ void menuGestionPropietarios(ListaPropietarios &listaPropietarios)
         {
             system("cls");
             cout << "========================================" << endl;
-            cout << "   BUSQUEDA DE PROPIETARIO POR CÉDULA   " << endl;
+            cout << "   BUSQUEDA DE PROPIETARIO POR CEDULA   " << endl;
             cout << "========================================" << endl;
             string cedula;
-            cout << "Ingrese la cédula a buscar: ";
+            cout << "Ingrese la cedula a buscar: ";
             cin >> cedula;
             Propietario* propietario = listaPropietarios.buscarPropietarioPorCedula(cedula);
             if (propietario)
@@ -119,7 +119,7 @@ void menuGestionPropietarios(ListaPropietarios &listaPropietarios)
             salirSubmenu = true;
             break;
         default:
-            cout << "Opción no válida. Intente de nuevo." << endl;
+            cout << "Opcion no valida. Intente de nuevo." << endl;
         }
     }
 }
