@@ -3,6 +3,7 @@
 #include "Menu.h"
 #include "ValidacionPlaca.h"
 #include "Validaciones.h"
+#include "ListaPropietarios.h"
 #include <string> 
 #include <vector>
 #include <cstdlib>
@@ -112,7 +113,7 @@ ostream &operator<<(ostream &os, const Coche &coche)
 }
 
 
-Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial)
+Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial, ListaPropietarios &listaPropietarios)
 {
     Validaciones validaciones;
     Placa<Coche> validador;
@@ -197,6 +198,20 @@ Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<
     color = validaciones.ingresarString("Ingrese el color: ");
     modelo = validaciones.ingresarString("Ingrese el modelo: ");
 
+    
+    string cedula;
+    do {
+        cedula = validaciones.ingresarCedula("Ingrese la cedula del propietario: ");
+        Propietario* propietario = listaPropietarios.buscarPropietarioPorCedula(cedula);
+        if (propietario != nullptr) {
+            propietario->agregarPlaca(placa);
+            cout << "Placa asociada exitosamente al propietario." << endl;
+            listaPropietarios.guardarArchivo("propietarios.txt");
+            break;
+        } else {
+            cout << "Propietario no encontrado. Intente de nuevo." << endl;
+        }
+    } while (true);
 
     return Coche(placa, modelo, color, marca, anio);
 }

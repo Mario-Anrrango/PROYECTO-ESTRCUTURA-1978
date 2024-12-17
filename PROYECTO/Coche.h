@@ -6,6 +6,8 @@
 #include <ctime>
 #include "Lista.h"
 #include <sstream>
+#include "ListaPropietarios.h"
+#include "Propietario.h"
 
 using namespace std;
 
@@ -40,7 +42,7 @@ public:
     int getAño() const;
     chrono::system_clock::time_point getHora() const;
 
-    Coche InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial);
+    Coche InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial, ListaPropietarios &listaPropietarios);
 
     friend ostream &operator<<(ostream &os, const Coche &coche);
 };

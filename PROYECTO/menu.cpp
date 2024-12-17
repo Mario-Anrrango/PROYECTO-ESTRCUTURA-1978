@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <conio.h>
+#include "ListaPropietarios.h"
 #include "Coche.h"
 #include "Lista.h"
 #include "Validaciones.h"
@@ -57,15 +58,83 @@ int menuInteractivo(const vector<string> &opciones, const string &titulo)
     }
 }
 
-void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial)
+
+void menuGestionPropietarios(ListaPropietarios &listaPropietarios)
+{
+    bool salirSubmenu = false;
+    while (!salirSubmenu)
+    {
+        system("cls");
+        cout << "========================================" << endl;
+        cout << "========================================" << endl;
+        cout << "      Menu de Gestion de Propietarios   " << endl;
+        cout << "========================================" << endl;
+        cout << "========================================" << endl;
+
+        vector<string> opcionesPropietarios = {
+            "Agregar Propietario",
+            "Mostrar Propietarios",
+            "Buscar Propietario por Cédula",
+            "Eliminar Placa de Propietario", 
+            "Volver al Menu Principal"};
+
+        int seleccionPropietarios = menuInteractivo(opcionesPropietarios, "Menu de Gestion de Propietarios");
+
+        switch (seleccionPropietarios)
+        {
+        case 0:
+            agregarPropietario(listaPropietarios);
+            listaPropietarios.guardarArchivo("propietarios.txt");
+            break;
+        case 1:
+            listaPropietarios.mostrarPropietarios();
+            system("pause");
+            break;
+        case 2:
+        {
+            system("cls");
+            cout << "========================================" << endl;
+            cout << "   BUSQUEDA DE PROPIETARIO POR CÉDULA   " << endl;
+            cout << "========================================" << endl;
+            string cedula;
+            cout << "Ingrese la cédula a buscar: ";
+            cin >> cedula;
+            Propietario* propietario = listaPropietarios.buscarPropietarioPorCedula(cedula);
+            if (propietario)
+            {
+                cout << "Propietario encontrado: " << propietario->toString() << endl;
+            }
+            else
+            {
+                cout << "Propietario no encontrado." << endl;
+            }
+            system("pause");
+            break;
+        }
+        case 3:
+            eliminarPlacaPropietario(listaPropietarios);
+            listaPropietarios.guardarArchivo("propietarios.txt");
+            break;
+        case 4:
+            salirSubmenu = true;
+            break;
+        default:
+            cout << "Opción no válida. Intente de nuevo." << endl;
+        }
+    }
+}
+
+void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial, ListaPropietarios &listaPropietarios)
 {
     Placa<Coche> validador;
+     
 
     vector<string> opciones = {
         "Insertar Coche",
         "Mostrar Lista de Coches",
         "Busqueda de Coche Por Placa",
         "Busqueda Avanzada",
+        "Menu de Gestion de Propietarios",
         "Liberar el parqueadero",
         "Ayuda",
         "Salir"};
@@ -83,7 +152,12 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
         case 0:
         {
 
-            Coche nuevoCoche = nuevoCoche.InsertarDatos(lista, listaHistorial);
+  if(listaPropietarios.estaVacia()) {
+        cout << "No hay propietarios registrados. Por favor, registre un propietario antes de continuar." << endl;
+        break ;
+    }
+
+            Coche nuevoCoche = nuevoCoche.InsertarDatos(lista, listaHistorial, listaPropietarios);
             lista.insertar(nuevoCoche, "autos.txt");
             listaHistorial.insertar(nuevoCoche, "autos_historial.txt");
             break;
@@ -205,7 +279,7 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
     }
     break; 
 }
-        case 3:
+         case 3:
         {
             system("cls");
             cout << "========================================" << endl;
@@ -218,7 +292,10 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
             break;
         }
         case 4:
-          {
+            menuGestionPropietarios(listaPropietarios);
+            break;
+        case 5:
+        {
             system("cls");
             cout << "========================================" << endl;
             cout << "========================================" << endl;
@@ -233,7 +310,7 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
             break;
         }
      
-        case 5:
+        case 6:
         {
             system("cls");
             cout << "========================================" << endl;
@@ -246,13 +323,13 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
             system(comando.c_str());
             break;
         }
-        case 6:
+        case 7:
         {
             cout << "Saliendo..." << endl;
             return;
         }
         default:
-            cout << "Opción inválida. Inténtelo de nuevo." << endl;
+            cout << "Opcion invalida. Inténtelo de nuevo." << endl;
             break;
         }
 

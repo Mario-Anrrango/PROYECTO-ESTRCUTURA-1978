@@ -22,10 +22,9 @@ public:
     void mostrar(Nodo<T> *aux);  
     void CargarArchivo(string nombreArchivo);
     void GuardarArchivo(string nombreArchivo);
-    string cifrarTexto(const std::string& texto);
-    string descifrarTexto(const std::string& texto);
     void salirDelParqueadero(const std::string& placa);
-    string ingresarPlaca();
+    static std::string cifrarTexto(const std::string &texto); // Declarar como estático
+    static std::string descifrarTexto(const std::string &texto);
 };
 
 #include "Lista.cpp"
