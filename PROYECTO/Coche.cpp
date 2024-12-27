@@ -121,23 +121,25 @@ Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<
     string placa, modelo, color, marca, cedula;
     int anio = 0;
 
-    
-    cedula = validaciones.ingresarCedula("Ingrese el numero de cedula del propietario: ");
-    Nodo<Propietario> *propietarioNodo = listaPropietarios.getPrimero();
+    Nodo<Propietario> *propietarioNodo = nullptr;
     bool propietarioEncontrado = false;
 
-   
-    do {
-        if (propietarioNodo->getDato().getCedula() == cedula) {
-            propietarioEncontrado = true;
-            break;
-        }
-        propietarioNodo = propietarioNodo->getSiguiente();
-    } while (propietarioNodo != listaPropietarios.getPrimero());
+    while (!propietarioEncontrado)
+    {
+        cedula = validaciones.ingresarCedula("Ingrese el numero de cedula del propietario: ");
+        propietarioNodo = listaPropietarios.getPrimero();
 
-    if (!propietarioEncontrado) {
-        cout << "No se encontro un propietario con esa cedula." << endl;
-        return Coche();
+        do {
+            if (propietarioNodo->getDato().getCedula() == cedula) {
+                propietarioEncontrado = true;
+                break;
+            }
+            propietarioNodo = propietarioNodo->getSiguiente();
+        } while (propietarioNodo != listaPropietarios.getPrimero());
+
+        if (!propietarioEncontrado) {
+            cout << "No se encontro un propietario con esa cedula. Por favor, intente de nuevo." << endl;
+        }
     }
 
     while (true)

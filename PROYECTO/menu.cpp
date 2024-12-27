@@ -279,7 +279,7 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
         "Busqueda Avanzada",
         "Menu de Gestion de Propietarios",
         "Liberar el parqueadero",
-        "Ordenar lista de coches",
+        "Ordenar Lista",
         "Ayuda",
         "Salir"};
 
@@ -674,7 +674,7 @@ void menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista, ListaCircularDoble<C
                 return;
             }
             default:
-                cout << "Opción invalida. Intentalo de nuevo." << endl;
+                cout << "Opcion invalida. Intentalo de nuevo." << endl;
                 break;
             }
             break;
@@ -685,7 +685,7 @@ void menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista, ListaCircularDoble<C
             return;
 
         default:
-            cout << "Opción invalida. Intentalo de nuevo." << endl;
+            cout << "Opcion invalida. Intentalo de nuevo." << endl;
             break;
         }
 
@@ -712,7 +712,7 @@ void menuOrdenarCoches(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coch
             "Radix sort",
             "Volver al Menu Principal"};
 
-        int seleccionMetodo = menuInteractivo(opcionesMetodo, "Seleccione el método de ordenamiento:");
+        int seleccionMetodo = menuInteractivo(opcionesMetodo, "Seleccione el metodo de ordenamiento:");
 
         if (seleccionMetodo == 5)
         {
@@ -764,7 +764,7 @@ void menuOrdenarCoches(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coch
                 cout << "Lista ordenada por marca y guardada exitosamente." << endl;
                 break;
             default:
-                cout << "Opción inválida. Intente de nuevo." << endl;
+                cout << "Opcion invalida. Intente de nuevo." << endl;
             }
         }
         else if (seleccionMetodo == 1)
@@ -802,7 +802,7 @@ void menuOrdenarCoches(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coch
                 cout << "Lista ordenada por marca y guardada exitosamente." << endl;
                 break;
             default:
-                cout << "Opción inválida. Intente de nuevo." << endl;
+                cout << "Opcion invalida. Intente de nuevo." << endl;
                 continue;
             }
         }
@@ -835,7 +835,7 @@ void menuOrdenarCoches(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coch
                 cout << "Lista ordenada por marca y guardada exitosamente." << endl;
                 break;
             default:
-                cout << "Opción inválida. Intente de nuevo." << endl;
+                cout << "Opcion invalida. Intente de nuevo." << endl;
                 break;
             }
         }
@@ -868,7 +868,7 @@ void menuOrdenarCoches(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coch
                 cout << "Lista ordenada por marca y guardada exitosamente." << endl;
                 break;
             default:
-                cout << "Opción inválida. Intente de nuevo." << endl;
+                cout << "Opcion invalida. Intente de nuevo." << endl;
             }
         }
         else if (seleccionMetodo == 4)
@@ -900,7 +900,7 @@ void menuOrdenarCoches(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coch
                 cout << "Lista ordenada por marca y guardada exitosamente." << endl;
                 break;
             default:
-                cout << "Opción inválida. Intente de nuevo." << endl;
+                cout << "Opcion invalida. Intente de nuevo." << endl;
             }
         }
 
@@ -929,7 +929,7 @@ void menuOrdenarPropietarios(ListaCircularDoble<Propietario> &listaPropietarios)
             "Radix sort",
             "Volver al Menu Principal"};
 
-        int seleccionMetodo = menuInteractivo(opcionesMetodo, "Seleccione el método de ordenamiento:");
+        int seleccionMetodo = menuInteractivo(opcionesMetodo, "Seleccione el metodo de ordenamiento:");
 
         if (seleccionMetodo == 5)
         {
@@ -940,7 +940,7 @@ void menuOrdenarPropietarios(ListaCircularDoble<Propietario> &listaPropietarios)
         vector<string> opcionesOrdenar = {
             "Ordenar por Nombre",
             "Ordenar por Apellido",
-            "Ordenar por Cédula",
+            "Ordenar por Cedula",
             "Ordenar por Correo",
             "Volver al Menu Principal"};
 
@@ -972,7 +972,7 @@ void menuOrdenarPropietarios(ListaCircularDoble<Propietario> &listaPropietarios)
                 ordenarLista(listaPropietarios, [](const Propietario &a, const Propietario &b)
                              { return a.getCedula() < b.getCedula(); });
                 listaPropietarios.GuardarPropietarios("propietarios.txt");
-                cout << "Lista ordenada por cédula y guardada exitosamente." << endl;
+                cout << "Lista ordenada por cedula y guardada exitosamente." << endl;
                 break;
             case 3:
                 ordenarLista(listaPropietarios, [](const Propietario &a, const Propietario &b)
@@ -981,7 +981,7 @@ void menuOrdenarPropietarios(ListaCircularDoble<Propietario> &listaPropietarios)
                 cout << "Lista ordenada por correo y guardada exitosamente." << endl;
                 break;
             default:
-                cout << "Opción inválida. Intente de nuevo." << endl;
+                cout << "Opcion invalida. Intente de nuevo." << endl;
             }
         }
         else if (seleccionMetodo == 1)
@@ -1009,7 +1009,7 @@ void menuOrdenarPropietarios(ListaCircularDoble<Propietario> &listaPropietarios)
                 { return item.getCedula(); };
                 ordenarListaBucket(listaPropietarios, getKeyPropietario);
                 listaPropietarios.GuardarPropietarios("propietarios.txt");
-                cout << "Lista ordenada por cédula y guardada exitosamente." << endl;
+                cout << "Lista ordenada por cedula y guardada exitosamente." << endl;
                 break;
             case 3:
                 getKeyPropietario = [](const Propietario &item)
@@ -1019,7 +1019,7 @@ void menuOrdenarPropietarios(ListaCircularDoble<Propietario> &listaPropietarios)
                 cout << "Lista ordenada por correo y guardada exitosamente." << endl;
                 break;
             default:
-                cout << "Opción inválida. Intente de nuevo." << endl;
+                cout << "Opcion invalida. Intente de nuevo." << endl;
                 continue;
             }
         }
@@ -1043,7 +1043,7 @@ void menuOrdenarPropietarios(ListaCircularDoble<Propietario> &listaPropietarios)
                 ordenarListaBubbleSort(listaPropietarios, [](const Propietario &a, const Propietario &b)
                                        { return a.getCedula() < b.getCedula(); });
                 listaPropietarios.GuardarPropietarios("propietarios.txt");
-                cout << "Lista ordenada por cédula y guardada exitosamente." << endl;
+                cout << "Lista ordenada por cedula y guardada exitosamente." << endl;
                 break;
             case 3:
                 ordenarListaBubbleSort(listaPropietarios, [](const Propietario &a, const Propietario &b)
@@ -1052,7 +1052,7 @@ void menuOrdenarPropietarios(ListaCircularDoble<Propietario> &listaPropietarios)
                 cout << "Lista ordenada por correo y guardada exitosamente." << endl;
                 break;
             default:
-                cout << "Opción inválida. Intente de nuevo." << endl;
+                cout << "Opción invalida. Intente de nuevo." << endl;
                 break;
             }
         }
@@ -1076,7 +1076,7 @@ void menuOrdenarPropietarios(ListaCircularDoble<Propietario> &listaPropietarios)
                 ordenarListaShellSort(listaPropietarios, [](const Propietario &a, const Propietario &b)
                                       { return a.getCedula() < b.getCedula(); });
                 listaPropietarios.GuardarPropietarios("propietarios.txt");
-                cout << "Lista ordenada por cédula y guardada exitosamente." << endl;
+                cout << "Lista ordenada por cedula y guardada exitosamente." << endl;
                 break;
             case 3:
                 ordenarListaShellSort(listaPropietarios, [](const Propietario &a, const Propietario &b)
@@ -1085,7 +1085,7 @@ void menuOrdenarPropietarios(ListaCircularDoble<Propietario> &listaPropietarios)
                 cout << "Lista ordenada por correo y guardada exitosamente." << endl;
                 break;
             default:
-                cout << "Opción inválida. Intente de nuevo." << endl;
+                cout << "Opcion invalida. Intente de nuevo." << endl;
             }
         }
         else if (seleccionMetodo == 4)
@@ -1108,7 +1108,7 @@ void menuOrdenarPropietarios(ListaCircularDoble<Propietario> &listaPropietarios)
                 ordenarListaPorRadix(listaPropietarios, [](const Propietario &propietario)
                                      { return propietario.getCedula(); });
                 listaPropietarios.GuardarPropietarios("propietarios.txt");
-                cout << "Lista ordenada por cédula y guardada exitosamente." << endl;
+                cout << "Lista ordenada por cedula y guardada exitosamente." << endl;
                 break;
             case 3:
                 ordenarListaPorRadix(listaPropietarios, [](const Propietario &propietario)
@@ -1117,7 +1117,7 @@ void menuOrdenarPropietarios(ListaCircularDoble<Propietario> &listaPropietarios)
                 cout << "Lista ordenada por correo y guardada exitosamente." << endl;
                 break;
             default:
-                cout << "Opción inválida. Intente de nuevo." << endl;
+                cout << "Opcion invalida. Intente de nuevo." << endl;
             }
         }
 
