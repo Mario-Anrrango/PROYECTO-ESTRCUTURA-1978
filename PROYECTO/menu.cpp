@@ -11,6 +11,75 @@
 using namespace std;
 
 Coche coche;
+
+template <typename T>
+void menuEliminarPlaca(ListaCircularDoble<Propietario> &listaPropietarios)
+{
+    Placa<Propietario> validador;
+    Validaciones validaciones;
+    system("cls");
+    cout << "========================================" << endl;
+    cout << "========================================" << endl;
+    cout << "    ELIMINAR PLACA DE PROPIETARIO       " << endl;
+    cout << "========================================" << endl;
+    cout << "========================================" << endl;
+
+    string cedula = validaciones.ingresarCedula("Ingrese la cedula del propietario: ");
+    Nodo<T> *aux = listaPropietarios.getPrimero();
+    bool encontrado = false;
+
+    do {
+        if (aux->getDato().getCedula() == cedula) {
+            encontrado = true;
+            cout << "========================================" << endl;
+            cout << "   PROPIETARIO REGISTRADO" << endl;
+            cout << "========================================" << endl;
+            cout << aux->getDato() << endl;
+
+            vector<string> placas = aux->getDato().getPlacas();
+
+            if (placas.empty()) {
+                cout << "Este propietario no tiene placas asociadas." << endl;
+                return;
+            }
+            
+            vector<string> opcionesPlacas = placas;
+            opcionesPlacas.push_back("Volver");
+            int seleccion = menuInteractivo(opcionesPlacas, "Seleccionar Placa a Eliminar");
+
+            if (seleccion == opcionesPlacas.size() - 1) {
+                return;
+            }
+
+            string placa = placas[seleccion];
+
+            vector<string> placasActualizadas = aux->getDato().eliminarPlaca(placa);
+
+            
+            Propietario propietarioActualizado(aux->getDato().getNombre(), aux->getDato().getApellido(), 
+                                               aux->getDato().getCedula(), aux->getDato().getCorreo());
+
+            propietarioActualizado.setPlacas(placasActualizadas);
+
+            
+            aux->setDato(propietarioActualizado);
+            cout << aux->getDato() << endl;
+
+            listaPropietarios.GuardarPropietarios("propietarios.txt");
+
+            break;
+        }
+        aux = aux->getSiguiente();
+    } while (aux != listaPropietarios.getPrimero() && !encontrado);
+
+    if (!encontrado) {
+        cout << "No se encontró un propietario con esa cédula." << endl;
+    }
+}
+
+
+
+
 int menuInteractivo(const vector<string> &opciones, const string &titulo)
 {
     int seleccion = 0;
@@ -104,10 +173,9 @@ void menuGestionPropietarios(ListaCircularDoble<Propietario> &listaPropietarios)
                 break;
             }
         case 3:
-        {
-        Propietario propietarioEliminar;
-            //propietarioEliminar.eliminarPlacaPropietario(listaPropietarios);
-            break;
+          {
+            menuEliminarPlaca<Propietario>(listaPropietarios);
+           
         }
         case 4:
             salirSubmenu = true;
@@ -232,7 +300,7 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
                 break;
             }
 
-            Coche nuevoCoche = nuevoCoche.InsertarDatos(lista, listaHistorial);
+            Coche nuevoCoche = nuevoCoche.InsertarDatos(lista, listaHistorial, listaPropietarios);
             lista.insertar(nuevoCoche);
             lista.GuardarArchivo("autos.txt");
             listaHistorial.insertar(nuevoCoche);

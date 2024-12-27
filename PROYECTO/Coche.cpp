@@ -113,13 +113,32 @@ ostream &operator<<(ostream &os, const Coche &coche)
 }
 
 
-Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial)
+Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial, ListaCircularDoble<Propietario> &listaPropietarios)
 {
     Validaciones validaciones;
     Placa<Coche> validador;
 
-    string placa, modelo, color, marca;
+    string placa, modelo, color, marca, cedula;
     int anio = 0;
+
+    
+    cedula = validaciones.ingresarCedula("Ingrese el numero de cedula del propietario: ");
+    Nodo<Propietario> *propietarioNodo = listaPropietarios.getPrimero();
+    bool propietarioEncontrado = false;
+
+   
+    do {
+        if (propietarioNodo->getDato().getCedula() == cedula) {
+            propietarioEncontrado = true;
+            break;
+        }
+        propietarioNodo = propietarioNodo->getSiguiente();
+    } while (propietarioNodo != listaPropietarios.getPrimero());
+
+    if (!propietarioEncontrado) {
+        cout << "No se encontro un propietario con esa cedula." << endl;
+        return Coche();
+    }
 
     while (true)
     {
@@ -136,7 +155,7 @@ Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<
 
                 if (cocheActual.getPlaca() == placa && cocheActual.getHoraSalida() == chrono::system_clock::time_point())
                 {
-                    cout << "\nEl coche con la placa " << placa << " ya está en el parqueadero. Ingrese una placa nueva." << endl;
+                    cout << "\nEl coche con la placa " << placa << " ya esta en el parqueadero. Ingrese una placa nueva." << endl;
                     placaDuplicada = true;
                     break;
                 }
@@ -182,6 +201,17 @@ Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<
                     cout << "Placa:    " << placa << endl;
 
                     
+                    Propietario propietarioActualizado(propietarioNodo->getDato().getNombre(), 
+                                                        propietarioNodo->getDato().getApellido(), 
+                                                        propietarioNodo->getDato().getCedula(),
+                                                        propietarioNodo->getDato().getCorreo(),
+                                                        propietarioNodo->getDato().getPlacas());
+                    propietarioActualizado.agregarPlaca(placa);
+                    
+                    
+                    propietarioNodo->setDato(propietarioActualizado);
+
+                    listaPropietarios.GuardarPropietarios("propietarios.txt");
 
                     return Coche(placa, modelo, color, marca, anio);
                 }
@@ -200,6 +230,19 @@ Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<
     marca = validaciones.ingresarString("Ingrese la marca: ");
     color = validaciones.ingresarString("Ingrese el color: ");
     modelo = validaciones.ingresarString("Ingrese el modelo: ");
+
+  
+    Propietario propietarioActualizado(propietarioNodo->getDato().getNombre(), 
+                                        propietarioNodo->getDato().getApellido(), 
+                                        propietarioNodo->getDato().getCedula(),
+                                        propietarioNodo->getDato().getCorreo(),
+                                        propietarioNodo->getDato().getPlacas());
+    propietarioActualizado.agregarPlaca(placa);
+
+   
+    propietarioNodo->setDato(propietarioActualizado);
+
+    listaPropietarios.GuardarPropietarios("propietarios.txt");
 
     return Coche(placa, modelo, color, marca, anio);
 }

@@ -524,7 +524,7 @@ void ListaCircularDoble<T>::GuardarPropietarios(const std::string& nombreArchivo
             archivo << placas[i];
             if (i < placas.size() - 1)
             {
-                archivo << ";";
+                archivo << ",";
             }
         }
         archivo << endl;
@@ -559,7 +559,7 @@ void ListaCircularDoble<T>::CargarPropietarios(const std::string& nombreArchivo)
         vector<string> placas;
         stringstream ssPlacas(placasStr);
         string placa;
-        while (getline(ssPlacas, placa, ';'))
+        while (getline(ssPlacas, placa, ','))
         {
             placas.push_back(placa);
         }

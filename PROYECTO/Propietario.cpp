@@ -7,10 +7,14 @@
 using namespace std;
 
 Propietario::Propietario()
-    : nombre(""), apellido(""), cedula(""), correo("") {}
+    : nombre(""), apellido(""), cedula(""), correo(""), placas() {}
 
 Propietario::Propietario(string nombre, string apellido, string cedula, string correo)
     : nombre(nombre), apellido(apellido), cedula(cedula), correo(correo) {}
+
+Propietario::Propietario(string nombre, string apellido, string cedula, string correo, vector<string> placas)
+    : nombre(nombre), apellido(apellido), cedula(cedula), correo(correo), placas(placas) {}
+
 
 void Propietario::setNombre(const string &nombre)
 {
@@ -32,18 +36,18 @@ void Propietario::setCorreo(const string &correo)
     this->correo = correo;
 }
 
-void Propietario::eliminarPlaca(const string &placa)
+vector<string> Propietario::eliminarPlaca(const string &placa)
 {
+
     auto it = find(placas.begin(), placas.end(), placa);
-    if (it != placas.end())
-    {
+    if (it != placas.end()) {
         placas.erase(it);
-        cout << "Placa eliminada exitosamente." << endl;
+        cout << "Placa " << placa << " eliminada correctamente." << endl;
+    } else {
+        cout << "La placa no se encontró en las placas del propietario." << endl;
     }
-    else
-    {
-        cout << "Placa no encontrada." << endl;
-    }
+
+    return placas;
 }
 
 string Propietario::getNombre() const
@@ -61,9 +65,14 @@ string Propietario::getCedula() const
     return cedula;
 }
 
+
 string Propietario::getCorreo() const
 {
     return correo;
+}
+void Propietario::setPlacas(const vector<string> &placas)
+{
+    this->placas = placas;
 }
 
 void Propietario::agregarPlaca(const string &placa)
