@@ -7,6 +7,7 @@
 #include "Validaciones.h"
 #include "ValidacionPlaca.h"
 #include "Menu.h"
+#include "Ordenamiento.cpp"
 
 using namespace std;
 
@@ -456,7 +457,7 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
         }
         case 6:
         {
-           /* menuOrdenar(lista, listaHistorial, listaPropietarios);*/
+            menuOrdenar(lista, listaHistorial, listaPropietarios);
             break;
         }
         case 7:
@@ -692,7 +693,7 @@ void menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista, ListaCircularDoble<C
     }
 }
 
- /*void menuOrdenar(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial, ListaCircularDoble<Propietario> &listaPropietarios)
+void menuOrdenar(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial, ListaCircularDoble<Propietario> &listaPropietarios)
 {
     bool salirSubmenu = false;
 
@@ -703,96 +704,239 @@ void menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista, ListaCircularDoble<C
         cout << "           Menu de Ordenamiento         " << endl;
         cout << "========================================" << endl;
 
-        vector<string> opcionesLista = {
-            "Ordenar en Lista del Parqueadero",
-            "Ordenar en el Historial",
-            "Ordenar Propietarios",
+        vector<string> opcionesMetodo = {
+            "Quick Sort",
+            "Bucket Sort",
+            "Bubble Sort",
+            "Shell Sort",
+            "Radix sort",
             "Volver al Menu Principal"};
 
-        int seleccionLista = menuInteractivo(opcionesLista, "Seleccione la lista a ordenar:");
+        int seleccionMetodo = menuInteractivo(opcionesMetodo, "Seleccione el método de ordenamiento:");
 
-        if (seleccionLista == 3)
+        if (seleccionMetodo == 5)
         {
             salirSubmenu = true;
             continue;
         }
 
-        vector<string> opcionesOrdenar;
-        int seleccionOrdenar = 0;
+        vector<string> opcionesOrdenar = {
+            "Ordenar por Placa",
+            "Ordenar por Apellido del Propietario",
+            "Ordenar por Color",
+            "Ordenar por Modelo",
+            "Ordenar por Marca",
+            "Volver al Menu Principal"};
 
-        if (seleccionLista == 0 || seleccionLista == 1) 
+        int seleccionOrdenar = menuInteractivo(opcionesOrdenar, "Seleccione el criterio de ordenamiento:");
+
+        if (seleccionOrdenar == 5)
         {
-            opcionesOrdenar = {
-                "Ordenar por Placa",
-                "Ordenar por Modelo",
-                "Ordenar por Marca",
-                "Volver al Menu Principal"};
-
-            seleccionOrdenar = menuInteractivo(opcionesOrdenar, "Seleccione el criterio de ordenamiento:");
-        }
-        else if (seleccionLista == 2)
-        {
-            opcionesOrdenar = {
-                "Ordenar por Nombre del Propietario",
-                "Ordenar por Apellido del Propietario",
-                "Ordenar por Cédula del Propietario",
-                "Ordenar por Correo del Propietario",
-                "Volver al Menu Principal"};
-
-            seleccionOrdenar = menuInteractivo(opcionesOrdenar, "Seleccione el criterio de ordenamiento:");
+            continue;
         }
 
-        if (seleccionOrdenar == opcionesOrdenar.size() - 1)
-        {
-            continue; // Volver al menú si se selecciona la opción "Volver al Menu Principal"
-        }
-
-        // Ordenar la lista del parqueadero
-        if (seleccionLista == 0) 
+        system("cls");
+        if (seleccionMetodo == 0)
         {
             switch (seleccionOrdenar)
             {
-            case 0: 
+            case 0:
                 ordenarLista(lista, [](const Coche &a, const Coche &b)
-                                     { return a.getPlaca() < b.getPlaca(); });
-                cout << "Lista del Parqueadero ordenada por placa usando QuickSort." << endl;
+                             { return a.getPlaca() < b.getPlaca(); });
+                lista.GuardarArchivo("autos.txt");
+                cout << "Lista ordenada por placa y guardada exitosamente." << endl;
                 break;
-            case 1: 
+            case 1:
+                ordenarLista(listaPropietarios, [](const Propietario &a, const Propietario &b)
+                             { return a.getApellido() < b.getApellido(); });
+                listaPropietarios.GuardarPropietarios("propietarios.txt");
+                cout << "Lista ordenada por apellido del propietario y guardada exitosamente." << endl;
+                break;
+            case 2:
                 ordenarLista(lista, [](const Coche &a, const Coche &b)
-                                     { return a.getModelo() < b.getModelo(); });
-                cout << "Lista del Parqueadero ordenada por modelo usando QuickSort." << endl;
+                             { return a.getColor() < b.getColor(); });
+                lista.GuardarArchivo("autos.txt");
+                cout << "Lista ordenada por color y guardada exitosamente." << endl;
                 break;
-            case 2: 
+            case 3:
                 ordenarLista(lista, [](const Coche &a, const Coche &b)
-                                     { return a.getMarca() < b.getMarca(); });
-                cout << "Lista del Parqueadero ordenada por marca usando QuickSort." << endl;
+                             { return a.getModelo() < b.getModelo(); });
+                lista.GuardarArchivo("autos.txt");
+                cout << "Lista ordenada por modelo y guardada exitosamente." << endl;
                 break;
+            case 4:
+                ordenarLista(lista, [](const Coche &a, const Coche &b)
+                             { return a.getMarca() < b.getMarca(); });
+                lista.GuardarArchivo("autos.txt");
+                cout << "Lista ordenada por marca y guardada exitosamente." << endl;
+                break;
+            default:
+                cout << "Opción inválida. Intente de nuevo." << endl;
             }
         }
+        else if (seleccionMetodo == 1)
+        {
+            std::function<std::string(const Coche &)> getKeyCoche;
+            std::function<std::string(const Propietario &)> getKeyPropietario;
 
-      
-        else if (seleccionLista == 1) 
+            switch (seleccionOrdenar)
+            {
+            case 0:
+                getKeyCoche = [](const Coche &item)
+                { return item.getPlaca(); };
+                ordenarListaBucket(lista, getKeyCoche);
+                lista.GuardarArchivo("autos.txt");
+                cout << "Lista ordenada por placa y guardada exitosamente." << endl;
+                break;
+            case 1:
+                getKeyPropietario = [](const Propietario &item)
+                { return item.getApellido(); };
+                ordenarListaBucket(listaPropietarios, getKeyPropietario);
+                listaPropietarios.GuardarPropietarios("propietarios.txt");
+                cout << "Lista ordenada por apellido del propietario y guardada exitosamente." << endl;
+                break;
+            case 2:
+                getKeyCoche = [](const Coche &item)
+                { return item.getColor(); };
+                ordenarListaBucket(lista, getKeyCoche);
+                lista.GuardarArchivo("autos.txt");
+                cout << "Lista ordenada por color y guardada exitosamente." << endl;
+                break;
+            case 3:
+                getKeyCoche = [](const Coche &item)
+                { return item.getModelo(); };
+                ordenarListaBucket(lista, getKeyCoche);
+                lista.GuardarArchivo("autos.txt");
+                cout << "Lista ordenada por modelo y guardada exitosamente." << endl;
+                break;
+            case 4:
+                getKeyCoche = [](const Coche &item)
+                { return item.getMarca(); };
+                ordenarListaBucket(lista, getKeyCoche);
+                lista.GuardarArchivo("autos.txt");
+                cout << "Lista ordenada por marca y guardada exitosamente." << endl;
+                break;
+            default:
+                cout << "Opción inválida. Intente de nuevo." << endl;
+                continue;
+            }
+        }
+        else if (seleccionMetodo == 2)
         {
             switch (seleccionOrdenar)
             {
-            case 0: 
-                ordenarLista(listaHistorial, [](const Coche &a, const Coche &b)
-                                     { return a.getPlaca() < b.getPlaca(); });
-                cout << "Historial ordenado por placa usando QuickSort." << endl;
+            case 0:
+                ordenarListaBubbleSort(lista, [](const Coche &a, const Coche &b)
+                                       { return a.getPlaca() < b.getPlaca(); });
+                lista.GuardarArchivo("autos.txt");
+                cout << "Lista ordenada por placa y guardada exitosamente." << endl;
                 break;
-            case 1: 
-                ordenarLista(listaHistorial, [](const Coche &a, const Coche &b)
-                                     { return a.getModelo() < b.getModelo(); });
-                cout << "Historial ordenado por modelo usando QuickSort." << endl;
+            case 1:
+                ordenarListaBubbleSort(listaPropietarios, [](const Propietario &a, const Propietario &b)
+                                       { return a.getApellido() < b.getApellido(); });
+                listaPropietarios.GuardarPropietarios("propietarios.txt");
+                cout << "Lista ordenada por apellido del propietario y guardada exitosamente." << endl;
                 break;
-            case 2: 
-                ordenarLista(listaHistorial, [](const Coche &a, const Coche &b)
-                                     { return a.getMarca() < b.getMarca(); });
-                cout << "Historial ordenado por marca usando QuickSort." << endl;
+            case 2:
+                ordenarListaBubbleSort(lista, [](const Coche &a, const Coche &b)
+                                       { return a.getColor() < b.getColor(); });
+                lista.GuardarArchivo("autos.txt");
+                cout << "Lista ordenada por color y guardada exitosamente." << endl;
+                break;
+            case 3:
+                ordenarListaBubbleSort(lista, [](const Coche &a, const Coche &b)
+                                       { return a.getModelo() < b.getModelo(); });
+                lista.GuardarArchivo("autos.txt");
+                cout << "Lista ordenada por modelo y guardada exitosamente." << endl;
+                break;
+            case 4:
+                ordenarListaBubbleSort(lista, [](const Coche &a, const Coche &b)
+                                       { return a.getMarca() < b.getMarca(); });
+                lista.GuardarArchivo("autos.txt");
+                cout << "Lista ordenada por marca y guardada exitosamente." << endl;
+                break;
+            default:
+                cout << "Opción inválida. Intente de nuevo." << endl;
                 break;
             }
         }
-
+        else if (seleccionMetodo == 3)
+        { // Shell Sort
+            switch (seleccionOrdenar)
+            {
+            case 0:
+                ordenarListaShellSort(lista, [](const Coche &a, const Coche &b)
+                                      { return a.getPlaca() < b.getPlaca(); });
+                lista.GuardarArchivo("autos.txt");
+                cout << "Lista ordenada por placa y guardada exitosamente." << endl;
+                break;
+            case 1:
+                ordenarListaShellSort(listaPropietarios, [](const Propietario &a, const Propietario &b)
+                                      { return a.getApellido() < b.getApellido(); });
+                listaPropietarios.GuardarPropietarios("propietarios.txt");
+                cout << "Lista ordenada por apellido del propietario y guardada exitosamente." << endl;
+                break;
+            case 2:
+                ordenarListaShellSort(lista, [](const Coche &a, const Coche &b)
+                                      { return a.getColor() < b.getColor(); });
+                lista.GuardarArchivo("autos.txt");
+                cout << "Lista ordenada por color y guardada exitosamente." << endl;
+                break;
+            case 3:
+                ordenarListaShellSort(lista, [](const Coche &a, const Coche &b)
+                                      { return a.getModelo() < b.getModelo(); });
+                lista.GuardarArchivo("autos.txt");
+                cout << "Lista ordenada por modelo y guardada exitosamente." << endl;
+                break;
+            case 4:
+                ordenarListaShellSort(lista, [](const Coche &a, const Coche &b)
+                                      { return a.getMarca() < b.getMarca(); });
+                lista.GuardarArchivo("autos.txt");
+                cout << "Lista ordenada por marca y guardada exitosamente." << endl;
+                break;
+            default:
+                cout << "Opción inválida. Intente de nuevo." << endl;
+            }
         }
+        else if (seleccionMetodo == 4)
+        { // Radix
+            switch (seleccionOrdenar)
+            {
+            case 0:
+                ordenarListaPorRadix(lista, [](const Coche &coche)
+                                     { return coche.getPlaca(); });
+                lista.GuardarArchivo("autos.txt");
+                cout << "Lista ordenada por placa y guardada exitosamente." << endl;
+                break;
+            case 1:
+                ordenarListaPorRadix(listaPropietarios, [](const Propietario &propietario)
+                                     { return propietario.getApellido(); });
+                listaPropietarios.GuardarPropietarios("propietarios.txt");
+                cout << "Lista ordenada por apellido del propietario y guardada exitosamente." << endl;
+                break;
+            case 2:
+                ordenarListaPorRadix(lista, [](const Coche &coche)
+                                     { return coche.getColor(); });
+                lista.GuardarArchivo("autos.txt");
+                cout << "Lista ordenada por color y guardada exitosamente." << endl;
+                break;
+            case 3:
+                ordenarListaPorRadix(lista, [](const Coche &coche)
+                                     { return coche.getModelo(); });
+                lista.GuardarArchivo("autos.txt");
+                cout << "Lista ordenada por modelo y guardada exitosamente." << endl;
+                break;
+            case 4:
+                ordenarListaPorRadix(lista, [](const Coche &coche)
+                                     { return coche.getMarca(); });
+                lista.GuardarArchivo("autos.txt");
+                cout << "Lista ordenada por marca y guardada exitosamente." << endl;
+                break;
+            default:
+                cout << "Opción inválida. Intente de nuevo." << endl;
+            }
+        }
+
+        system("pause");
     }
-*/
+}
