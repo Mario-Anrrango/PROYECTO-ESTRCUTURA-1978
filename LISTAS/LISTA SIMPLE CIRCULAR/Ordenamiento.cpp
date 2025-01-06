@@ -221,3 +221,88 @@ void ordenarListaShellSort(ListaCircularDoble<T>& lista, Comparator comp) {
     // Mostrar lista ordenada
     lista.mostrar(lista.getPrimero());
 }
+
+template <typename T, typename KeyExtractor>
+void radixSortByString(std::vector<T>& elementos, KeyExtractor getKey) {
+    int maxLength = 0;
+    for (const auto& item : elementos) {
+        int length = static_cast<int>(getKey(item).length());
+        maxLength = std::max(maxLength, length);
+    }
+
+    for (int i = maxLength - 1; i >= 0; i--) {
+        std::vector<std::vector<T>> buckets(256);
+        for (const auto& item : elementos) {
+            std::string key = getKey(item);
+            int charIndex = static_cast<int>(key.length()) - 1 - i;
+            int charValue = (charIndex >= 0) ? static_cast<int>(key[charIndex]) : 0;
+            buckets[charValue].push_back(item);
+        }
+
+        elementos.clear();
+        for (auto& bucket : buckets) {
+            for (const auto& item : bucket) {
+                elementos.push_back(item);
+            }
+        }
+    }
+}
+
+template <typename T, typename KeyExtractor>
+void radixSortByInt(std::vector<T>& elementos, KeyExtractor getKey) {
+    int maxValue = 0;
+    for (const auto& item : elementos) {
+        int value = getKey(item);
+        maxValue = std::max(maxValue, value);
+    }
+
+    for (int exp = 1; maxValue / exp > 0; exp *= 10) {
+        std::vector<std::vector<T>> buckets(10);
+        for (const auto& item : elementos) {
+            int digit = (getKey(item) / exp) % 10;
+            buckets[digit].push_back(item);
+        }
+
+        elementos.clear();
+        for (auto& bucket : buckets) {
+            for (const auto& item : bucket) {
+                elementos.push_back(item);
+            }
+        }
+    }
+}
+
+
+template <typename T, typename KeyExtractor>
+void ordenarListaPorRadix(ListaCircularDoble<T>& lista, KeyExtractor getKey) {
+    std::vector<T> elementos;
+
+   
+    Nodo<T>* aux = lista.getPrimero();
+    do {
+        elementos.push_back(aux->getDato());
+        aux = aux->getSiguiente();
+    } while (aux != lista.getPrimero());
+
+   
+    using KeyType = typename std::invoke_result<KeyExtractor, T>::type;
+    if constexpr (std::is_same<KeyType, std::string>::value) {
+       
+        radixSortByString(elementos, getKey);
+    } else if constexpr (std::is_integral<KeyType>::value) {
+       
+        radixSortByInt(elementos, getKey);
+    } else {
+        static_assert(false, "El tipo de clave no es compatible con Radix Sort");
+    }
+
+ 
+    aux = lista.getPrimero();
+    int index = 0;
+    do {
+        aux->setDato(elementos[index++]);
+        aux = aux->getSiguiente();
+    } while (aux != lista.getPrimero());
+
+    lista.mostrar(lista.getPrimero());
+}

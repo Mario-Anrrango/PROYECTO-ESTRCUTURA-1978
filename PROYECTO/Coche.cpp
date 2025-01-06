@@ -124,6 +124,7 @@ Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<
     Nodo<Propietario> *propietarioNodo = nullptr;
     bool propietarioEncontrado = false;
 
+    // Buscar propietario por cédula
     while (!propietarioEncontrado)
     {
         cedula = validaciones.ingresarCedula("Ingrese el numero de cedula del propietario: ");
@@ -142,109 +143,103 @@ Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<
         }
     }
 
-    while (true)
-    {
-        placa = validador.ingresarPlaca(lista.getPrimero());
-        
-        Nodo<Coche> *temp = lista.getPrimero();
-        bool placaDuplicada = false;
-
-        if (temp != nullptr)
-        {
-            do
-            {
-                Coche cocheActual = temp->getDato();
-
-                if (cocheActual.getPlaca() == placa && cocheActual.getHoraSalida() == chrono::system_clock::time_point())
-                {
-                    cout << "\nEl coche con la placa " << placa << " ya esta en el parqueadero. Ingrese una placa nueva." << endl;
-                    placaDuplicada = true;
-                    break;
-                }
-
-                temp = temp->getSiguiente();
-            } while (temp != lista.getPrimero());
-        }
-
-        if (!placaDuplicada)
-        {
-            break;
-        }
-    }
-
+    // Mostrar placas del historial que no estén en el parqueadero
+    vector<string> opcionesPlacas;
     Nodo<Coche> *tempHistorial = listaHistorial.getPrimero();
     if (tempHistorial != nullptr)
     {
         do
         {
             Coche cocheHistorial = tempHistorial->getDato();
+            bool placaEnParqueadero = false;
 
-            if (cocheHistorial.getPlaca() == placa)
+            Nodo<Coche> *temp = lista.getPrimero();
+            if (temp != nullptr)
             {
-                cout << "\nLa placa " << placa << " fue encontrada en el historial. Recuperando datos..." << endl;
-                modelo = cocheHistorial.getModelo();
-                color = cocheHistorial.getColor();
-                marca = cocheHistorial.getMarca();
-
-                cout << "Marca: " << marca << "\nColor: " << color << "\nModelo: " << modelo << "\n";
-
-                vector<string> opciones = {"Si", "No"};
-                int seleccion = menuInteractivo(opciones, "Auto encontrado en el sistema.\n¿Desea sobreescribir los datos del historial?");
-
-                if (seleccion == 0) 
+                do
                 {
-                    system("cls");
-                    cout << "========================================" << endl;
-                    cout << "        Datos Recuperados Exitosamente  " << endl;
-                    cout << "========================================" << endl;
-                    cout << "\nMarca:    " << marca << endl;
-                    cout << "Modelo:   " << modelo << endl;
-                    cout << "Color:    " << color << endl;
-                    cout << "Placa:    " << placa << endl;
+                    if (temp->getDato().getPlaca() == cocheHistorial.getPlaca() && temp->getDato().getHoraSalida() == chrono::system_clock::time_point())
+                    {
+                        placaEnParqueadero = true;
+                        break;
+                    }
+                    temp = temp->getSiguiente();
+                } while (temp != lista.getPrimero());
+            }
 
-                    
-                    Propietario propietarioActualizado(propietarioNodo->getDato().getNombre(), 
-                                                        propietarioNodo->getDato().getApellido(), 
-                                                        propietarioNodo->getDato().getCedula(),
-                                                        propietarioNodo->getDato().getCorreo(),
-                                                        propietarioNodo->getDato().getPlacas());
-                    propietarioActualizado.agregarPlaca(placa);
-                    
-                    
-                    propietarioNodo->setDato(propietarioActualizado);
-
-                    listaPropietarios.GuardarPropietarios("propietarios.txt");
-
-                    return Coche(placa, modelo, color, marca, anio);
-                }
-                else 
-                {
-                    system("cls");
-                    cout << "\nPor favor, ingrese los datos manualmente:" << endl;
-                    break;
-                }
+            if (!placaEnParqueadero)
+            {
+                opcionesPlacas.push_back(cocheHistorial.getPlaca());
             }
 
             tempHistorial = tempHistorial->getSiguiente();
         } while (tempHistorial != listaHistorial.getPrimero());
     }
 
-    marca = validaciones.ingresarString("Ingrese la marca: ");
-    color = validaciones.ingresarString("Ingrese el color: ");
-    modelo = validaciones.ingresarString("Ingrese el modelo: ");
+    opcionesPlacas.push_back("Agregar nueva placa");
 
-  
-    Propietario propietarioActualizado(propietarioNodo->getDato().getNombre(), 
-                                        propietarioNodo->getDato().getApellido(), 
-                                        propietarioNodo->getDato().getCedula(),
-                                        propietarioNodo->getDato().getCorreo(),
-                                        propietarioNodo->getDato().getPlacas());
-    propietarioActualizado.agregarPlaca(placa);
+    // Selección de placa
+    int seleccionPlaca = menuInteractivo(opcionesPlacas, "Seleccione una placa existente o agregue una nueva:");
 
-   
-    propietarioNodo->setDato(propietarioActualizado);
+    if (seleccionPlaca != opcionesPlacas.size() - 1) {
+        placa = opcionesPlacas[seleccionPlaca];
 
-    listaPropietarios.GuardarPropietarios("propietarios.txt");
+        // Recuperar datos del historial
+        tempHistorial = listaHistorial.getPrimero();
+        if (tempHistorial != nullptr)
+        {
+            do
+            {
+                Coche cocheHistorial = tempHistorial->getDato();
+
+                if (cocheHistorial.getPlaca() == placa)
+                {
+                    cout << "\nLa placa " << placa << " fue encontrada en el historial. Recuperando datos..." << endl;
+                    modelo = cocheHistorial.getModelo();
+                    color = cocheHistorial.getColor();
+                    marca = cocheHistorial.getMarca();
+
+                    cout << "Marca: " << marca << "\nColor: " << color << "\nModelo: " << modelo << "\n";
+
+                    return Coche(placa, modelo, color, marca, anio);
+                }
+
+                tempHistorial = tempHistorial->getSiguiente();
+            } while (tempHistorial != listaHistorial.getPrimero());
+        }
+    } else {
+        // Validar nueva placa
+        while (true)
+        {
+            placa = validador.ingresarPlaca(listaHistorial.getPrimero());
+
+            bool placaExistente = false;
+            tempHistorial = listaHistorial.getPrimero();
+            if (tempHistorial != nullptr)
+            {
+                do
+                {
+                    if (tempHistorial->getDato().getPlaca() == placa)
+                    {
+                        cout << "\nLa placa ingresada ya existe en el historial. Ingrese una placa nueva." << endl;
+                        placaExistente = true;
+                        break;
+                    }
+                    tempHistorial = tempHistorial->getSiguiente();
+                } while (tempHistorial != listaHistorial.getPrimero());
+            }
+
+            if (!placaExistente)
+            {
+                break;
+            }
+        }
+
+        // Ingresar datos manualmente
+        marca = validaciones.ingresarString("Ingrese la marca: ");
+        color = validaciones.ingresarString("Ingrese el color: ");
+        modelo = validaciones.ingresarString("Ingrese el modelo: ");
+    }
 
     return Coche(placa, modelo, color, marca, anio);
 }

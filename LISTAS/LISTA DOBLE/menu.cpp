@@ -876,7 +876,7 @@ void menuOrdenarCoches(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coch
             switch (seleccionOrdenar)
             {
             case 0:
-                /*ordenarListaPorRadix(lista, [](const Coche &coche)
+                ordenarListaPorRadix(lista, [](const Coche &coche)
                                      { return coche.getPlaca(); });
                 lista.GuardarArchivo("autos.txt");
                 cout << "Lista ordenada por placa y guardada exitosamente." << endl;
@@ -898,7 +898,7 @@ void menuOrdenarCoches(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coch
                                      { return coche.getMarca(); });
                 lista.GuardarArchivo("autos.txt");
                 cout << "Lista ordenada por marca y guardada exitosamente." << endl;
-                */break; 
+                break;
             default:
                 cout << "Opcion invalida. Intente de nuevo." << endl;
             }
@@ -1092,7 +1092,7 @@ void menuOrdenarPropietarios(ListaCircularDoble<Propietario> &listaPropietarios)
         { // Radix
             switch (seleccionOrdenar)
             {
-            case 0:/*
+            case 0:
                 ordenarListaPorRadix(listaPropietarios, [](const Propietario &propietario)
                                      { return propietario.getNombre(); });
                 listaPropietarios.GuardarPropietarios("propietarios.txt");
@@ -1115,7 +1115,7 @@ void menuOrdenarPropietarios(ListaCircularDoble<Propietario> &listaPropietarios)
                                      { return propietario.getCorreo(); });
                 listaPropietarios.GuardarPropietarios("propietarios.txt");
                 cout << "Lista ordenada por correo y guardada exitosamente." << endl;
-               */ break;
+                break;
             default:
                 cout << "Opcion invalida. Intente de nuevo." << endl;
             }
