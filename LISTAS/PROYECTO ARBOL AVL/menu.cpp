@@ -268,9 +268,11 @@ void menuBusquedaAvanzadaPropietario(ListaCircularDoble<Propietario> &listaPropi
 
 }
 
-void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial, ListaCircularDoble<Propietario> &listaPropietarios,  Estacionamiento &estacionamiento, Parqueadero &parqueadero)
+void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial, ListaCircularDoble<Propietario> &listaPropietarios,  Estacionamiento &estacionamiento, Parqueadero &parqueadero, ArbolAVL &arbolCoches)
 {
     Placa<Coche> validador;
+
+    parqueadero.cargarYAsignarParqueadero(lista, arbolCoches);
 
     vector<string> opciones = {
         "Insertar Coche",
@@ -281,10 +283,14 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
         "Liberar el parqueadero",
         "Ordenar Lista",
         "Ayuda",
+        "Mostrar Arbol AVL",
         "Salir"};
 
     string archivo = "autos.txt";
     string archivoHistorial = "autos_historial.txt";
+      
+      
+
 
     while (true)
     {
@@ -294,8 +300,6 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
         {
         case 0:
         {
-            parqueadero.cargarYAsignarParqueadero(lista);
-           
 
             if (listaPropietarios.estaVacia())
             {
@@ -311,8 +315,9 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
             parqueadero.agregarCoche(nuevoCoche);
             int espacio = estacionamiento.obtenerEspacioAleatorio();
             estacionamiento.ocuparEspacio(espacio, nuevoCoche);
-             estacionamiento.mostrarEstacionamiento();
+            parqueadero.mostrarEstadoParqueadero();
 
+         
 
             break;
         }
@@ -481,7 +486,62 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
             system(comando.c_str());
             break;
         }
-        case 8:
+
+         case 8:
+        {
+            system("cls");
+            cout << "========================================" << endl;
+            cout << "========================================" << endl;
+            cout << "          MOSTRAR ARBOL                 " << endl;
+            cout << "========================================" << endl;
+            cout << "========================================" << endl;
+           sf::RenderWindow ventana(sf::VideoMode(1000, 1000), "Menu de Parqueadero");
+
+   
+    sf::Font fuente;
+    if (!fuente.loadFromFile("C:\\Windows\\Fonts\\times.ttf")) {
+        std::cerr << "Error al cargar la fuente." << std::endl;
+        return;
+    }
+
+   
+    while (ventana.isOpen()) {
+        sf::Event evento;
+        while (ventana.pollEvent(evento)) {
+            if (evento.type == sf::Event::Closed) {
+                ventana.close();  
+            }
+        }
+
+      
+        ventana.clear(sf::Color::Black);
+
+       
+        sf::Text texto("Mostrando Arbol de Coches", fuente, 24);
+texto.setFillColor(sf::Color::White);
+
+
+sf::FloatRect bounds = texto.getLocalBounds();
+
+
+float centerX = (ventana.getSize().x - bounds.width) / 2; 
+float topY = 10; 
+
+texto.setPosition(centerX, topY);
+ventana.draw(texto); 
+
+      
+
+      
+        arbolCoches.mostrarArbol(ventana, fuente); 
+
+       
+        ventana.display();
+    }
+
+            break;
+        }
+        case 9:
         {
             cout << "Saliendo..." << endl;
             return;

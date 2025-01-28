@@ -44,7 +44,7 @@ void Parqueadero::mostrarCoches() {
     arbolCoches.mostrarDistancias();  
 }
 
-void Parqueadero::cargarYAsignarParqueadero(ListaCircularDoble<Coche>& listaCoches) {
+void Parqueadero::cargarYAsignarParqueadero(ListaCircularDoble<Coche>& listaCoches, ArbolAVL& arbolCoches) {
     Nodo<Coche>* nodoActual = listaCoches.getPrimero();
 
     if (nodoActual == nullptr) {
@@ -55,11 +55,14 @@ void Parqueadero::cargarYAsignarParqueadero(ListaCircularDoble<Coche>& listaCoch
     do {
         Coche coche = nodoActual->getDato(); 
 
-       
         int posicionAleatoria = estacionamiento.obtenerEspacioAleatorio();
 
-        
         estacionamiento.ocuparEspacio(posicionAleatoria, coche);  
+
+       
+        arbolCoches.agregarDistancia(posicionAleatoria);
+
+        cout << "Coche con placa " << coche.getPlaca() << " estacionado en el espacio " << posicionAleatoria << "." << endl;
        
         nodoActual = nodoActual->getSiguiente();
     } while (nodoActual != listaCoches.getPrimero()); 

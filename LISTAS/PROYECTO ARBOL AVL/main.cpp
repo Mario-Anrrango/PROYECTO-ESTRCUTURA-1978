@@ -1,9 +1,11 @@
 #include <iostream>
 #include "Menu.h"
 #include "Parqueadero.h"
+#include "ArbolAVL.h"
 
 int main() {
 ListaCircularDoble<Propietario> listaPropietarios;
+ArbolAVL arbolCoches;
 listaPropietarios.CargarPropietarios("propietarios.txt");
 ListaCircularDoble<Coche> listaCochesHistorial;
     listaCochesHistorial.CargarArchivo("autos_historial.txt");
@@ -13,7 +15,7 @@ ListaCircularDoble<Coche> listaCochesHistorial;
     Parqueadero parqueadero;
 
 
-    menu(listaCoches, listaCochesHistorial, listaPropietarios, estacionamiento, parqueadero);
+    menu(listaCoches, listaCochesHistorial, listaPropietarios, estacionamiento, parqueadero, arbolCoches);
 
     return 0;
 }

@@ -17,6 +17,6 @@ public:
     void mostrarEstadoParqueadero();
     void mostrarCoches();
     void guardarEstadoParqueadero(const std::string& nombreArchivo);
-    void cargarYAsignarParqueadero(ListaCircularDoble<Coche>& listaCoches);
+    void cargarYAsignarParqueadero(ListaCircularDoble<Coche>& listaCoches , ArbolAVL& arbolCoches);
 
 };
