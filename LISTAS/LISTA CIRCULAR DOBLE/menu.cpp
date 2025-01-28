@@ -268,7 +268,7 @@ void menuBusquedaAvanzadaPropietario(ListaCircularDoble<Propietario> &listaPropi
 
 }
 
-void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial, ListaCircularDoble<Propietario> &listaPropietarios)
+void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial, ListaCircularDoble<Propietario> &listaPropietarios,  Estacionamiento &estacionamiento, Parqueadero &parqueadero)
 {
     Placa<Coche> validador;
 
@@ -306,6 +306,12 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
             lista.GuardarArchivo("autos.txt");
             listaHistorial.insertar(nuevoCoche);
             listaHistorial.GuardarArchivo("autos_historial.txt");
+            parqueadero.agregarCoche(nuevoCoche);
+            int espacio = estacionamiento.obtenerEspacioAleatorio();
+            estacionamiento.ocuparEspacio(espacio);
+             estacionamiento.mostrarEstacionamiento();
+
+
             break;
         }
         case 1:
