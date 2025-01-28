@@ -67,3 +67,5 @@ void Parqueadero::cargarYAsignarParqueadero(ListaCircularDoble<Coche>& listaCoch
         nodoActual = nodoActual->getSiguiente();
     } while (nodoActual != listaCoches.getPrimero()); 
 }
+
+
