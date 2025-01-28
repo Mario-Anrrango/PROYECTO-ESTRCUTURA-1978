@@ -1,72 +1,45 @@
 #include "Estacionamiento.h"
-#include <cstdlib>  
-#include <ctime>    
-
+#include "Coche.h"
 
 Estacionamiento::Estacionamiento() {
-   
-    espacios.resize(TAMANIO, 0);  
-}
-
-
-void Estacionamiento::ocuparEspacio(int espacio) {
-    if (espacio >= 1 && espacio <= TAMANIO) {
-        if (espacios[espacio - 1] == 0) {
-            espacios[espacio - 1] = 1;  
-            std::cout << "Espacio " << espacio << " ocupado." << std::endl;
-        } else {
-            std::cout << "El espacio " << espacio << " ya está ocupado." << std::endl;
-        }
-    } else {
-        std::cout << "Número de espacio no válido." << std::endl;
-    }
-}
-
-
-void Estacionamiento::liberarEspacio(int espacio) {
-    if (espacio >= 1 && espacio <= TAMANIO) {
-        if (espacios[espacio - 1] == 1) {
-            espacios[espacio - 1] = 0;  
-            std::cout << "Espacio " << espacio << " liberado." << std::endl;
-        } else {
-            std::cout << "El espacio " << espacio << " ya está libre." << std::endl;
-        }
-    } else {
-        std::cout << "Número de espacio no válido." << std::endl;
-    }
-}
-
-
-void Estacionamiento::mostrarEstacionamiento() {
-    int contador = 0;
-    
     
     for (int i = 0; i < TAMANIO; ++i) {
-       
-        if (espacios[i] == 0) {
-            std::cout << "[ ] ";  
-        } else {
-            std::cout << "[X] ";  
-        }
+        espacios.push_back(0); 
+    }
+}
 
-        contador++;
+void Estacionamiento::ocuparEspacio(int espacio, Coche &coche) {
+    if (espacio >= 0 && espacio < TAMANIO && espacios[espacio] == 0) {
+        espacios[espacio] = 1;  
+    } else {
+        std::cout << "Espacio no disponible o inválido." << std::endl;
+    }
+}
+
+void Estacionamiento::liberarEspacio(int espacio) {
+    if (espacio >= 0 && espacio < TAMANIO && espacios[espacio] == 1) {
+        espacios[espacio] = 0; 
+    } else {
+        std::cout << "Espacio no ocupado o inválido." << std::endl;
+    }
+}
+
+void Estacionamiento::mostrarEstacionamiento() {
+    for (int i = 0; i < TAMANIO; ++i) {
+       
+        std::cout << (espacios[i] == 0 ? "[ ] " : "[X] ");
+
         
-        
-        if (contador % 10 == 0) {
+        if ((i + 1) % 10 == 0) {
             std::cout << std::endl;
         }
     }
-    std::cout << std::endl;  
+    std::cout << std::endl; 
 }
-
 int Estacionamiento::obtenerEspacioAleatorio() {
-    srand(time(0)); 
-    int espacioAleatorio = rand() % TAMANIO;  
-    
-    
-    while (espacios[espacioAleatorio] == 1) {
-        espacioAleatorio = rand() % TAMANIO;  
+    int espacio = rand() % TAMANIO;
+    while (espacios[espacio] == 1) {  
+        espacio = rand() % TAMANIO;  
     }
-
-    return espacioAleatorio + 1;  
+    return espacio;
 }

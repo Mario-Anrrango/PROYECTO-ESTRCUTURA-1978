@@ -294,6 +294,8 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
         {
         case 0:
         {
+            parqueadero.cargarYAsignarParqueadero(lista);
+           
 
             if (listaPropietarios.estaVacia())
             {
@@ -308,7 +310,7 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
             listaHistorial.GuardarArchivo("autos_historial.txt");
             parqueadero.agregarCoche(nuevoCoche);
             int espacio = estacionamiento.obtenerEspacioAleatorio();
-            estacionamiento.ocuparEspacio(espacio);
+            estacionamiento.ocuparEspacio(espacio, nuevoCoche);
              estacionamiento.mostrarEstacionamiento();
 
 

@@ -136,5 +136,3 @@ Propietario Propietario::agregarPropietario()
 
     return nuevoPropietario;
 }
-
-
