@@ -38,16 +38,26 @@ void Estacionamiento::liberarEspacio(int espacio) {
 
 
 void Estacionamiento::mostrarEstacionamiento() {
-    for (int i = 0; i < TAMANIO; i++) {
+    int contador = 0;
+    
+    
+    for (int i = 0; i < TAMANIO; ++i) {
+       
         if (espacios[i] == 0) {
             std::cout << "[ ] ";  
         } else {
             std::cout << "[X] ";  
         }
-    }
-    std::cout << std::endl;
-}
 
+        contador++;
+        
+        
+        if (contador % 10 == 0) {
+            std::cout << std::endl;
+        }
+    }
+    std::cout << std::endl;  
+}
 
 int Estacionamiento::obtenerEspacioAleatorio() {
     srand(time(0)); 
