@@ -38,5 +38,5 @@ public:
     
 
     friend ostream &operator<<(ostream &os, const Propietario &propietario);
-    Propietario agregarPropietario();
+    Propietario agregarPropietario(ListaCircularDoble<Propietario> &listaPropietarios);
 };

@@ -7,7 +7,8 @@ Estacionamiento::Estacionamiento() {
 void Estacionamiento::ocuparEspacio(int espacio, Coche& coche) {
     if (espacio >= 0 && espacio < TAMANIO && !espacioOcupado(espacio)) {
         espaciosOcupados[espacio] = coche;  
-       
+        std::cout << "El coche con placa " << coche.getPlaca() << " ha entrado en el parqueadero " 
+                  << "en el espacio " << espacio + 1 << "." << std::endl;  // sumamos 1 para hacerlo más amigable
 
     } else {
         std::cout << "Espacio no válido o ya ocupado." << std::endl;

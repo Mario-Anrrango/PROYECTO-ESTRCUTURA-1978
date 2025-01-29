@@ -206,7 +206,7 @@ void menuGestionPropietarios(ListaCircularDoble<Propietario> &listaPropietarios)
         {
         case 0:
             {
-                Propietario nuevoPropietario = nuevoPropietario.agregarPropietario();
+                Propietario nuevoPropietario = nuevoPropietario.agregarPropietario(listaPropietarios);
                 listaPropietarios.insertar(nuevoPropietario);
                 listaPropietarios.GuardarPropietarios("propietarios.txt");
                 break;
@@ -355,7 +355,6 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
         {
         case 0:
         {
-            parqueadero.mostrarEstadoParqueadero();
 
             if (listaPropietarios.estaVacia())
             {
