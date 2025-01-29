@@ -62,35 +62,37 @@ std::cout << "==========================================" << std::endl;
 void Estacionamiento::mostrarEstacionamiento() {
     std::cout << "Estado del Parqueadero:\n";
     
-    
-    std::cout << "Entrada            | Salida 1 | Salida 2\n";
-    std::cout << "------------------------------------------\n";
-    
-   
+   std::cout << "\n";
+
+   std::cout << " _________" << std::endl;
+   std::cout << "| E1 | S1 |" << std::endl;
+   std::cout << "|    |    |_____________" << std::endl;
+   std::cout << "|    |_______________   |" << std::endl;
+   std::cout << "|__________________  |  |" << std::endl;
     for (int i = 0; i < TAMANIO; ++i) {
        
         if (espacioOcupado(i)) {
             std::cout << "[X] ";  
         } else {
-            std::cout << "[ ] "; 
-        }
+            std::cout << "[ ] ";  
+         }
 
-        if ((i + 1) % 5 == 0) {
-            std::cout << "   ";  
-        }
-
-      
-        if ((i + 1) == 5) {
-            std::cout << "| Salida 1 ";
-        } else if ((i + 1) == 95) {
-            std::cout << "| Salida 2 ";
-        }
-
-       
-        if ((i + 1) % 10 == 0) {
-            std::cout << std::endl;
-        }
+   
+    if ((i + 1) % 5 == 0) {
+        std::cout << "    ";  
     }
+
+    if ((i + 1) % 10 == 0) {
+        std::cout << std::endl;  
+    }
+    }
+   std::cout << "                  |  |  |_________" << std::endl;
+   std::cout << "                  |  |_______     |" << std::endl;
+   std::cout << "                  |_____     |    |" << std::endl;
+   std::cout << "                        |    |    |" << std::endl;
+   std::cout << "                        | E2 | S2 |" << std::endl;
+   std::cout << "                        |____|____|" << std::endl;
+   
 
     std::cout << std::endl;
 }
@@ -114,14 +116,66 @@ bool Estacionamiento::espacioOcupado(int espacio) {
 }
 
 Coche Estacionamiento::obtenerCocheEnEspacio(int espacio) {
-    if (espacioOcupado(espacio)) {
-        return espaciosOcupados[espacio];  
-    } else {
-        throw std::invalid_argument("El espacio no está ocupado.");
+        if (espacioOcupado(espacio)) {
+            return espaciosOcupados[espacio];
+        }
+        return Coche();
     }
-}
+
 
 void Estacionamiento::vaciarEstacionamiento() {
     espaciosOcupados.clear();  
     std::cout << "Estacionamiento vaciado correctamente." << std::endl;
 }
+
+    vector<int> Estacionamiento::obtenerTodosLosEspacios() {
+        vector<int> espacios;
+        for (const auto& it : espaciosOcupados) {
+            espacios.push_back(it.first);
+        }
+        return espacios;
+    }
+        int Estacionamiento::buscarCocheCercano(string salida) {
+        vector<int> espacios = obtenerTodosLosEspacios();
+
+        if (espacios.empty()) {
+            cout << "No hay coches en el estacionamiento." << endl;
+            return -1;
+        }
+
+       
+        vector<int> prioridad = {4, 5, 3, 6, 2, 7, 1, 8, 0, 9};
+
+       
+        auto prioridadOrdenamiento = [&](int a, int b) {
+            string strA = to_string(a);
+            string strB = to_string(b);
+
+            
+            if (salida == "1") { 
+                if (strA[0] != strB[0])
+                    return strA[0] < strB[0];
+            } else if (salida == "2") {
+                if (strA[0] != strB[0])
+                    return strA[0] > strB[0];
+            }
+
+            
+            if (strA.length() > 1 && strB.length() > 1) {
+                int segundoA = strA[1] - '0';
+                int segundoB = strB[1] - '0';
+
+                return find(prioridad.begin(), prioridad.end(), segundoA) <
+                       find(prioridad.begin(), prioridad.end(), segundoB);
+            }
+
+            return false;
+        };
+
+       
+        sort(espacios.begin(), espacios.end(), prioridadOrdenamiento);
+
+        return espacios.front(); 
+    }
+
+    

@@ -80,6 +80,58 @@ void menuEliminarPlaca(ListaCircularDoble<Propietario> &listaPropietarios)
 
 
 
+void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches) {
+    system("cls");
+    cout << "========================================" << endl;
+    cout << "========================================" << endl;
+    cout << "           SIMULACRO DE SALIDA          " << endl;
+    cout << "========================================" << endl;
+    cout << "========================================" << endl;
+
+    vector<string> opcionesBinario = {
+        "Iniciar simulacro de salida",
+        "Volver al Menu Principal"
+    };
+
+    int seleccionBinario = menuInteractivo(opcionesBinario, "Busqueda binaria");
+
+    switch (seleccionBinario) {
+        case 0: {
+            system("cls");
+            cout << "========================================" << endl;
+            cout << "           SIMULACRO DE SALIDA          " << endl;
+            cout << "========================================" << endl;
+            cout << "Este simulacro ayuda a organizar la salida rapida de vehiculos " << endl;
+            cout << "en caso de emergencia o desastre." << endl;
+            cout << "========================================" << endl;
+            cout << "Ingrese la salida que desea utilizar: ( 1,2) ";
+            
+             string salida; 
+            cin >> salida;
+
+
+            if (salida =="1") {
+                arbolCoches.imprimirPrimerTermino(salida);
+            }
+            if(salida =="2"){
+                arbolCoches.imprimirUltimoTermino(salida);
+            }
+
+          
+            break; 
+        }
+        case 1: {
+            cout << "Regresando al menú principal..." << endl;
+            break;
+        }
+        default:
+            cout << "Opción no válida. Intente de nuevo." << endl;
+    }
+}
+
+
+
+
 
 int menuInteractivo(const vector<string> &opciones, const string &titulo)
 {
@@ -286,6 +338,7 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
         "Ordenar Lista",
         "Ayuda",
         "Mostrar Arbol AVL",
+        "Busqueda binaria",
         "Salir"};
 
     string archivo = "autos.txt";
@@ -302,6 +355,7 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
         {
         case 0:
         {
+            parqueadero.mostrarEstadoParqueadero();
 
             if (listaPropietarios.estaVacia())
             {
@@ -545,7 +599,14 @@ ventana.draw(texto);
 
             break;
         }
+
         case 9:
+        {
+            MenuBusquedaBinaria(estacionamiento, arbolCoches);
+            break;
+        }
+
+        case 10:
         {
             cout << "Saliendo..." << endl;
             return;

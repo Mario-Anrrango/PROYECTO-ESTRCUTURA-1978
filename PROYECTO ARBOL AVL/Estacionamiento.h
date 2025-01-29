@@ -2,6 +2,7 @@
 
 #include <unordered_map>
 #include "Coche.h"
+#include <vector>
 
 class Estacionamiento {
 private:
@@ -19,4 +20,6 @@ public:
     Coche obtenerCocheEnEspacio(int espacio);  
     int obtenerEspacioPorPlaca(const std::string& placa);
     void vaciarEstacionamiento();
+    int buscarCocheCercano(string salida);
+    vector<int> obtenerTodosLosEspacios();
 };

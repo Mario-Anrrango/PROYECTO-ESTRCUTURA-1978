@@ -98,20 +98,26 @@ NodoAVL* ArbolAVL::rotarIzquierda(NodoAVL* x) {
 }
 
 
-void ArbolAVL::recorridoInorden(NodoAVL* nodo) {
-    if (nodo != nullptr) {
-        recorridoInorden(nodo->izquierdo);
-        std::cout << nodo->distancia << " ";
-        recorridoInorden(nodo->derecho);
+
+
+
+void ArbolAVL::recorridoInorden(NodoAVL* nodo, bool &detenido) {
+    if (nodo != nullptr && !detenido) {
+        recorridoInorden(nodo->izquierdo, detenido);  
+
+        if (!detenido) {
+            std::cout << nodo->distancia << " ";  
+            detenido = true;  
+        }
+
+        recorridoInorden(nodo->derecho, detenido); 
     }
 }
-
-
 void ArbolAVL::mostrarDistancias() {
-    recorridoInorden(raiz);
+    bool detenido = false; 
+    recorridoInorden(raiz, detenido);
     std::cout << std::endl;
 }
-
 
 
 
@@ -176,4 +182,35 @@ NodoAVL* ArbolAVL::obtenerRaiz() {
 void ArbolAVL::vaciarArbol() {
     raiz = nullptr;  
     std::cout << "Árbol AVL vaciado correctamente." << std::endl;
+}
+
+
+void ArbolAVL::imprimirPrimerTermino(const std::string &salida) {
+    bool detenido = false; 
+    if (salida == "1") {
+        recorridoInorden(raiz, detenido);  
+    }
+    std::cout << std::endl;  
+}
+
+void ArbolAVL::imprimirUltimoTermino(const std::string &salida) {
+    bool detenido = false;  
+    NodoAVL* ultimo = nullptr;
+    recorridoInordenUltimo(raiz, ultimo);  // Recorrido para obtener el último nodo
+    if (ultimo != nullptr) {
+        std::cout << ultimo->distancia << std::endl;  // Imprime el último término
+    }
+}
+
+void ArbolAVL::recorridoInordenUltimo(NodoAVL* nodo, NodoAVL* &ultimo) {
+    if (nodo != nullptr) {
+        // Recorre el subárbol izquierdo
+        recorridoInordenUltimo(nodo->izquierdo, ultimo);
+
+        // Actualiza el último nodo encontrado
+        ultimo = nodo;
+
+        // Recorre el subárbol derecho
+        recorridoInordenUltimo(nodo->derecho, ultimo);
+    }
 }

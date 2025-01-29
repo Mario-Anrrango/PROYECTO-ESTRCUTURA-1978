@@ -14,7 +14,6 @@ private:
     NodoAVL* rotarDerecha(NodoAVL* y);
     NodoAVL* rotarIzquierda(NodoAVL* x);
     NodoAVL* insertar(NodoAVL* nodo, int distancia);
-    void recorridoInorden(NodoAVL* nodo);
     void dibujarNodo(NodoAVL* nodo, sf::RenderWindow &ventana, sf::Font &fuente, float x, float y, float offset);
 
 
@@ -25,4 +24,11 @@ public:
     void mostrarDistancias();  
     void mostrarArbol(sf::RenderWindow& ventana, sf::Font& fuente);  
     void vaciarArbol();
+    void recorridoInorden(NodoAVL* nodo, bool& detenido);
+     void imprimirPrimerTermino(const std::string &salida);
+     void imprimirUltimoTermino(const std::string &salida);
+     void recorridoInordenUltimo(NodoAVL* nodo, NodoAVL* &ultimo);
+    
+
+
 };
