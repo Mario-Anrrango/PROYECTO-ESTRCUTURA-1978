@@ -13,10 +13,11 @@ private:
 public:
     Parqueadero();
     void agregarCoche(Coche coche);
-    void quitarCoche(int espacio);
     void mostrarEstadoParqueadero();
     void mostrarCoches();
     void guardarEstadoParqueadero(const std::string& nombreArchivo);
     void cargarYAsignarParqueadero(ListaCircularDoble<Coche>& listaCoches , ArbolAVL& arbolCoches);
+    void liberarParqueadero(ListaCircularDoble<Coche>& listaCoches, ArbolAVL& arbolCoches);
+    void inicializarSemilla();
 
 };

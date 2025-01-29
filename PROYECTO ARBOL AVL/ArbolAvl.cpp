@@ -172,3 +172,8 @@ void ArbolAVL::dibujarNodo(NodoAVL* nodo, sf::RenderWindow &ventana, sf::Font &f
 NodoAVL* ArbolAVL::obtenerRaiz() {
     return raiz;  
 }
+
+void ArbolAVL::vaciarArbol() {
+    raiz = nullptr;  
+    std::cout << "Árbol AVL vaciado correctamente." << std::endl;
+}

@@ -271,8 +271,10 @@ void menuBusquedaAvanzadaPropietario(ListaCircularDoble<Propietario> &listaPropi
 void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial, ListaCircularDoble<Propietario> &listaPropietarios,  Estacionamiento &estacionamiento, Parqueadero &parqueadero, ArbolAVL &arbolCoches)
 {
     Placa<Coche> validador;
-
+    parqueadero.inicializarSemilla();
     parqueadero.cargarYAsignarParqueadero(lista, arbolCoches);
+
+    
 
     vector<string> opciones = {
         "Insertar Coche",
@@ -464,8 +466,12 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
             string placa;
             cout << "Ingrese la placa del coche que  va a  dejar el estacionamiento: ";
             cin >> placa;
+
             listaHistorial.salirDelParqueadero(placa);
             lista.eliminarPorPlaca(placa);
+            parqueadero.inicializarSemilla();
+            parqueadero.cargarYAsignarParqueadero(lista, arbolCoches);
+            parqueadero.mostrarEstadoParqueadero();
             break;
         }
         case 6:
@@ -496,8 +502,6 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
             cout << "========================================" << endl;
             cout << "========================================" << endl;
            sf::RenderWindow ventana(sf::VideoMode(1000, 1000), "Menu de Parqueadero");
-
-   
     sf::Font fuente;
     if (!fuente.loadFromFile("C:\\Windows\\Fonts\\times.ttf")) {
         std::cerr << "Error al cargar la fuente." << std::endl;
@@ -517,7 +521,7 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
         ventana.clear(sf::Color::Black);
 
        
-        sf::Text texto("Mostrando Arbol de Coches", fuente, 24);
+        sf::Text texto("Mostrando Arbol AVL ", fuente, 24);
 texto.setFillColor(sf::Color::White);
 
 

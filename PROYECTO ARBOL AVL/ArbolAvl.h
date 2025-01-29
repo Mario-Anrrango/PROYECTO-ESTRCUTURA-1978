@@ -24,4 +24,5 @@ public:
     void agregarDistancia(int distancia);
     void mostrarDistancias();  
     void mostrarArbol(sf::RenderWindow& ventana, sf::Font& fuente);  
+    void vaciarArbol();
 };
