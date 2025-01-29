@@ -60,17 +60,38 @@ std::cout << "==========================================" << std::endl;
 
 
 void Estacionamiento::mostrarEstacionamiento() {
+    std::cout << "Estado del Parqueadero:\n";
+    
+    
+    std::cout << "Entrada            | Salida 1 | Salida 2\n";
+    std::cout << "------------------------------------------\n";
+    
+   
     for (int i = 0; i < TAMANIO; ++i) {
+       
         if (espacioOcupado(i)) {
             std::cout << "[X] ";  
         } else {
-            std::cout << "[ ] ";  
+            std::cout << "[ ] "; 
         }
 
+        if ((i + 1) % 5 == 0) {
+            std::cout << "   ";  
+        }
+
+      
+        if ((i + 1) == 5) {
+            std::cout << "| Salida 1 ";
+        } else if ((i + 1) == 95) {
+            std::cout << "| Salida 2 ";
+        }
+
+       
         if ((i + 1) % 10 == 0) {
-            std::cout << std::endl;  
+            std::cout << std::endl;
         }
     }
+
     std::cout << std::endl;
 }
 
