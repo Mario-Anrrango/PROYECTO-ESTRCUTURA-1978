@@ -114,24 +114,24 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
 
                 if (cocheCercano != nullptr) {
                     
-                    cout << "Coche más cercano a la salida " << salida << ": " << endl;
+                    cout << "Coche mas cercano a la salida " << salida << ": " << endl;
                     
                   cout << cocheCercano->getDato() << endl;
                     
                 } else {
-                    cout << "No se encontró un coche cercano para la salida " << salida << "." << endl;
+                    cout << "No se encontro un coche cercano para la salida " << salida << "." << endl;
                 }
             } else {
-                cout << "Entrada inválida. Solo puede ingresar 1 o 2." << endl;
+                cout << "Entrada invalida. Solo puede ingresar 1 o 2." << endl;
             }
             break; 
         }
         case 1: {
-            cout << "Regresando al menú principal..." << endl;
+            cout << "Regresando al menu principal..." << endl;
             break;
         }
         default:
-            cout << "Opción no válida. Intente de nuevo." << endl;
+            cout << "Opción no valida. Intente de nuevo." << endl;
     }
 }
 

@@ -189,14 +189,16 @@ void ArbolAVL::vaciarArbol() {
 
 
 bool compararSalida1(int pos1, int pos2) {
-    int decimal1 = pos1 % 10;
-    int decimal2 = pos2 % 10;
+    int decimal1 = pos1 / 10;  
+    int unidad1 = pos1 % 10;   
+
+    int decimal2 = pos2 / 10;  
+    int unidad2 = pos2 % 10;   
+
     
     if (decimal1 != decimal2) {
         return decimal1 < decimal2;  
     } else {
-        int unidad1 = pos1 / 10;
-        int unidad2 = pos2 / 10;
         
         std::vector<int> orden = {4, 5, 3, 6, 2, 7, 1, 8, 0, 9};
         
@@ -208,24 +210,27 @@ bool compararSalida1(int pos1, int pos2) {
 }
 
 bool compararSalida2(int pos1, int pos2) {
-    int decimal1 = pos1 % 10;
-    int decimal2 = pos2 % 10;
-    
+    int unidad1 = pos1 % 10;
+    int decimal1 = pos1 / 10;
+
+    int unidad2 = pos2 % 10;
+    int decimal2 = pos2 / 10;
+
     if (decimal1 != decimal2) {
         return decimal1 > decimal2;  
     } else {
-        int unidad1 = pos1 / 10;
-        int unidad2 = pos2 / 10;
-        
         std::vector<int> orden = {4, 5, 3, 6, 2, 7, 1, 8, 0, 9};
         
         auto it1 = std::find(orden.begin(), orden.end(), unidad1);
         auto it2 = std::find(orden.begin(), orden.end(), unidad2);
-        
-        return it1 < it2;
+
+       
+        if (it1 != orden.end() && it2 != orden.end()) {
+            return it1 > it2;  
+        }
+        return unidad1 > unidad2;  
     }
 }
-
 Nodo<Coche>* ArbolAVL::buscarCocheMasCercanoEnLista(ListaCircularDoble<Coche>& listaCoches, int salida) {
     Nodo<Coche>* nodoActual = listaCoches.getPrimero();
     
@@ -241,6 +246,7 @@ Nodo<Coche>* ArbolAVL::buscarCocheMasCercanoEnLista(ListaCircularDoble<Coche>& l
         int posicion = coche.getposicion();
 
         if (cocheMasCercano == nullptr) {
+           
             cocheMasCercano = nodoActual;
         } else {
             int posicionMasCercana = cocheMasCercano->getDato().getposicion();
