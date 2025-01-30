@@ -1,6 +1,7 @@
 #include "ArbolAVL.h"
 #include <iostream>
 #include "Coche.h"
+#include "Validaciones.h"
 
 
 ArbolAVL::ArbolAVL() : raiz(nullptr) {}
@@ -268,45 +269,43 @@ bool ArbolAVL::validarPosicion(int posicion)
 
 std::vector<int> ArbolAVL::determinarOrdenSalida(int salida, ListaCircularDoble<Coche>& listaCoches) {
     std::vector<int> posiciones;  
+    Validaciones validaciones;
 
-    
     for (int i = 0; i < 3; ++i) {
-        int posicion;
-        std::cout << "Ingrese la posicion del coche " << (i + 1) << ": ";
-        std::cin >> posicion;
-
-       
+        int  posicion =  validaciones.ingresarNumero("Ingrese la posicion del coche " + std::to_string(i + 1) + ": ");
+     
         if (!validarPosicion(posicion)) {
-            std::cerr << "Error: La posición " << posicion << " no es válida. Debe estar en el rango de 00 a 99." << std::endl;
+            std::cerr << "Error: La posicion " << posicion << " no es valida. Debe estar en el rango de 00 a 99." << std::endl;
             return {};  
         }
 
-      
-        bool existe = false;
+
         Nodo<Coche>* nodoActual = listaCoches.getPrimero();
+        bool existe = false;
+
         do {
             if (nodoActual->getDato().getposicion() == posicion) {
                 existe = true;
+                posiciones.push_back(posicion);  
+            
+                std::cout << "Coche asociado:  " << nodoActual->getDato() << std::endl;  
                 break;
             }
             nodoActual = nodoActual->getSiguiente();
         } while (nodoActual != listaCoches.getPrimero());
 
         if (!existe) {
-            std::cerr << "Error: El coche con la posición " << posicion << " no existe en la lista." << std::endl;
+            std::cerr << "Error: El coche con la posicion " << posicion << " no existe en la lista." << std::endl;
             return {};  
         }
-
-      
-        posiciones.push_back(posicion);
     }
 
-   
+
     std::sort(posiciones.begin(), posiciones.end(), [salida](int pos1, int pos2) {
         return (salida == 1) ? compararSalida1(pos1, pos2) : compararSalida2(pos1, pos2);
     });
 
-  
+
     std::cout << "Orden de salida de los coches: " << std::endl;
     for (int i = 0; i < posiciones.size(); ++i) {
         std::cout << (i + 1) << "er coche: " << posiciones[i] << std::endl;

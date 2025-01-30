@@ -13,5 +13,6 @@ public:
     bool validarCorreo(const string &correo);
     string ingresarCedula(const string &msj);
     string ingresarCorreo(const string &msj);
+    int ingresarNumero(const string &msj);
 };
 

@@ -81,6 +81,9 @@ void menuEliminarPlaca(ListaCircularDoble<Propietario> &listaPropietarios)
 
 
 void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches, ListaCircularDoble<Coche> &lista) {
+
+    Validaciones validaciones;
+
     system("cls");
     cout << "========================================" << endl;
     cout << "========================================" << endl;
@@ -107,11 +110,10 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
             cout << "========================================" << endl;
             cout << "Ingrese la salida que desea utilizar: ( 1,2) ";
             
-            string salida;
-            cin >> salida;
+            int salida = validaciones.ingresarNumero("Ingrese el tipo de salida (1 o 2): ");
 
-            if (salida == "1" || salida == "2") {
-                Nodo<Coche>* cocheCercano  = arbolCoches.buscarCocheMasCercanoEnLista(lista, stoi(salida)); 
+            if (salida == 1|| salida == 2) {
+                Nodo<Coche>* cocheCercano  = arbolCoches.buscarCocheMasCercanoEnLista(lista, salida); 
 
                 if (cocheCercano != nullptr) {
                     cout << "Coche mas cercano a la salida " << salida << ": " << endl;
@@ -131,35 +133,8 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
     cout << "========================================" << endl;
     cout << "Ingrese las posiciones de los 3 coches para el simulacro de salida: " << endl;
 
-    vector<int> posiciones;
-
    
-
-
-       
-        bool existe = false;
-        Nodo<Coche>* nodoActual = lista.getPrimero();
-        do {
-            if (nodoActual->getDato().getposicion() == posicion) {
-                existe = true;
-                break;
-            }
-            nodoActual = nodoActual->getSiguiente();
-        } while (nodoActual != lista.getPrimero());
-
-        if (!existe) {
-            cout << "Error: El coche con la posicion " << posicion << " no existe en la lista." << endl;
-            return;
-        }
-
-       
-        posiciones.push_back(posicion);
-    }
-
-   
-    int salida;
-    cout << "Ingrese el tipo de salida (1 o 2): ";
-    cin >> salida;
+    int  salida = validaciones.ingresarNumero("Ingrese el tipo de salida (1 o 2): ");
 
     if (salida == 1 || salida == 2) {
       
@@ -168,11 +143,6 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
         if (orden.empty()) {
             cout << "Error al determinar el orden de salida." << endl;
             return;
-        }
-
-        cout << "Orden de salida de los coches: " << endl;
-        for (int i = 0; i < orden.size(); ++i) {
-            cout << (i + 1) << "er coche: " << orden[i] << endl;
         }
     } else {
         cout << "Entrada invalida. Solo puede ingresar 1 o 2." << endl;

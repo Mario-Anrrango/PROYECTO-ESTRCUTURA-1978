@@ -129,3 +129,45 @@ bool Validaciones::validarCorreo(const string &correo)
     const regex pattern(R"((\w+)(\.{1}\w+)*@(\w+)(\.{1}\w+)+)");
     return regex_match(correo, pattern);
 }
+
+int Validaciones::ingresarNumero(const string &msj)
+{
+    string numero;
+    char c;
+
+    cout << msj;
+
+    while (true)
+    {
+        c = _getch();  
+
+        if (isdigit(c)) 
+        {
+            numero += c;  
+            cout << c;
+        }
+        else if (c == '\b' && !numero.empty())  
+        {
+            numero.pop_back();  
+            cout << "\b \b";  
+        }
+        else if (c == '\r' && !numero.empty())  
+        {
+            break;  
+        }
+        else if (c == ' ' || c == '\n')  
+        {
+            continue;
+        }
+        else  
+        {
+            cout << "\a";  
+        }
+    }
+
+    
+    int numeroEntero = std::stoi(numero);  
+
+    cout << endl;
+    return numeroEntero;
+}
