@@ -17,9 +17,6 @@ private:
     NodoAVL* insertar(NodoAVL* nodo, int distancia);
     void dibujarNodo(NodoAVL* nodo, sf::RenderWindow &ventana, sf::Font &fuente, float x, float y, float offset);
 
-   
-    NodoAVL* buscarCocheMasCercanoAux(NodoAVL* nodo, int salida);
-
 public:
  
     ArbolAVL();
@@ -33,4 +30,6 @@ public:
     void recorridoInorden(NodoAVL* nodo, bool& detenido);
     Coche* buscarCocheMasCercano(int salida);
     Nodo<Coche>* buscarCocheMasCercanoEnLista(ListaCircularDoble<Coche>& listaCoches, int salida);
+    bool validarPosicion(int posicion);
+    std::vector<int> determinarOrdenSalida(int salida, ListaCircularDoble<Coche>& listaCoches);
 };

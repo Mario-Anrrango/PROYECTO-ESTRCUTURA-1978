@@ -210,27 +210,24 @@ bool compararSalida1(int pos1, int pos2) {
 }
 
 bool compararSalida2(int pos1, int pos2) {
-    int unidad1 = pos1 % 10;
-    int decimal1 = pos1 / 10;
-
-    int unidad2 = pos2 % 10;
-    int decimal2 = pos2 / 10;
-
-    if (decimal1 != decimal2) {
-        return decimal1 > decimal2;  
+    int decima1 = pos1 / 10;
+    int decima2 = pos2 / 10;
+    
+    if (decima1 != decima2) {
+        return decima1 > decima2;  
     } else {
+        int unidad1 = pos1 % 10;
+        int unidad2 = pos2 % 10;
+        
         std::vector<int> orden = {4, 5, 3, 6, 2, 7, 1, 8, 0, 9};
         
         auto it1 = std::find(orden.begin(), orden.end(), unidad1);
         auto it2 = std::find(orden.begin(), orden.end(), unidad2);
-
-       
-        if (it1 != orden.end() && it2 != orden.end()) {
-            return it1 > it2;  
-        }
-        return unidad1 > unidad2;  
+        
+        return it1 < it2;
     }
 }
+
 Nodo<Coche>* ArbolAVL::buscarCocheMasCercanoEnLista(ListaCircularDoble<Coche>& listaCoches, int salida) {
     Nodo<Coche>* nodoActual = listaCoches.getPrimero();
     
@@ -261,4 +258,59 @@ Nodo<Coche>* ArbolAVL::buscarCocheMasCercanoEnLista(ListaCircularDoble<Coche>& l
     } while (nodoActual != listaCoches.getPrimero()); 
     
     return cocheMasCercano;
+}
+
+bool ArbolAVL::validarPosicion(int posicion)
+{
+     return posicion >= 0 && posicion <= 99;
+}
+
+
+std::vector<int> ArbolAVL::determinarOrdenSalida(int salida, ListaCircularDoble<Coche>& listaCoches) {
+    std::vector<int> posiciones;  
+
+    
+    for (int i = 0; i < 3; ++i) {
+        int posicion;
+        std::cout << "Ingrese la posicion del coche " << (i + 1) << ": ";
+        std::cin >> posicion;
+
+       
+        if (!validarPosicion(posicion)) {
+            std::cerr << "Error: La posición " << posicion << " no es válida. Debe estar en el rango de 00 a 99." << std::endl;
+            return {};  
+        }
+
+      
+        bool existe = false;
+        Nodo<Coche>* nodoActual = listaCoches.getPrimero();
+        do {
+            if (nodoActual->getDato().getposicion() == posicion) {
+                existe = true;
+                break;
+            }
+            nodoActual = nodoActual->getSiguiente();
+        } while (nodoActual != listaCoches.getPrimero());
+
+        if (!existe) {
+            std::cerr << "Error: El coche con la posición " << posicion << " no existe en la lista." << std::endl;
+            return {};  
+        }
+
+      
+        posiciones.push_back(posicion);
+    }
+
+   
+    std::sort(posiciones.begin(), posiciones.end(), [salida](int pos1, int pos2) {
+        return (salida == 1) ? compararSalida1(pos1, pos2) : compararSalida2(pos1, pos2);
+    });
+
+  
+    std::cout << "Orden de salida de los coches: " << std::endl;
+    for (int i = 0; i < posiciones.size(); ++i) {
+        std::cout << (i + 1) << "er coche: " << posiciones[i] << std::endl;
+    }
+
+    return posiciones;
 }

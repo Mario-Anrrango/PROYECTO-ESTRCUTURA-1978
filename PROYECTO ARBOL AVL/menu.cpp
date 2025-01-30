@@ -90,6 +90,7 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
 
     vector<string> opcionesBinario = {
         "Iniciar simulacro de salida",
+        "Ver orden de salida de 3 coches",
         "Volver al Menu Principal"
     };
 
@@ -113,11 +114,8 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
                 Nodo<Coche>* cocheCercano  = arbolCoches.buscarCocheMasCercanoEnLista(lista, stoi(salida)); 
 
                 if (cocheCercano != nullptr) {
-                    
                     cout << "Coche mas cercano a la salida " << salida << ": " << endl;
-                    
-                  cout << cocheCercano->getDato() << endl;
-                    
+                    cout << cocheCercano->getDato() << endl;
                 } else {
                     cout << "No se encontro un coche cercano para la salida " << salida << "." << endl;
                 }
@@ -127,12 +125,62 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
             break; 
         }
         case 1: {
-            cout << "Regresando al menu principal..." << endl;
-            break;
+    system("cls");
+    cout << "========================================" << endl;
+    cout << "           GESTION DE COCHES            " << endl;
+    cout << "========================================" << endl;
+    cout << "Ingrese las posiciones de los 3 coches para el simulacro de salida: " << endl;
+
+    vector<int> posiciones;
+
+   
+
+
+       
+        bool existe = false;
+        Nodo<Coche>* nodoActual = lista.getPrimero();
+        do {
+            if (nodoActual->getDato().getposicion() == posicion) {
+                existe = true;
+                break;
+            }
+            nodoActual = nodoActual->getSiguiente();
+        } while (nodoActual != lista.getPrimero());
+
+        if (!existe) {
+            cout << "Error: El coche con la posicion " << posicion << " no existe en la lista." << endl;
+            return;
         }
-        default:
-            cout << "Opción no valida. Intente de nuevo." << endl;
+
+       
+        posiciones.push_back(posicion);
     }
+
+   
+    int salida;
+    cout << "Ingrese el tipo de salida (1 o 2): ";
+    cin >> salida;
+
+    if (salida == 1 || salida == 2) {
+      
+        vector<int> orden = arbolCoches.determinarOrdenSalida(salida, lista);
+
+        if (orden.empty()) {
+            cout << "Error al determinar el orden de salida." << endl;
+            return;
+        }
+
+        cout << "Orden de salida de los coches: " << endl;
+        for (int i = 0; i < orden.size(); ++i) {
+            cout << (i + 1) << "er coche: " << orden[i] << endl;
+        }
+    } else {
+        cout << "Entrada invalida. Solo puede ingresar 1 o 2." << endl;
+    }
+    break;
+}
+}
+
 }
 
 
