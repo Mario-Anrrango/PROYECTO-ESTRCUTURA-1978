@@ -325,6 +325,7 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
     Placa<Coche> validador;
     parqueadero.inicializarSemilla();
     parqueadero.cargarYAsignarParqueadero(lista, arbolCoches);
+     parqueadero.mostrarEstadoParqueadero();
 
     
 
@@ -356,6 +357,8 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
         case 0:
         {
 
+             parqueadero.mostrarEstadoParqueadero();
+
             if (listaPropietarios.estaVacia())
             {
                 cout << "No hay propietarios registrados. Por favor, registre un propietario antes de continuar." << endl;
@@ -368,8 +371,6 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
             listaHistorial.insertar(nuevoCoche);
             listaHistorial.GuardarArchivo("autos_historial.txt");
             parqueadero.agregarCoche(nuevoCoche);
-            int espacio = estacionamiento.obtenerEspacioAleatorio();
-            estacionamiento.ocuparEspacio(espacio, nuevoCoche);
             parqueadero.mostrarEstadoParqueadero();
 
          

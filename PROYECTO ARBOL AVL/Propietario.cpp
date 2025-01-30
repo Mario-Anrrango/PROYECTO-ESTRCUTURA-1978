@@ -116,7 +116,6 @@ Propietario Propietario::agregarPropietario(ListaCircularDoble<Propietario> &lis
     string apellido = validaciones.ingresarString("Ingrese el apellido del propietario: ");
     string cedula;
 
-    // Solicitar cédula hasta que se ingrese una válida
     do {
         cedula = validaciones.ingresarCedula("Ingrese la cedula del propietario: ");
         if (!validaciones.validarCedula(cedula)) {
@@ -124,11 +123,10 @@ Propietario Propietario::agregarPropietario(ListaCircularDoble<Propietario> &lis
         }
     } while (!validaciones.validarCedula(cedula));
 
-    // Verificar si la cédula ya está registrada
     Nodo<Propietario> *propietarioNodo = nullptr;
     bool propietarioEncontrado = false;
 
-    // Repetir hasta que la cédula no esté registrada
+   
     while (true) {
         propietarioNodo = listaPropietarios.getPrimero();
         propietarioEncontrado = false;
@@ -143,24 +141,24 @@ Propietario Propietario::agregarPropietario(ListaCircularDoble<Propietario> &lis
 
         if (propietarioEncontrado) {
             cout << "Ya existe un propietario con esa cedula. Por favor ingrese una cedula diferente." << endl;
-            // Si la cédula está registrada, seguir pidiendo una nueva cédula
+            
             cedula = validaciones.ingresarCedula("Ingrese el numero de cedula del propietario: ");
         } else {
             cout << "Cedula disponible. Puede continuar." << endl;
-            break;  // Si la cédula no está registrada, salir del ciclo
+            break;  
         }
     }
 
-    // Solicitar el correo electrónico
+  
     string correo;
     do {
-        correo = validaciones.ingresarCorreo("Ingrese el correo electrónico del propietario: ");
+        correo = validaciones.ingresarCorreo("Ingrese el correo electronico del propietario: ");
         if (!validaciones.validarCorreo(correo)) {
-            cout << "Correo inválido. Intente de nuevo." << endl;
+            cout << "Correo invalido. Intente de nuevo." << endl;
         }
     } while (!validaciones.validarCorreo(correo));
 
-    // Crear el nuevo propietario
+    
     Propietario nuevoPropietario(nombre, apellido, cedula, correo);
 
     cout << "Propietario creado exitosamente." << endl;

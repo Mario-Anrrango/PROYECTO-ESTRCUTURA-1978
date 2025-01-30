@@ -204,13 +204,13 @@ void ArbolAVL::imprimirUltimoTermino(const std::string &salida) {
 
 void ArbolAVL::recorridoInordenUltimo(NodoAVL* nodo, NodoAVL* &ultimo) {
     if (nodo != nullptr) {
-        // Recorre el subárbol izquierdo
+        
         recorridoInordenUltimo(nodo->izquierdo, ultimo);
 
-        // Actualiza el último nodo encontrado
+       
         ultimo = nodo;
 
-        // Recorre el subárbol derecho
+     
         recorridoInordenUltimo(nodo->derecho, ultimo);
     }
 }

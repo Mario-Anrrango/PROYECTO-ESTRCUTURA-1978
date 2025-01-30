@@ -5,6 +5,7 @@ Parqueadero::Parqueadero() {
 
 
 void Parqueadero::agregarCoche(Coche coche) {
+    inicializarSemilla();
     int espacioLibre = estacionamiento.obtenerEspacioAleatorio();  
 
    
