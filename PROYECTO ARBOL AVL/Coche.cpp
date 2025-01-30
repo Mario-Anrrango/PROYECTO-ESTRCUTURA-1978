@@ -16,14 +16,22 @@ Coche::Coche()
     this->marca = "";
     this->modelo = "";
     this->color = "";
+    this->posicion = 0;
 }
 
-Coche::Coche(string placa, string modelo, string color, string marca, int anio)
-    : placa(placa), modelo(modelo), color(color), marca(marca), anio(anio), horaIngreso(chrono::system_clock::now()) {}
+Coche::Coche(int posicion) : posicion(posicion) {}
+
+Coche::Coche(string placa, string modelo, string color, string marca, int posicion)
+    : placa(placa), modelo(modelo), color(color), marca(marca), posicion(posicion), horaIngreso(chrono::system_clock::now()) {}
+
+Coche::Coche(string placa, string modelo, string color, string marca, std::chrono::time_point<std::chrono::system_clock> horaIngreso, std::chrono::time_point<std::chrono::system_clock> horaSalida, int posicion)
+: placa(placa), modelo(modelo), color(color), marca(marca),
+      horaIngreso(horaIngreso), horaSalida(horaSalida), posicion(posicion) {}
+
 
 Coche::Coche(string placa, string modelo, string color, string marca,
              chrono::system_clock::time_point horaIngreso, chrono::system_clock::time_point horaSalida )
-    : placa(placa), modelo(modelo), color(color), marca(marca), anio(0), horaIngreso(horaIngreso), horaSalida(horaSalida) {}
+    : placa(placa), modelo(modelo), color(color), marca(marca), posicion(), horaIngreso(horaIngreso), horaSalida(horaSalida) {}
 
 
 void Coche::setHoraSalida(chrono::system_clock::time_point hora)
@@ -51,6 +59,11 @@ void Coche::setColor(const string &color)
     this->color = color;
 }
 
+void Coche::setPosicion(int posicion)
+{
+    this->posicion = posicion;
+}
+
 chrono::system_clock::time_point Coche::getHoraSalida() const
 {
     return horaSalida;
@@ -76,9 +89,9 @@ string Coche::getColor() const
     return color;
 }
 
-int Coche::getAnio() const
+int Coche::getposicion() const
 {
-    return anio;
+    return posicion;
 }
 
 chrono::system_clock::time_point Coche::getHora() const
@@ -92,6 +105,7 @@ ostream &operator<<(ostream &os, const Coche &coche)
 {
     os << "Placa: " << coche.placa << "\nMarca: " << coche.marca
        << "\nModelo: " << coche.modelo << "\nColor: " << coche.color
+         << "\nPosicion: " << coche.posicion
        << "\n----------------------------------------" << endl;
 
     time_t tiempoIngreso = chrono::system_clock::to_time_t(coche.horaIngreso);
@@ -113,13 +127,12 @@ ostream &operator<<(ostream &os, const Coche &coche)
 }
 
 
-Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial, ListaCircularDoble<Propietario> &listaPropietarios)
+Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial, ListaCircularDoble<Propietario> &listaPropietarios, int posicion )
 {
     Validaciones validaciones;
     Placa<Coche> validador;
 
     string placa, modelo, color, marca, cedula;
-    int anio = 0;
 
     Nodo<Propietario> *propietarioNodo = nullptr;
     bool propietarioEncontrado = false;
@@ -202,6 +215,7 @@ Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<
                     cout << "Color:    " << color << endl;
                     cout << "Placa:    " << placa << endl;
 
+
                     
                     Propietario propietarioActualizado(propietarioNodo->getDato().getNombre(), 
                                                         propietarioNodo->getDato().getApellido(), 
@@ -215,7 +229,7 @@ Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<
 
                     listaPropietarios.GuardarPropietarios("propietarios.txt");
 
-                    return Coche(placa, modelo, color, marca, anio);
+                    return Coche(placa, modelo, color, marca, posicion);
                 }
                 else 
                 {
@@ -246,5 +260,5 @@ Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<
 
     listaPropietarios.GuardarPropietarios("propietarios.txt");
 
-    return Coche(placa, modelo, color, marca, anio);
+    return Coche(placa, modelo, color, marca, posicion);
 }

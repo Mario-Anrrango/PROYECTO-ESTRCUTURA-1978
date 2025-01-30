@@ -12,6 +12,7 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <set>
 //SI METES AQUI EL MENU.H SE DAÑA TODITO 
 
 
@@ -266,6 +267,7 @@ void ListaCircularDoble<T>::BusquedaAvanzada(string criterio, string valorInicio
 template <typename T>
 void ListaCircularDoble<T>::CargarArchivo(std::string nombreArchivo)
 {
+      srand(time(0));
     std::ifstream archivo(nombreArchivo);
 
     if (!archivo.is_open())
@@ -282,6 +284,7 @@ void ListaCircularDoble<T>::CargarArchivo(std::string nombreArchivo)
     }
 
     std::string linea;
+    std::set<int> posicionesOcupadas;
     while (std::getline(archivo, linea))
     {
         std::istringstream ss(linea);
@@ -329,8 +332,19 @@ void ListaCircularDoble<T>::CargarArchivo(std::string nombreArchivo)
                     horaSalidaParsed = std::chrono::system_clock::from_time_t(std::mktime(&tmSalida));
                 }
             }
+ 
+             int rangoMaximo = 100;  
+            int posicionAleatoria;
 
-            T coche(placa, modelo, color, marca, horaIngreso, horaSalidaParsed);
+            do {
+                posicionAleatoria = rand() % rangoMaximo;  
+            } while (posicionesOcupadas.find(posicionAleatoria) != posicionesOcupadas.end());  // Verificar que la posición no esté ocupada
+
+            posicionesOcupadas.insert(posicionAleatoria);
+
+ 
+
+            T coche(placa, modelo, color, marca, horaIngreso, horaSalidaParsed, posicionAleatoria);
 
             this->insertar(coche);
         }

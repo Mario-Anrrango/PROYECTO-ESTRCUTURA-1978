@@ -196,9 +196,9 @@ void ArbolAVL::imprimirPrimerTermino(const std::string &salida) {
 void ArbolAVL::imprimirUltimoTermino(const std::string &salida) {
     bool detenido = false;  
     NodoAVL* ultimo = nullptr;
-    recorridoInordenUltimo(raiz, ultimo);  // Recorrido para obtener el último nodo
+    recorridoInordenUltimo(raiz, ultimo);  
     if (ultimo != nullptr) {
-        std::cout << ultimo->distancia << std::endl;  // Imprime el último término
+        std::cout << ultimo->distancia << std::endl; 
     }
 }
 

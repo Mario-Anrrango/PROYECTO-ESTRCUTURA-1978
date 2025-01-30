@@ -4,10 +4,7 @@ Parqueadero::Parqueadero() {
 }
 
 
-void Parqueadero::agregarCoche(Coche coche) {
-    inicializarSemilla();
-    int espacioLibre = estacionamiento.obtenerEspacioAleatorio();  
-
+void Parqueadero::agregarCoche(Coche coche, int espacioLibre) {
    
     estacionamiento.ocuparEspacio(espacioLibre, coche);  
 
@@ -32,7 +29,6 @@ void Parqueadero::cargarYAsignarParqueadero(ListaCircularDoble<Coche>& listaCoch
     estacionamiento.vaciarEstacionamiento();
     arbolCoches.vaciarArbol();
 
-    
     Nodo<Coche>* nodoActual = listaCoches.getPrimero();
 
     if (nodoActual == nullptr) {
@@ -43,16 +39,24 @@ void Parqueadero::cargarYAsignarParqueadero(ListaCircularDoble<Coche>& listaCoch
     do {
         Coche coche = nodoActual->getDato(); 
 
+    
+        int posicionExistente = coche.getposicion();
+        
+          std::cerr << "Posición obtenida para el coche: " << posicionExistente << std::endl;
+
+        if (posicionExistente == -1) {
+          
+            posicionExistente = estacionamiento.obtenerEspacioAleatorio();
+            coche.setPosicion(posicionExistente);
+        }
+        
+      
+        estacionamiento.ocuparEspacio(posicionExistente, coche);  
+
        
-        int posicionAleatoria = estacionamiento.obtenerEspacioAleatorio();
+        arbolCoches.agregarDistancia(posicionExistente);
 
       
-        estacionamiento.ocuparEspacio(posicionAleatoria, coche);  
-
-       
-        arbolCoches.agregarDistancia(posicionAleatoria);
-
-       
         nodoActual = nodoActual->getSiguiente();
     } while (nodoActual != listaCoches.getPrimero());  
 }

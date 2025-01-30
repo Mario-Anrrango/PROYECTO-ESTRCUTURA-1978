@@ -365,12 +365,15 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
                 break;
             }
 
-            Coche nuevoCoche = nuevoCoche.InsertarDatos(lista, listaHistorial, listaPropietarios);
+            int espacioLibre = estacionamiento.obtenerEspacioAleatorio();
+            cout << "Espacio libre asignado: " << espacioLibre << endl;
+            Coche nuevoCoche = nuevoCoche.InsertarDatos(lista, listaHistorial, listaPropietarios,espacioLibre);
             lista.insertar(nuevoCoche);
             lista.GuardarArchivo("autos.txt");
             listaHistorial.insertar(nuevoCoche);
             listaHistorial.GuardarArchivo("autos_historial.txt");
-            parqueadero.agregarCoche(nuevoCoche);
+
+            parqueadero.agregarCoche(nuevoCoche,espacioLibre);
             parqueadero.mostrarEstadoParqueadero();
 
          

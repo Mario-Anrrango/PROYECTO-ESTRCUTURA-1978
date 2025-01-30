@@ -12,7 +12,7 @@ private:
 
 public:
     Parqueadero();
-    void agregarCoche(Coche coche);
+    void agregarCoche(Coche coche, int espacioLibre);
     void mostrarEstadoParqueadero();
     void mostrarCoches();
     void guardarEstadoParqueadero(const std::string& nombreArchivo);
