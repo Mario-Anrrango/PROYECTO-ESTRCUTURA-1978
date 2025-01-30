@@ -61,7 +61,8 @@
     "unordered_set": "cpp",
     "map": "cpp",
     "regex": "cpp",
-    "fstream": "cpp"
+    "fstream": "cpp",
+    "set": "cpp"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",

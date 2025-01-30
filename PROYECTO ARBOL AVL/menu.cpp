@@ -80,7 +80,7 @@ void menuEliminarPlaca(ListaCircularDoble<Propietario> &listaPropietarios)
 
 
 
-void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches) {
+void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches, ListaCircularDoble<Coche> &lista) {
     system("cls");
     cout << "========================================" << endl;
     cout << "========================================" << endl;
@@ -106,18 +106,24 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
             cout << "========================================" << endl;
             cout << "Ingrese la salida que desea utilizar: ( 1,2) ";
             
-             string salida; 
+            string salida;
             cin >> salida;
 
+            if (salida == "1" || salida == "2") {
+                Nodo<Coche>* cocheCercano  = arbolCoches.buscarCocheMasCercanoEnLista(lista, stoi(salida)); 
 
-            if (salida =="1") {
-                arbolCoches.imprimirPrimerTermino(salida);
+                if (cocheCercano != nullptr) {
+                    
+                    cout << "Coche más cercano a la salida " << salida << ": " << endl;
+                    
+                  cout << cocheCercano->getDato() << endl;
+                    
+                } else {
+                    cout << "No se encontró un coche cercano para la salida " << salida << "." << endl;
+                }
+            } else {
+                cout << "Entrada inválida. Solo puede ingresar 1 o 2." << endl;
             }
-            if(salida =="2"){
-                arbolCoches.imprimirUltimoTermino(salida);
-            }
-
-          
             break; 
         }
         case 1: {
@@ -128,6 +134,7 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
             cout << "Opción no válida. Intente de nuevo." << endl;
     }
 }
+
 
 
 
@@ -366,7 +373,6 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
             }
 
             int espacioLibre = estacionamiento.obtenerEspacioAleatorio();
-            cout << "Espacio libre asignado: " << espacioLibre << endl;
             Coche nuevoCoche = nuevoCoche.InsertarDatos(lista, listaHistorial, listaPropietarios,espacioLibre);
             lista.insertar(nuevoCoche);
             lista.GuardarArchivo("autos.txt");
@@ -605,7 +611,7 @@ ventana.draw(texto);
 
         case 9:
         {
-            MenuBusquedaBinaria(estacionamiento, arbolCoches);
+            MenuBusquedaBinaria(estacionamiento, arbolCoches, lista);
             break;
         }
 

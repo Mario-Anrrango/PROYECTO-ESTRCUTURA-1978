@@ -1,5 +1,6 @@
 #include "ArbolAVL.h"
 #include <iostream>
+#include "Coche.h"
 
 
 ArbolAVL::ArbolAVL() : raiz(nullptr) {}
@@ -185,32 +186,73 @@ void ArbolAVL::vaciarArbol() {
 }
 
 
-void ArbolAVL::imprimirPrimerTermino(const std::string &salida) {
-    bool detenido = false; 
-    if (salida == "1") {
-        recorridoInorden(raiz, detenido);  
-    }
-    std::cout << std::endl;  
-}
 
-void ArbolAVL::imprimirUltimoTermino(const std::string &salida) {
-    bool detenido = false;  
-    NodoAVL* ultimo = nullptr;
-    recorridoInordenUltimo(raiz, ultimo);  
-    if (ultimo != nullptr) {
-        std::cout << ultimo->distancia << std::endl; 
-    }
-}
 
-void ArbolAVL::recorridoInordenUltimo(NodoAVL* nodo, NodoAVL* &ultimo) {
-    if (nodo != nullptr) {
+bool compararSalida1(int pos1, int pos2) {
+    int decimal1 = pos1 % 10;
+    int decimal2 = pos2 % 10;
+    
+    if (decimal1 != decimal2) {
+        return decimal1 < decimal2;  
+    } else {
+        int unidad1 = pos1 / 10;
+        int unidad2 = pos2 / 10;
         
-        recorridoInordenUltimo(nodo->izquierdo, ultimo);
-
-       
-        ultimo = nodo;
-
-     
-        recorridoInordenUltimo(nodo->derecho, ultimo);
+        std::vector<int> orden = {4, 5, 3, 6, 2, 7, 1, 8, 0, 9};
+        
+        auto it1 = std::find(orden.begin(), orden.end(), unidad1);
+        auto it2 = std::find(orden.begin(), orden.end(), unidad2);
+        
+        return it1 < it2;
     }
+}
+
+bool compararSalida2(int pos1, int pos2) {
+    int decimal1 = pos1 % 10;
+    int decimal2 = pos2 % 10;
+    
+    if (decimal1 != decimal2) {
+        return decimal1 > decimal2;  
+    } else {
+        int unidad1 = pos1 / 10;
+        int unidad2 = pos2 / 10;
+        
+        std::vector<int> orden = {4, 5, 3, 6, 2, 7, 1, 8, 0, 9};
+        
+        auto it1 = std::find(orden.begin(), orden.end(), unidad1);
+        auto it2 = std::find(orden.begin(), orden.end(), unidad2);
+        
+        return it1 < it2;
+    }
+}
+
+Nodo<Coche>* ArbolAVL::buscarCocheMasCercanoEnLista(ListaCircularDoble<Coche>& listaCoches, int salida) {
+    Nodo<Coche>* nodoActual = listaCoches.getPrimero();
+    
+    if (nodoActual == nullptr) {
+        std::cerr << "La lista de coches está vacía." << std::endl;
+        return nullptr;
+    }
+
+    Nodo<Coche>* cocheMasCercano = nullptr;
+
+    do {
+        Coche coche = nodoActual->getDato();
+        int posicion = coche.getposicion();
+
+        if (cocheMasCercano == nullptr) {
+            cocheMasCercano = nodoActual;
+        } else {
+            int posicionMasCercana = cocheMasCercano->getDato().getposicion();
+            bool esMasCercano = (salida == 1) ? compararSalida1(posicion, posicionMasCercana) : compararSalida2(posicion, posicionMasCercana);
+
+            if (esMasCercano) {
+                cocheMasCercano = nodoActual;
+            }
+        }
+
+        nodoActual = nodoActual->getSiguiente(); 
+    } while (nodoActual != listaCoches.getPrimero()); 
+    
+    return cocheMasCercano;
 }

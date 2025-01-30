@@ -5,11 +5,14 @@ Estacionamiento::Estacionamiento() {
 }
 
 void Estacionamiento::ocuparEspacio(int espacio, Coche& coche) {
-    if (espacio >= 0 && espacio < TAMANIO && !espacioOcupado(espacio)) {
-        espaciosOcupados[espacio] = coche;  
-    } else {
-        std::cout << "Espacio no válido o ya ocupado." << std::endl;
+    while (espacio < 0 || espacio >= TAMANIO || espacioOcupado(espacio)) {
+       
+        espacio = obtenerEspacioAleatorio();  
+    
     }
+    
+    espaciosOcupados[espacio] = coche;
+    std::cout << "Coche asignado al espacio " << espacio << "." << std::endl;
 }
 
 void Estacionamiento::liberarEspacio(const std::string& placa) {

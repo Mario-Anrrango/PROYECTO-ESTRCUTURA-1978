@@ -3,12 +3,13 @@
 #include "NodoAVL.h"
 #include <string>
 #include <SFML/Graphics.hpp>
+#include "Coche.h"
 
 class ArbolAVL {
 private:
     NodoAVL* raiz;
 
-  
+   
     int obtenerAltura(NodoAVL* nodo);
     int obtenerFactorBalance(NodoAVL* nodo);
     NodoAVL* rotarDerecha(NodoAVL* y);
@@ -16,19 +17,20 @@ private:
     NodoAVL* insertar(NodoAVL* nodo, int distancia);
     void dibujarNodo(NodoAVL* nodo, sf::RenderWindow &ventana, sf::Font &fuente, float x, float y, float offset);
 
+   
+    NodoAVL* buscarCocheMasCercanoAux(NodoAVL* nodo, int salida);
 
 public:
+ 
     ArbolAVL();
-     NodoAVL* obtenerRaiz();
+
+ 
+    NodoAVL* obtenerRaiz();
     void agregarDistancia(int distancia);
     void mostrarDistancias();  
     void mostrarArbol(sf::RenderWindow& ventana, sf::Font& fuente);  
     void vaciarArbol();
     void recorridoInorden(NodoAVL* nodo, bool& detenido);
-     void imprimirPrimerTermino(const std::string &salida);
-     void imprimirUltimoTermino(const std::string &salida);
-     void recorridoInordenUltimo(NodoAVL* nodo, NodoAVL* &ultimo);
-    
-
-
+    Coche* buscarCocheMasCercano(int salida);
+    Nodo<Coche>* buscarCocheMasCercanoEnLista(ListaCircularDoble<Coche>& listaCoches, int salida);
 };
