@@ -56,29 +56,37 @@ void ListaCircularDoble<T>::insertar(T dato )
 template <typename T>
 void ListaCircularDoble<T>::buscarPorPlaca(string placa)
 {
-
     if (primero == nullptr)
     {
-        cout << "La lista está vacia." << endl;
+        cout << "La lista está vacía." << endl;
         return;
     }
 
     Nodo<T> *aux = primero;
+    bool encontrado = false;  
+
     do
     {
-
+       
         if (aux->getDato().getPlaca() == placa)
         {
-            cout << "========================================" << endl;
-            cout << "   AUTOMOVIL REGISTRADO" << endl;
-            cout << "========================================" << endl;
-            cout << aux->getDato() << endl;
-            return;
+            if (!encontrado)
+            {
+                cout << "========================================" << endl;
+                cout << "   AUTOMOVILES REGISTRADOS CON LA PLACA: " << placa << endl;
+                cout << "========================================" << endl;
+            }
+
+            cout << aux->getDato() << endl;  
+            encontrado = true;  
         }
         aux = aux->getSiguiente();
     } while (aux != primero);
 
-    cout << "El coche con la placa " << placa << " no esta en el parqueadero." << endl;
+    if (!encontrado)
+    {
+        cout << "El coche con la placa " << placa << " no está en el parqueadero." << endl;
+    }
 }
 
 template <typename T>
@@ -178,7 +186,7 @@ void ListaCircularDoble<T>::BusquedaAvanzada(string criterio, string valorInicio
     }
 
     
-    if (criterio != "hora")
+    if (criterio != "hora" && criterio != "fecha")
     {
         transform(valorInicio.begin(), valorInicio.end(), valorInicio.begin(), ::tolower);
     }
@@ -255,14 +263,56 @@ void ListaCircularDoble<T>::BusquedaAvanzada(string criterio, string valorInicio
             }
         }
 
+
+ else if (criterio == "Año" || criterio == "fecha") {
+    
+    std::chrono::system_clock::time_point horaIngreso = aux->getDato().getHora();
+    std::time_t tiempo = std::chrono::system_clock::to_time_t(horaIngreso);
+    std::tm* tm = std::localtime(&tiempo);
+
+    char fechaActual[11];
+    std::strftime(fechaActual, sizeof(fechaActual), "%d-%m-%Y", tm); 
+
+    
+    auto convertirFechaAFechaSistema = [](const std::string &fechaStr) -> std::chrono::system_clock::time_point {
+        std::tm tmFecha = {};
+        std::istringstream ss(fechaStr);
+        ss >> std::get_time(&tmFecha, "%d-%m-%Y"); 
+        return std::chrono::system_clock::from_time_t(std::mktime(&tmFecha)); 
+    };
+
+    std::chrono::system_clock::time_point fechaInicioConv = convertirFechaAFechaSistema(valorInicio);
+    std::chrono::system_clock::time_point fechaFinConv = convertirFechaAFechaSistema(valorFin);
+    
+   
+    auto estaEnIntervaloFecha = [&fechaInicioConv, &fechaFinConv, &fechaActual]() {
+     
+        std::tm tmFechaActual = {};
+        std::istringstream ss(fechaActual);
+        ss >> std::get_time(&tmFechaActual, "%d-%m-%Y");
+        std::chrono::system_clock::time_point fechaActualConv = std::chrono::system_clock::from_time_t(std::mktime(&tmFechaActual));
+        
+        return fechaInicioConv <= fechaActualConv && fechaActualConv <= fechaFinConv;
+    };
+
+    if (estaEnIntervaloFecha()) {
+        cout << "========================================" << endl;
+        cout << "   AUTOMOVIL REGISTRADO POR FECHA" << endl;
+        cout << "========================================" << endl;
+        cout << aux->getDato() << endl;
+        encontrado = true;
+    }
+}
+
         aux = aux->getSiguiente();
     } while (aux != primero);
 
     if (!encontrado)
     {
-        cout << "No se encontro ningun automovil con el criterio de busqueda: " << criterio <<endl;
+        cout << "No se encontro ningun automovil con el criterio de busqueda: " << criterio << endl;
     }
 }
+
 
 template <typename T>
 void ListaCircularDoble<T>::CargarArchivo(std::string nombreArchivo)

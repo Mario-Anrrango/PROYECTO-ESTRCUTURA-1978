@@ -94,6 +94,7 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
     vector<string> opcionesBinario = {
         "Iniciar simulacro de salida",
         "Ver orden de salida de 3 coches",
+        "Buscar coche por posicion",
         "Volver al Menu Principal"
     };
 
@@ -112,7 +113,7 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
             
             int salida = validaciones.ingresarNumero("Ingrese el tipo de salida (1 o 2): ");
 
-            if (salida == 1|| salida == 2) {
+            if (salida == 1 || salida == 2) {
                 Nodo<Coche>* cocheCercano  = arbolCoches.buscarCocheMasCercanoEnLista(lista, salida); 
 
                 if (cocheCercano != nullptr) {
@@ -127,31 +128,46 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
             break; 
         }
         case 1: {
-    system("cls");
-    cout << "========================================" << endl;
-    cout << "           GESTION DE COCHES            " << endl;
-    cout << "========================================" << endl;
-    cout << "Ingrese las posiciones de los 3 coches para el simulacro de salida: " << endl;
+            system("cls");
+            cout << "========================================" << endl;
+            cout << "           GESTION DE COCHES            " << endl;
+            cout << "========================================" << endl;
+            cout << "Ingrese las posiciones de los 3 coches para el simulacro de salida: " << endl;
 
-   
-    int  salida = validaciones.ingresarNumero("Ingrese el tipo de salida (1 o 2): ");
+            int salida = validaciones.ingresarNumero("Ingrese el tipo de salida (1 o 2): ");
 
-    if (salida == 1 || salida == 2) {
-      
-        vector<int> orden = arbolCoches.determinarOrdenSalida(salida, lista);
+            if (salida == 1 || salida == 2) {
+                vector<int> orden = arbolCoches.determinarOrdenSalida(salida, lista);
 
-        if (orden.empty()) {
-            cout << "Error al determinar el orden de salida." << endl;
+                if (orden.empty()) {
+                    cout << "Error al determinar el orden de salida." << endl;
+                    return;
+                }
+            } else {
+                cout << "Entrada invalida. Solo puede ingresar 1 o 2." << endl;
+            }
+            break;
+        }
+        case 2: {
+            system("cls");
+            cout << "========================================" << endl;
+            cout << "           BUSCAR COCHE POR POSICION    " << endl;
+            cout << "========================================" << endl;
+            cout << "Ingrese la posicion del coche a buscar: " << endl;
+
+            int posicionBuscada = validaciones.ingresarNumero("Ingrese la posicion del coche: ");
+
+            Nodo<Coche>* cocheEncontrado = arbolCoches.buscarCochePorPosicion(posicionBuscada, lista);
+            cout << cocheEncontrado->getDato() << endl;
+
+            break;
+        }
+        case 3: {
+          cout << "Saliendo..." << endl;
             return;
         }
-    } else {
-        cout << "Entrada invalida. Solo puede ingresar 1 o 2." << endl;
+        }
     }
-    break;
-}
-}
-
-}
 
 
 
@@ -667,7 +683,7 @@ void menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista, ListaCircularDoble<C
             vector<string> opcionesBusqueda = {
                 "Buscar por Modelo",
                 "Buscar por Color",
-                "Buscar por Año/Fecha",
+                "Buscar por Anio/Fecha",
                 "Buscar por Marca",
                 "Buscar por Hora",
                 "Volver al Menu Principal"};
@@ -701,18 +717,54 @@ void menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista, ListaCircularDoble<C
                 lista.BusquedaAvanzada("color", color, "");
                 break;
             }
-            case 2:
-            {
-                system("cls");
-                cout << "========================================" << endl;
-                cout << "  Buscar por Anio/Fecha" << endl;
-                cout << "========================================" << endl;
-                string fecha;
-                cout << "Ingrese la fecha (DD-MM-AAAA): ";
-                cin >> fecha;
-                lista.BusquedaAvanzada("fecha", fecha, "");
-                break;
-            }
+   case 2: {
+    system("cls");
+    cout << "========================================" << endl;
+    cout << "  Buscar por Anio/Fecha" << endl;
+    cout << "========================================" << endl;
+
+    string fechaInicio, fechaFin;
+
+    cout << "Ingrese la fecha de inicio (DD-MM-AAAA): ";
+    cin >> fechaInicio;
+
+   
+    std::tm tmFechaInicio = {};
+    std::istringstream ssInicio(fechaInicio);
+    ssInicio >> std::get_time(&tmFechaInicio, "%d-%m-%Y");
+    std::chrono::system_clock::time_point fechaInicioConv = std::chrono::system_clock::from_time_t(std::mktime(&tmFechaInicio));
+
+    std::string fechaMinimaStr = "09-11-2024";
+    std::tm tmFechaMinima = {};
+    std::istringstream ssMinima(fechaMinimaStr);
+    ssMinima >> std::get_time(&tmFechaMinima, "%d-%m-%Y");
+    std::chrono::system_clock::time_point fechaMinimaConv = std::chrono::system_clock::from_time_t(std::mktime(&tmFechaMinima));
+
+    std::time_t tiempoHoy = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+    std::tm* tmHoy = std::localtime(&tiempoHoy);
+    char fechaHoy[11];
+    std::strftime(fechaHoy, sizeof(fechaHoy), "%d-%m-%Y", tmHoy);
+    std::chrono::system_clock::time_point fechaHoyConv = std::chrono::system_clock::from_time_t(std::mktime(tmHoy));
+
+    if (fechaInicioConv < fechaMinimaConv) {
+        cout << "La fecha de inicio debe ser a partir del 9 de noviembre de 2024." << endl;
+        system("pause");
+        break;
+    }
+
+    if (fechaInicioConv > fechaHoyConv) {
+        cout << "La fecha de inicio no puede ser posterior al dia de hoy (" << fechaHoy << ")." << endl;
+        system("pause");
+        break;
+    }
+
+    cout << "Ingrese la fecha de fin (DD-MM-AAAA): ";
+    cin >> fechaFin;
+
+    lista.BusquedaAvanzada("fecha", fechaInicio, fechaFin);
+
+    break;
+}
             case 3:
             {
                 system("cls");
@@ -746,7 +798,7 @@ void menuBusquedaAvanzada(ListaCircularDoble<Coche> &lista, ListaCircularDoble<C
                 return;
             }
             default:
-                cout << "Opción invalida. Intentalo de nuevo." << endl;
+                cout << "Opcion invalida. Intentalo de nuevo." << endl;
                 break;
             }
             break;

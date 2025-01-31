@@ -306,10 +306,35 @@ std::vector<int> ArbolAVL::determinarOrdenSalida(int salida, ListaCircularDoble<
     });
 
 
-    std::cout << "Orden de salida de los coches: " << std::endl;
+    std::cout << "Orden de salida de los coches: \n" << std::endl;
     for (int i = 0; i < posiciones.size(); ++i) {
         std::cout << (i + 1) << "er coche: " << posiciones[i] << std::endl;
     }
 
     return posiciones;
+}
+
+Nodo<Coche> *ArbolAVL::buscarCochePorPosicion(int posicionBuscada, ListaCircularDoble<Coche> &listaCoches)
+{
+ Nodo<Coche>* nodoActual = listaCoches.getPrimero();
+    
+    if (nodoActual == nullptr) {
+        std::cerr << "La lista de coches está vacía." << std::endl;
+        return nullptr;
+    }
+
+    do {
+        Coche coche = nodoActual->getDato();
+        int posicion = coche.getposicion();
+
+        if (posicion == posicionBuscada) {
+            cout << "Coche encontrado en la posicion " << posicionBuscada << ": \n" << endl;
+            return nodoActual;
+        }
+
+        nodoActual = nodoActual->getSiguiente(); 
+    } while (nodoActual != listaCoches.getPrimero());
+
+    std::cerr << "Error: No se encontro un coche con la posicion " << posicionBuscada << "." << std::endl;
+    return nullptr;
 }

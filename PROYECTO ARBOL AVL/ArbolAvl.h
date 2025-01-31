@@ -32,4 +32,5 @@ public:
     Nodo<Coche>* buscarCocheMasCercanoEnLista(ListaCircularDoble<Coche>& listaCoches, int salida);
     bool validarPosicion(int posicion);
     std::vector<int> determinarOrdenSalida(int salida, ListaCircularDoble<Coche>& listaCoches);
+    Nodo<Coche>* buscarCochePorPosicion(int posicion, ListaCircularDoble<Coche>& listaCoches);
 };
