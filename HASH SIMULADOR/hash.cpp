@@ -54,7 +54,7 @@ int funcionHash(const string& clave) {
 
         if (index < totalLetras - 1) { // Solo hacer XOR y agregar ceros si NO es la última letra
             string primeros4 = binSuma.substr(0, 4);
-            cout << "Primeros 4 bits extraídos: " << primeros4 << endl;
+            cout << "Primeros 4 bits extraidos: " << primeros4 << endl;
 
             for (int i = 11; i <= 14; i++) {
                 binSuma[i] = (binSuma[i] == primeros4[i - 11]) ? '0' : '1';
@@ -62,7 +62,7 @@ int funcionHash(const string& clave) {
 
             binSuma = binSuma.substr(4) + "0000";
 
-            cout << "Binario después de XOR y agregar ceros: " << binSuma << endl;
+            cout << "Binario despues de XOR y agregar ceros: " << binSuma << endl;
         }
 
         hash = bitset<32>(binSuma).to_ulong();
@@ -92,7 +92,7 @@ public:
             indice = (indice + 1) % TAMANIO_TABLA;
         }
         tabla[indice] = clave;
-        cout << "Insertado \"" << clave << "\" en el índice " << indice << " con valor hash " << valorHash << endl;
+        cout << "Insertado \"" << clave << "\" en el Indice " << indice << " con valor hash " << valorHash << endl;
     }
 
     bool buscar(const string& clave) {
