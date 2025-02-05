@@ -11,6 +11,13 @@ void ArbolAVL::agregarDistancia(int distancia) {
     raiz = insertar(raiz, distancia);
 }
 
+int ArbolAVL::obtenerprofundidad(NodoAVL* nodo) {
+    if (nodo == nullptr) {
+        return 0;
+    }
+    return 1 + std::max(obtenerprofundidad(nodo->izquierdo), obtenerprofundidad(nodo->derecho));
+}
+
 
 NodoAVL* ArbolAVL::insertar(NodoAVL* nodo, int distancia) {
     if (nodo == nullptr) {
@@ -101,23 +108,35 @@ NodoAVL* ArbolAVL::rotarIzquierda(NodoAVL* x) {
 
 
 
-
-
-void ArbolAVL::recorridoInorden(NodoAVL* nodo, bool &detenido) {
-    if (nodo != nullptr && !detenido) {
-        recorridoInorden(nodo->izquierdo, detenido);  
-
-        if (!detenido) {
-            std::cout << nodo->distancia << " ";  
-            detenido = true;  
-        }
-
-        recorridoInorden(nodo->derecho, detenido); 
+void ArbolAVL::recorridoInorden(NodoAVL* nodo){
+    if (nodo != nullptr) {
+        recorridoInorden(nodo->izquierdo);  
+        std::cout << nodo->distancia << " ";  
+        recorridoInorden(nodo->derecho);   
     }
 }
+
+
+
+void ArbolAVL::recorridoPreorden(NodoAVL* nodo) {
+    if (nodo != nullptr) {
+        std::cout << nodo->distancia << " ";  
+        recorridoPreorden(nodo->izquierdo);  
+        recorridoPreorden(nodo->derecho);   
+    }
+}
+
+void ArbolAVL::recorridoPostorden(NodoAVL* nodo) {
+    if (nodo != nullptr) {
+        recorridoPostorden(nodo->izquierdo);  
+        recorridoPostorden(nodo->derecho);   
+        std::cout << nodo->distancia << " ";  
+    }
+}
+
 void ArbolAVL::mostrarDistancias() {
     bool detenido = false; 
-    recorridoInorden(raiz, detenido);
+    recorridoInorden(raiz);
     std::cout << std::endl;
 }
 
