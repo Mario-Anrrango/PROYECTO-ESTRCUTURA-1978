@@ -598,8 +598,23 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
             cout << "          MOSTRAR ARBOL                 " << endl;
             cout << "========================================" << endl;
             cout << "========================================" << endl;
+
+             int altura = arbolCoches.obtenerAltura(arbolCoches.obtenerRaiz()) -1;
+                cout << "Altura del arbol: " << altura << endl;
+
+            int profundidad = arbolCoches.obtenerprofundidad(arbolCoches.obtenerRaiz())-1;
+            cout << "Profundidad del arbol: " << profundidad << endl;
+
+             cout << "Recorrido Inorden: "; 
+              arbolCoches.recorridoInorden(arbolCoches.obtenerRaiz()), cout << endl;
+             cout<< "Recorrido Preorden: ";
+              arbolCoches.recorridoPreorden(arbolCoches.obtenerRaiz()), cout << endl;
+                cout<< "Recorrido Postorden: ";
+               arbolCoches.recorridoPostorden(arbolCoches.obtenerRaiz()), cout << endl;
+
+
            sf::RenderWindow ventana(sf::VideoMode(1000, 1000), "Menu de Parqueadero");
-    sf::Font fuente;
+        sf::Font fuente;
     if (!fuente.loadFromFile("C:\\Windows\\Fonts\\times.ttf")) {
         std::cerr << "Error al cargar la fuente." << std::endl;
         return;

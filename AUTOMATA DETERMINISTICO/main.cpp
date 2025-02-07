@@ -5,6 +5,7 @@
 #include "DFA.h"
 #include "Converter.h"
 #include "GraphRenderer.h"
+#include <string>
 
 using namespace std;
 
@@ -19,14 +20,18 @@ int main() {
     // Solicitar el número total de estados
     cout << "Ingrese el numero total de estados: ";
     cin >> numStates;
+    cin.ignore();
 
     // Solicitar el estado inicial
     cout << "Ingrese el estado inicial: ";
-    cin >> initialState;
+    cin >> numStates;
+    cin.ignore();
 
     // Solicitar los estados finales
     cout << "Ingrese la cantidad de estados finales: ";
     cin >> numFinalStates;
+    cin.ignore();
+
     cout << "Ingrese los estados finales: ";
     for (int i = 0; i < numFinalStates; i++) {
         int state;
@@ -40,6 +45,7 @@ int main() {
     // Solicitar las transiciones
     cout << "Ingrese la cantidad de transiciones: ";
     cin >> numTransitions;
+    cin.ignore();
     cout << "Ingrese las transiciones en formato: estado_origen simbolo estado_destino\n";
     for (int i = 0; i < numTransitions; i++) {
         int from, to;
