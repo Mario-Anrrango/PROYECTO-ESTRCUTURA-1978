@@ -26,7 +26,7 @@ class Automata:
         closure = set(states)
         while stack:
             state = stack.pop()
-            for next_state in self.transitions[state].get('ε', []):
+            for next_state in self.transitions[state].get('e', []):
                 if next_state not in closure:
                     closure.add(next_state)
                     stack.append(next_state)
@@ -46,7 +46,7 @@ class Automata:
             current_state = state_queue.pop(0)
             dfa_transitions[current_state] = {}
             
-            for symbol in self.alphabet - {'ε'}:
+            for symbol in self.alphabet - {'e'}:
                 new_state = set()
                 for substate in current_state:
                     new_state.update(self.transitions[substate].get(symbol, []))
@@ -97,7 +97,7 @@ class DFA:
 
 # INTERFAZ POR CONSOLA
 num_states = int(input("Ingrese el número total de estados: "))
-alphabet = set(input("Ingrese el alfabeto separado por espacios (incluir 'ε' si es necesario): ").split())
+alphabet = set(input("Ingrese el alfabeto separado por espacios (incluir 'e' si es necesario): ").split())
 
 automata = Automata(num_states, alphabet)
 
