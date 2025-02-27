@@ -4,7 +4,7 @@ class Automata:
     def __init__(self, num_states, alphabet):
         self.num_states = num_states
         self.states = set(range(num_states))
-        self.alphabet = set(alphabet) | {'e'}  # Incluir epsilon
+        self.alphabet = set(alphabet) | {'E'}  # Incluir epsilon
         self.initial_state = None
         self.final_states = set()
         self.transitions = {state: {symbol: set() for symbol in self.alphabet} for state in self.states}
@@ -26,7 +26,7 @@ class Automata:
         closure = set(states)
         while stack:
             state = stack.pop()
-            for next_state in self.transitions[state].get('e', []):
+            for next_state in self.transitions[state].get('ε', []):
                 if next_state not in closure:
                     closure.add(next_state)
                     stack.append(next_state)
@@ -46,7 +46,7 @@ class Automata:
             current_state = state_queue.pop(0)
             dfa_transitions[current_state] = {}
             
-            for symbol in self.alphabet - {'e'}:
+            for symbol in self.alphabet - {'ε'}:
                 new_state = set()
                 for substate in current_state:
                     new_state.update(self.transitions[substate].get(symbol, []))
